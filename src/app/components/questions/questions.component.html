@@ -1,0 +1,25 @@
+
+<input type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" />
+
+
+<form class="list-cont-questions">
+
+<div *ngFor="let item of questions">
+
+  <div class="form-group animated bounceInDown fast" [ngClass]="{'active': stateBox == 1}"  *ngIf="item.id != '0.2'" #pregunta1>
+    <label class="txt-question" for="formGroupExampleInput" *ngIf="!item.questions.option">{{ item.questions }}</label>
+    <div class="list-check">
+
+      <div class="form-check form-check-inline" *ngFor="let opt of item.questions.option; let i = index">
+        <input class="form-check-input" type="radio" id="inlineCheckbox1" value="option1" (change)="stateCheck(1,pregunta2,data)" #data>
+        <label class="form-check-label" for="inlineCheckbox1">{{ opt[i] }}</label>
+      </div>
+
+    </div>
+  </div>
+
+  </div>
+
+    <div class="float-degrade"></div>
+
+</form>
