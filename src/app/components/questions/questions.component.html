@@ -1,25 +1,55 @@
-
-<input type="file" #csvReader name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event)" accept=".csv" />
-
+Carga de preguntas
+<input type="file" #csvReaderQuestions name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event,'questions')" accept=".csv" />
+Carga de Usuarios
+<input type="file" #csvReaderUsers name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event,'users')" accept=".csv" />
 
 <form class="list-cont-questions">
 
-<div *ngFor="let item of questions">
+<div *ngFor="let item of questions; let pre = index">
 
-  <div class="form-group animated bounceInDown fast" [ngClass]="{'active': stateBox == 1}"  *ngIf="item.id != '0.2'" #pregunta1>
-    <label class="txt-question" for="formGroupExampleInput" *ngIf="!item.questions.option">{{ item.questions }}</label>
-    <div class="list-check">
+  <div class="form-group animated bounceInDown fast" [ngClass]="{'active': stateBox == 1}"  *ngIf="item.id != '0.2'" #{{i}}>
+    <label class="txt-question" for="formGroupExampleInput" >{{ item.questions.message }}</label>
 
-      <div class="form-check form-check-inline" *ngFor="let opt of item.questions.option; let i = index">
-        <input class="form-check-input" type="radio" id="inlineCheckbox1" value="option1" (change)="stateCheck(1,pregunta2,data)" #data>
-        <label class="form-check-label" for="inlineCheckbox1">{{ opt[i] }}</label>
+    <div class="list-check" *ngIf="item.typeDesign == 'check'">
+      <div class="form-check form-check-inline" *ngFor="let opt of item.questions.option[0].options; let op = index">
+        <input class="form-check-input" type="radio" name="question{{ item.id }}"  id="inlineCheckbox{{ item.id }}-{{ op }}" value="{{ opt }}" (change)="stateCheck(1,pregunta2,data)" #data>
+        <label class="form-check-label" for="inlineCheckbox{{ item.id }}-{{ op }}">{{ opt }}</label>
       </div>
-
     </div>
-  </div>
+
+    <div class="list-check-box two-box"  *ngIf="item.typeDesign == 'tabla'">
+      <div class="row">
+      <div class="form-check box-action col-12 col-sm-3" *ngFor="let opt of item.questions.option[0].options; let op = index">
+        <input class="form-check-input" type="radio" id="box{{ item.id }}-{{ op }}" value="{{ opt }}">
+        <label class="form-check-label" for="box{{ item.id }}-{{ op }}">{{ opt }}</label>
+      </div>
+      </div>
+    </div>
+
+    <div class="list-check-box two-box" *ngIf="item.typeDesign == 'tabla-multiple'">
+      <div class="row">
+        <div class="col-12 col-sm-3">
+        </div>
+        <div class="form-check form-check-inline col-12 col-sm-2" *ngFor="let opt of item.questions.option[0].options; let op = index">
+          <label class="form-check-label" for="box1">{{ opt }}</label>
+        </div>
+
+        <div class="form-check form-check-inline col-12 col-sm-3" *ngFor="let opt of item.questions.option[1].options; let op = index">
+          <label class="form-check-label">{{ opt }}</label>
+        </div>
+        <div class="form-check form-check-inline box-action col-12 col-sm-2" *ngFor="let opt of item.questions.option[0].options; let op = index">
+          <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ op }}" value="{{ opt }}">
+          <label class="form-check-label" for="box{{ item.id }}-{{ op }}"></label>
+        </div>
+      </div>
+    </div>
+
+    <textarea class="form-control" id="exampleFormControlTextarea1" *ngIf="item.typeDesign == 'textbox'" rows="3"></textarea>
 
   </div>
 
-    <div class="float-degrade"></div>
+</div>
+
+<div class="float-degrade"></div>
 
 </form>

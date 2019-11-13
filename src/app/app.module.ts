@@ -6,11 +6,13 @@ import { APP_ROUTES } from './app-routing';
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
+import { KeyArrayPipe } from './pipes/key-array.pipe';
 
 @NgModule({
   declarations: [
     AppComponent,
-    QuestionsComponent
+    QuestionsComponent,
+    KeyArrayPipe
   ],
   imports: [
     BrowserModule,

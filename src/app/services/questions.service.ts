@@ -1,27 +1,33 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore , AngularFirestoreCollection} from '@angular/fire/firestore';
-import { CsvModule } from '../models/csv.module';
+import { QuestionsModule } from '../models/questions.module';
 @Injectable({
   providedIn: 'root'
 })
 export class QuestionsService {
 
-  private itemsCollection: AngularFirestoreCollection<CsvModule>;
+  private itemsCollection: AngularFirestoreCollection<QuestionsModule>;
   constructor(
      private afs: AngularFirestore
   ) { }
 
   addQuestion(data){
-    console.log(data[0]);
     for (let i = 1; i < data.length; i++) {
-      console.log(data[i]);
       const param = JSON.parse(JSON.stringify(data[i]));
+      console.log(param);
       this.afs.collection("questions").add( param );
     }
   }
 
+  addMessage( data ){
+
+    console.log(data);
+    this.afs.collection("message").add( data );
+
+  }
+
   getQuestions(){
-    this.itemsCollection = this.afs.collection<CsvModule>("questions", ref => ref.orderBy('id','asc'));
+    this.itemsCollection = this.afs.collection<QuestionsModule>("questions", ref => ref.orderBy('id','asc'));
     return this.itemsCollection.valueChanges();
   }
 

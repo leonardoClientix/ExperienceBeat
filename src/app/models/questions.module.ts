@@ -7,9 +7,10 @@ import { CommonModule } from '@angular/common';
     CommonModule
   ]
 })
-export class CsvModule {
+export class QuestionsModule {
    public id: any;
    public questions: any;
+   public options?: any;
    public mandatory: any;
    public typeDesign: any;
    public assets: any;
