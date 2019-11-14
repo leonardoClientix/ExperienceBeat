@@ -3,6 +3,8 @@ import { QuestionsModule } from 'src/app/models/questions.module';
 import { QuestionsService } from 'src/app/services/questions.service';
 import { UserModule } from 'src/app/models/user.module';
 import { UsersService } from 'src/app/services/users.service';
+import { ResponseService } from 'src/app/services/response.service';
+import { ResponseModule } from 'src/app/models/response.module';
 
 @Component({
   selector: 'app-questions',
@@ -29,7 +31,8 @@ export class QuestionsComponent implements OnInit {
 
   constructor(
     public _questions:QuestionsService,
-    public _users:UsersService
+    public _users:UsersService,
+    public _response:ResponseService
   ) {
 
     this._questions.getMessage().subscribe( ( res:any )=>{
@@ -48,8 +51,23 @@ export class QuestionsComponent implements OnInit {
 
   }
 
-  saveOption( question:HTMLElement ){
-    console.log(question);
+  saveOption( idQuestion, options:HTMLElement , question ){
+    console.log(idQuestion);
+    console.log(options.value);
+
+    let listResponse: ResponseModule = new ResponseModule();
+    let dataResponse = [];
+
+    listResponse.name = localStorage.getItem("name");
+    listResponse.email = localStorage.getItem("email");
+    listResponse.rol = localStorage.getItem("rol");
+    listResponse.macro_process = localStorage.getItem("macro_process");
+    listResponse.question = { message: question ,option: options.value , date: new Date() };
+
+
+    console.log(listResponse);
+
+    this._response.addResponse(listResponse);
   }
 
   openQuiz(){

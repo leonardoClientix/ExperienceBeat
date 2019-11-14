@@ -22,7 +22,6 @@ export class UsersService {
 
   getUser( email ){
     this.itemsCollection = this.afs.collection<QuestionsModule>("users", ref => ref.where('email', '==', email));
-    //let userDoc = this.afs.doc<any>('users').set({email:"victor.atehortua@efecty.com.co"});
     return this.itemsCollection.valueChanges();
   }
 }
