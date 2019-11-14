@@ -3,16 +3,35 @@ Carga de preguntas
 Carga de Usuarios
 <input type="file" #csvReaderUsers name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event,'users')" accept=".csv" />
 
-<form class="list-cont-questions">
+<div class="card animated fadeInDown mens-data" *ngIf="showMessage">
+  <div class="card-body cnt-message">
+    <p class="card-text">{{ message }}</p>
+    <button type="button" class="btn btn-primary" (click)="openInputs()">Continuar</button>
+  </div>
+</div>
+
+<div class="card animated fadeIn mens-data" *ngIf="showInput">
+<div class="cnt-message">
+  <div class="form-group" *ngFor="let item of inputs">
+    <input [type]="item.type" class="form-control" [id]="item.name" aria-describedby="emailHelp" [placeholder]="item.placeholder" #camp>
+  </div>
+  <button type="submit" class="btn btn-primary" (click)="openQuiz()">Enviar</button>
+</div>
+<div class="alert alert-danger" role="alert" *ngIf="showValUser">
+  Este usuario no existe
+</div>
+</div>
+
+<form class="list-cont-questions" *ngIf="showQuestions">
 
 <div *ngFor="let item of questions; let pre = index">
 
-  <div class="form-group animated bounceInDown fast" [ngClass]="{'active': stateBox == 1}"  *ngIf="item.id != '0.2'" #{{i}}>
+  <div class="form-group animated bounceInUp fast" [ngClass]="{'active': stateBox == 1}"  *ngIf="item.id != '0.2'" #{{i}}>
     <label class="txt-question" for="formGroupExampleInput" >{{ item.questions.message }}</label>
 
     <div class="list-check" *ngIf="item.typeDesign == 'check'">
       <div class="form-check form-check-inline" *ngFor="let opt of item.questions.option[0].options; let op = index">
-        <input class="form-check-input" type="radio" name="question{{ item.id }}"  id="inlineCheckbox{{ item.id }}-{{ op }}" value="{{ opt }}" (change)="stateCheck(1,pregunta2,data)" #data>
+        <input class="form-check-input" type="radio" name="question{{ item.id }}"  id="inlineCheckbox{{ item.id }}-{{ op }}" value="{{ opt }}" (change)="saveOption(item.id,data)" #data>
         <label class="form-check-label" for="inlineCheckbox{{ item.id }}-{{ op }}">{{ opt }}</label>
       </div>
     </div>

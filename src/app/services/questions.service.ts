@@ -14,21 +14,22 @@ export class QuestionsService {
   addQuestion(data){
     for (let i = 1; i < data.length; i++) {
       const param = JSON.parse(JSON.stringify(data[i]));
-      console.log(param);
       this.afs.collection("questions").add( param );
     }
-  }
-
-  addMessage( data ){
-
-    console.log(data);
-    this.afs.collection("message").add( data );
-
   }
 
   getQuestions(){
     this.itemsCollection = this.afs.collection<QuestionsModule>("questions", ref => ref.orderBy('id','asc'));
     return this.itemsCollection.valueChanges();
+  }
+
+  getMessage(){
+    this.itemsCollection = this.afs.collection<QuestionsModule>("message", ref => ref);
+    return this.itemsCollection.valueChanges();
+  }
+
+  addMessage( data ){
+    this.afs.collection("message").add( data );
   }
 
 }

@@ -15,17 +15,29 @@ export class QuestionsComponent implements OnInit {
   dataCheck:number;
   questions:any;
   options:any;
+  showQuestions:boolean = false;
+  showInput:boolean = false;
+  showMessage: boolean = true;
+  message: any;
+  inputs:any;
+  showValUser:boolean = false;
 
   public records: any[] = [];
   @ViewChild('csvReaderQuestions', { static: false })  csvReaderQuestions:any;
   @ViewChild('csvReaderUsers', { static: false })  csvReaderUsers:any;
+  @ViewChild('camp', { static: false })  camp:any;
 
   constructor(
     public _questions:QuestionsService,
     public _users:UsersService
   ) {
 
-    this._questions.getQuestions().subscribe( (data:any)=>{
+    this._questions.getMessage().subscribe( ( res:any )=>{
+      this.message = res[0].message;
+      this.inputs = res[0].data;
+    });
+
+    this._questions.getQuestions().subscribe( ( data:any )=>{
       console.log(data);
       this.questions = data;
     });
@@ -36,10 +48,37 @@ export class QuestionsComponent implements OnInit {
 
   }
 
-  stateCheck( id, question:HTMLElement, data ){
-    this.stateBox = id;
-    this.dataCheck = id;
-    question.scrollIntoView({behavior: 'smooth'} );
+  saveOption( question:HTMLElement ){
+    console.log(question);
+  }
+
+  openQuiz(){
+    let email = this.camp.nativeElement.value;
+    console.log(email);
+    this._users.getUser(email).subscribe( ( data:any )=>{
+      console.log(data.length);
+      if( data.length > 0) {
+        data = data[0];
+        localStorage.setItem("name", data.name);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("macro_process", data.macro_process);
+        localStorage.setItem("rol", data.rol);
+        localStorage.setItem("id", data.id);
+
+        this.showQuestions = true;
+        this.showInput = false;
+        this.showValUser = false;
+
+      } else {
+        this.showValUser = true;
+      }
+    });
+
+  }
+
+  openInputs(){
+    this.showInput = true;
+    this.showMessage = false;
   }
 
   uploadListener($event: any, type): void {
@@ -82,11 +121,12 @@ export class QuestionsComponent implements OnInit {
 
   getDataUsers(csvRecordsArray: any, headerLength: any){
 
-    let csvUsers: UserModule = new UserModule();
+
     let csvDataUser = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
       let curruntRecord = (<string>csvRecordsArray[i]).split(';');
+      let csvUsers: UserModule = new UserModule();
 
       if (curruntRecord.length == headerLength) {
 
@@ -95,26 +135,42 @@ export class QuestionsComponent implements OnInit {
           csvUsers.email = curruntRecord[2];
           csvUsers.rol = curruntRecord[3];
           csvUsers.macro_process = curruntRecord[4];
+
+
           csvDataUser.push(csvUsers);
 
       }
     }
 
     return csvDataUser;
-
   }
 
   getDataQuestions(csvRecordsArray: any, headerLength: any) {
+
     let csvArr = [];
     let cvInit = [];
     let dataOption = [];
     let csvMessage:any = {};
+    let itemInput:any = [];
+    let listItems: any = [];
+    let inputs = [];
+    let list:any = [];
 
     let dataMessage = csvRecordsArray[1].split(';');
     let dataInput = csvRecordsArray[2].split(';');
+    dataInput = dataInput[1].split('|');
+
+    for( let w = 0; w < dataInput.length; w++) {
+      itemInput = dataInput[w].split(',');
+      inputs.push(itemInput);
+    }
+
+    for( let t = 0; t < inputs.length; t++) {
+        list.push({ name: inputs[t][0], type: inputs[t][1], placeholder: inputs[t][2] });
+    }
 
     csvMessage.message = dataMessage[1];
-    csvMessage.data = dataInput[1].split(',');
+    csvMessage.data =  list;
     // agregar mensaje de bienvenida
     this._questions.addMessage(csvMessage);
 
@@ -167,7 +223,6 @@ export class QuestionsComponent implements OnInit {
         let listOption =  curruntRecord[0].split('.');
         if(listOption.length == 2 && idQuestion == listOption[0]){
           //csvRecord = curruntRecord[1].split(',');
-
           csvRecord.id = Number(curruntRecord[0]);
           csvRecord.options = curruntRecord[1].split(',');
           csvRecord.mandatory = curruntRecord[2];
@@ -184,7 +239,6 @@ export class QuestionsComponent implements OnInit {
           csvRecord.matriz = curruntRecord[13];
           csvRecord.miltiCheck = curruntRecord[14];
           csvRecord.alerts = curruntRecord[15];
-
           csvOption.push(csvRecord);
         }
       }
@@ -211,7 +265,5 @@ export class QuestionsComponent implements OnInit {
      this.csvReaderUsers.nativeElement.value = "";
      this.records = [];
   }
-
-
 
 }
