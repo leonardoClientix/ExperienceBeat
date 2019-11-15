@@ -1,12 +1,12 @@
-Carga de preguntas
+<!-- Carga de preguntas
 <input type="file" #csvReaderQuestions name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event,'questions')" accept=".csv" />
 Carga de Usuarios
 <input type="file" #csvReaderUsers name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event,'users')" accept=".csv" />
-
+-->
 <div class="card animated fadeInDown mens-data" *ngIf="showMessage">
   <div class="card-body cnt-message">
     <p class="card-text">{{ message }}</p>
-    <button type="button" class="btn btn-primary" (click)="openInputs()">Continuar</button>
+    <button type="button" class="btn btn-primary bg-col" (click)="openInputs()">Continuar</button>
   </div>
 </div>
 
@@ -15,7 +15,7 @@ Carga de Usuarios
     <div class="form-group" *ngFor="let item of inputs">
       <input [type]="item.type" class="form-control" [id]="item.name" aria-describedby="emailHelp" [placeholder]="item.placeholder" #camp>
     </div>
-    <button type="submit" class="btn btn-primary" (click)="openQuiz()">Enviar</button>
+    <button type="submit" class="btn btn-primary bg-col" (click)="openQuiz()">Enviar</button>
   </div>
   <div class="alert alert-danger" role="alert" *ngIf="showValUser">
     Este usuario no existe
@@ -31,7 +31,7 @@ Carga de Usuarios
 
     <div class="list-check" *ngIf="item.typeDesign == 'check'">
       <div class="form-check form-check-inline" *ngFor="let opt of item.questions.option[0].options; let op = index">
-        <input class="form-check-input" type="radio" name="question{{ item.id }}"  id="inlineCheckbox{{ item.id }}-{{ op }}" value="{{ opt }}" (change)="saveOption(item.id,data,item.questions.message)" #data>
+        <input class="form-check-input" type="radio" name="question{{ item.id }}"  id="inlineCheckbox{{ item.id }}-{{ op }}" value="{{ opt }}" (change)="saveQuiz(item.id,data,item.questions.message)" #data>
         <label class="form-check-label" for="inlineCheckbox{{ item.id }}-{{ op }}">{{ opt }}</label>
       </div>
     </div>
@@ -69,6 +69,7 @@ Carga de Usuarios
 
 </div>
 
+<button type="button" class="btn btn-primary btn-lg bg-col float-right">Enviar</button>
 <div class="float-degrade"></div>
 
 </form>

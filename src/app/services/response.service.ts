@@ -7,16 +7,24 @@ import { ResponseModule } from '../models/response.module';
 })
 export class ResponseService {
 
+  collection:any = "response";
+
+  private itemsCollection: AngularFirestoreCollection<any>;
+
   constructor(
     private afs: AngularFirestore
   ) { }
 
+  getResponse(idResponse,idDocumentFire){
+    return this.afs.collection(this.collection).doc(idDocumentFire).get();
+
+  }
   addResponse(data){
     console.log(data);
-    this.afs.collection("response").add( JSON.parse(JSON.stringify(data)) );
-    /*for (let i = 1; i < data.length; i++) {
-      const param = JSON.parse(JSON.stringify(data[i]));
-      this.afs.collection("response").add( param );
-    }*/
+    return this.afs.collection(this.collection).add( JSON.parse(JSON.stringify(data)) );
+  }
+
+  updateResponsew(idDocumentFire,data){
+   return this.afs.collection(this.collection).doc(idDocumentFire).set( JSON.parse(JSON.stringify(data)) );
   }
 }

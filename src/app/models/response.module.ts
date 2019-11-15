@@ -17,5 +17,6 @@ export class ResponseModule {
    public question:any;
    public option:any;
    public date:any;
+   public state:any;
 
 }

@@ -23,11 +23,15 @@ export class QuestionsComponent implements OnInit {
   message: any;
   inputs:any;
   showValUser:boolean = false;
+  listResponse: ResponseModule = new ResponseModule();
+  svQuestion:any = [];
+  idDocumentFire:any;
 
   public records: any[] = [];
   @ViewChild('csvReaderQuestions', { static: false })  csvReaderQuestions:any;
   @ViewChild('csvReaderUsers', { static: false })  csvReaderUsers:any;
   @ViewChild('camp', { static: false })  camp:any;
+
 
   constructor(
     public _questions:QuestionsService,
@@ -51,23 +55,25 @@ export class QuestionsComponent implements OnInit {
 
   }
 
-  saveOption( idQuestion, options:HTMLElement , question ){
-    console.log(idQuestion);
-    console.log(options.value);
+  saveQuiz( idQuestion, options , question ){
 
-    let listResponse: ResponseModule = new ResponseModule();
-    let dataResponse = [];
+    let as = this._response.getResponse( idQuestion , this.idDocumentFire );
 
-    listResponse.name = localStorage.getItem("name");
-    listResponse.email = localStorage.getItem("email");
-    listResponse.rol = localStorage.getItem("rol");
-    listResponse.macro_process = localStorage.getItem("macro_process");
-    listResponse.question = { message: question ,option: options.value , date: new Date() };
+    this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date());
+    this._response.updateResponsew(this.idDocumentFire,this.listResponse);
+    console.log(this.svQuestion);
+  }
 
+  pushQuestions(idQuestion,message,options,date){
 
-    console.log(listResponse);
+    let saveQuestion:any = {};
+    saveQuestion.id = idQuestion;
+    saveQuestion.message = message;
+    saveQuestion.options = options;
+    saveQuestion.date = date;
+    this.svQuestion.push(saveQuestion);
+    return this.svQuestion;
 
-    this._response.addResponse(listResponse);
   }
 
   openQuiz(){
@@ -82,6 +88,17 @@ export class QuestionsComponent implements OnInit {
         localStorage.setItem("macro_process", data.macro_process);
         localStorage.setItem("rol", data.rol);
         localStorage.setItem("id", data.id);
+
+        this.listResponse.name = localStorage.getItem("name");
+        this.listResponse.email = localStorage.getItem("email");
+        this.listResponse.rol = localStorage.getItem("rol");
+        this.listResponse.macro_process = localStorage.getItem("macro_process");
+        this.listResponse.state = 0;
+
+        this._response.addResponse(this.listResponse).then( (data:any) =>{
+          console.log(data);
+          this.idDocumentFire = data.id;
+        });
 
         this.showQuestions = true;
         this.showInput = false;
