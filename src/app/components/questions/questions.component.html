@@ -1,8 +1,8 @@
-<!-- Carga de preguntas
+ Carga de preguntas
 <input type="file" #csvReaderQuestions name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event,'questions')" accept=".csv" />
 Carga de Usuarios
 <input type="file" #csvReaderUsers name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event,'users')" accept=".csv" />
--->
+
 <div class="card animated fadeInDown mens-data" *ngIf="showMessage">
   <div class="card-body cnt-message">
     <p class="card-text">{{ message }}</p>
@@ -33,6 +33,24 @@ Carga de Usuarios
       <div class="form-check form-check-inline" *ngFor="let opt of item.questions.option[0].options; let op = index">
         <input class="form-check-input" type="radio" name="question{{ item.id }}"  id="inlineCheckbox{{ item.id }}-{{ op }}" value="{{ opt }}" (change)="saveQuiz(item.id,data,item.questions.message,op,'check')" #data>
         <label class="form-check-label" for="inlineCheckbox{{ item.id }}-{{ op }}">{{ opt }}</label>
+      </div>
+    </div>
+
+    <div class="list-check" *ngIf="item.typeDesign == 'check-mensaje'">
+      <div class="row">
+
+        <!--<div *ngFor="let ms of item.questions.option[0].options; let op = index" class="col-3">{{ ms }}
+          <input type="hidden" name="question{{ item.id }}" value="{{ ms }}" #option2>
+        </div>-->
+
+        <div class="col-3" *ngFor="let opt of item.questions.option[1].options;"  >
+
+          <div class="form-check form-check-inline" *ngFor="let item of opt.options" >
+            <input class="form-check-input" type="radio" name="question{{ item.id }}"  id="inlineCheckbox{{ item.id }}-{{ op }}" value="{{ opt }}" (change)="saveQuiz(item.id,data,item.questions.message,op,'check-mensaje',option2)" #data>
+            <label class="form-check-label" for="inlineCheckbox{{ item.id }}-{{ op }}">{{ opt }}</label>
+          </div>
+        </div>
+
       </div>
     </div>
 

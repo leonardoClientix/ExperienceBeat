@@ -30,6 +30,7 @@ body{
 }
 .list-check , .list-check-box {
   margin-left: 27px;
+  margin-top: 34px;
 }
 .list-check label, .list-check-box label{
   color: #000000;

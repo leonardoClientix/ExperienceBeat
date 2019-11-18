@@ -58,11 +58,11 @@ export class QuestionsComponent implements OnInit {
 
   }
 
-  saveQuiz( idQuestion, options , question , idOp, typeQuestion){
+  saveQuiz( idQuestion, options , question , idOp, typeQuestion,option2?){
 
+    console.log(option2.value);
 
     this.actBox = idQuestion+'-'+idOp;
-
     this._response.getResponse( idQuestion , this.idDocumentFire ).subscribe( ( data:any )=>{
       let liRes = data.question;
       for (let i = 0; i < liRes.length; i++) {
@@ -76,10 +76,9 @@ export class QuestionsComponent implements OnInit {
 
       }
     });
-
+    console.log(options);
     this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date(),typeQuestion);
-    console.log('trueQuestion',this.trueQuestion);
-    console.log('idQuestion',idQuestion);
+
     if(this.trueQuestion == idQuestion) {
       console.log('update');
       this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);
@@ -113,6 +112,8 @@ export class QuestionsComponent implements OnInit {
       saveQuestion.options = options;
       saveQuestion.date = date;
     }
+
+    console.log(saveQuestion);
 
     this.svQuestion.push(saveQuestion);
     return this.svQuestion;
@@ -260,6 +261,7 @@ export class QuestionsComponent implements OnInit {
         if(listOption.length == 1){
           // lista de opciones de cada pregunta
           let valueOption = this.getOptions(curruntRecord[0], csvRecordsArray, headerLength );
+          //console.log(valueOption);
           csvRecord.questions = { message: curruntRecord[1], option: valueOption };
           csvRecord.mandatory = curruntRecord[2];
           csvRecord.typeDesign = curruntRecord[3];
@@ -295,10 +297,20 @@ export class QuestionsComponent implements OnInit {
 
         let csvRecord:QuestionsModule = new QuestionsModule();
         let listOption =  curruntRecord[0].split('.');
+
         if(listOption.length == 2 && idQuestion == listOption[0]){
+
           //csvRecord = curruntRecord[1].split(',');
           csvRecord.id = Number(curruntRecord[0]);
           csvRecord.options = curruntRecord[1].split(',');
+          /*let datOp = curruntRecord[1].split(',');
+          console.log(datOp);
+          console.log(datOp.length);
+          if(datOp.length == 1){
+            csvRecord.options = datOp[0];
+          } else {
+            csvRecord.options = datOp;
+          }*/
           csvRecord.mandatory = curruntRecord[2];
           csvRecord.typeDesign = curruntRecord[3];
           csvRecord.assets = curruntRecord[4];
