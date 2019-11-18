@@ -26,6 +26,9 @@ export class QuestionsComponent implements OnInit {
   listResponse: ResponseModule = new ResponseModule();
   svQuestion:any = [];
   idDocumentFire:any;
+  trueQuestion:any;
+  idTrueQuestion:any;
+  actBox: any;
 
   public records: any[] = [];
   @ViewChild('csvReaderQuestions', { static: false })  csvReaderQuestions:any;
@@ -55,22 +58,62 @@ export class QuestionsComponent implements OnInit {
 
   }
 
-  saveQuiz( idQuestion, options , question ){
+  saveQuiz( idQuestion, options , question , idOp, typeQuestion){
 
-    let as = this._response.getResponse( idQuestion , this.idDocumentFire );
 
-    this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date());
-    this._response.updateResponsew(this.idDocumentFire,this.listResponse);
-    console.log(this.svQuestion);
+    this.actBox = idQuestion+'-'+idOp;
+
+    this._response.getResponse( idQuestion , this.idDocumentFire ).subscribe( ( data:any )=>{
+      let liRes = data.question;
+      for (let i = 0; i < liRes.length; i++) {
+
+          if(liRes[i].id == idQuestion) {
+            console.log(liRes);
+            console.log(liRes[i].id);
+            this.trueQuestion = liRes[i].id;
+            this.idTrueQuestion = i;
+          }
+
+      }
+    });
+
+    this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date(),typeQuestion);
+    console.log('trueQuestion',this.trueQuestion);
+    console.log('idQuestion',idQuestion);
+    if(this.trueQuestion == idQuestion) {
+      console.log('update');
+      this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);
+    } else {
+      console.log('add');
+      this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
+    }
+
   }
 
-  pushQuestions(idQuestion,message,options,date){
+  pushQuestions(idQuestion,message,options,date,typeQuestion){
+
+    console.log(options);
+
+    for (let i = 0; i < this.svQuestion.length; i++) {
+        if(this.svQuestion[i].id == idQuestion){
+          this.svQuestion.splice(i,1);
+        }
+    }
 
     let saveQuestion:any = {};
-    saveQuestion.id = idQuestion;
-    saveQuestion.message = message;
-    saveQuestion.options = options;
-    saveQuestion.date = date;
+
+    if(typeQuestion == "text") {
+      saveQuestion.id = idQuestion;
+      saveQuestion.message = message;
+      saveQuestion.text = options;
+      saveQuestion.date = date;
+    } else {
+      saveQuestion.id = idQuestion;
+      saveQuestion.message = message;
+      saveQuestion.options = options;
+      saveQuestion.date = date;
+    }
+
     this.svQuestion.push(saveQuestion);
     return this.svQuestion;
 
@@ -156,9 +199,7 @@ export class QuestionsComponent implements OnInit {
 
   getDataUsers(csvRecordsArray: any, headerLength: any){
 
-
     let csvDataUser = [];
-
     for (let i = 1; i < csvRecordsArray.length; i++) {
       let curruntRecord = (<string>csvRecordsArray[i]).split(';');
       let csvUsers: UserModule = new UserModule();
@@ -170,8 +211,6 @@ export class QuestionsComponent implements OnInit {
           csvUsers.email = curruntRecord[2];
           csvUsers.rol = curruntRecord[3];
           csvUsers.macro_process = curruntRecord[4];
-
-
           csvDataUser.push(csvUsers);
 
       }

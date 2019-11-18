@@ -67,8 +67,14 @@ body{
 .two-box .box-action:hover label{
     color: #ffffff;
 }
+.two-box .box-action.action{
+  background-color: #000000;
+}
+.two-box .box-action.action label{
+  color: #ffffff;
+}
 .list-cont-questions{
-  margin-bottom: 140px;
+  margin-bottom: 25%;
 }
 .list-cont-questions .form-group{
   background-color: #ffffff;

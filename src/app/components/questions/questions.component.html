@@ -31,15 +31,15 @@ Carga de Usuarios
 
     <div class="list-check" *ngIf="item.typeDesign == 'check'">
       <div class="form-check form-check-inline" *ngFor="let opt of item.questions.option[0].options; let op = index">
-        <input class="form-check-input" type="radio" name="question{{ item.id }}"  id="inlineCheckbox{{ item.id }}-{{ op }}" value="{{ opt }}" (change)="saveQuiz(item.id,data,item.questions.message)" #data>
+        <input class="form-check-input" type="radio" name="question{{ item.id }}"  id="inlineCheckbox{{ item.id }}-{{ op }}" value="{{ opt }}" (change)="saveQuiz(item.id,data,item.questions.message,op,'check')" #data>
         <label class="form-check-label" for="inlineCheckbox{{ item.id }}-{{ op }}">{{ opt }}</label>
       </div>
     </div>
 
     <div class="list-check-box two-box"  *ngIf="item.typeDesign == 'tabla'">
       <div class="row">
-      <div class="form-check box-action col-12 col-sm-3" *ngFor="let opt of item.questions.option[0].options; let op = index">
-        <input class="form-check-input" type="radio" id="box{{ item.id }}-{{ op }}" value="{{ opt }}">
+      <div class="form-check box-action col-12 col-sm-3"  [ngClass]="{'action': actBox == item.id+'-'+op}"  *ngFor="let opt of item.questions.option[0].options; let op = index">
+        <input class="form-check-input" type="radio" id="box{{ item.id }}-{{ op }}" value="{{ opt }}" (change)="saveQuiz(item.id,dataTable,item.questions.message,op,'table')" #dataTable>
         <label class="form-check-label" for="box{{ item.id }}-{{ op }}">{{ opt }}</label>
       </div>
       </div>
@@ -56,14 +56,14 @@ Carga de Usuarios
         <div class="form-check form-check-inline col-12 col-sm-3" *ngFor="let opt of item.questions.option[1].options; let op = index">
           <label class="form-check-label">{{ opt }}</label>
         </div>
-        <div class="form-check form-check-inline box-action col-12 col-sm-2" *ngFor="let opt of item.questions.option[0].options; let op = index">
-          <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ op }}" value="{{ opt }}">
+        <div class="form-check form-check-inline box-action col-12 col-sm-2" [ngClass]="{'action': actBox == item.id+'-'+op}" *ngFor="let opt of item.questions.option[0].options; let op = index">
+          <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ op }}" value="{{ opt }}" (change)="saveQuiz(item.id,dataTableMulti,item.questions.message,op,'table-multiple')" #dataTableMulti>
           <label class="form-check-label" for="box{{ item.id }}-{{ op }}"></label>
         </div>
       </div>
     </div>
 
-    <textarea class="form-control" id="exampleFormControlTextarea1" *ngIf="item.typeDesign == 'textbox'" rows="3"></textarea>
+    <textarea class="form-control" id="exampleFormControlTextarea1" *ngIf="item.typeDesign == 'textbox'" rows="3" (keypress)="saveQuiz(item.id,dataText,item.questions.message,'','text')" #dataText></textarea>
 
   </div>
 
