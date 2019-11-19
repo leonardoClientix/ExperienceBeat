@@ -58,9 +58,21 @@ export class QuestionsComponent implements OnInit {
 
   }
 
-  saveQuiz( idQuestion, options , question , idOp, typeQuestion,option2?){
+  saveQuiz( idQuestion, options , question , idOp, typeQuestion, label?){
 
-    console.log(option2.value);
+    let datLabel:any;
+
+    if(typeQuestion == "check-mensaje"){
+      let idQr = (idQuestion + "").split(".");
+      let idLabel:any = Number(idQr[1])-1;
+      idLabel = (idQr[0])+'.'+idLabel;
+      for (let i = 0; i < label.length; i++) {
+          if(label[i].id == idLabel){
+            datLabel = label[i].options[0];
+            console.log(label[i].options);
+          }
+      }
+    }
 
     this.actBox = idQuestion+'-'+idOp;
     this._response.getResponse( idQuestion , this.idDocumentFire ).subscribe( ( data:any )=>{
@@ -77,7 +89,7 @@ export class QuestionsComponent implements OnInit {
       }
     });
     console.log(options);
-    this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date(),typeQuestion);
+    this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date(),typeQuestion,datLabel);
 
     if(this.trueQuestion == idQuestion) {
       console.log('update');
@@ -89,7 +101,7 @@ export class QuestionsComponent implements OnInit {
 
   }
 
-  pushQuestions(idQuestion,message,options,date,typeQuestion){
+  pushQuestions(idQuestion,message,options,date,typeQuestion,label){
 
     console.log(options);
 
@@ -105,6 +117,11 @@ export class QuestionsComponent implements OnInit {
       saveQuestion.id = idQuestion;
       saveQuestion.message = message;
       saveQuestion.text = options;
+      saveQuestion.date = date;
+    } if(typeQuestion == "check-mensaje") {
+      saveQuestion.id = idQuestion;
+      saveQuestion.message = message;
+      saveQuestion.option = { label: label , options: options};
       saveQuestion.date = date;
     } else {
       saveQuestion.id = idQuestion;
@@ -152,6 +169,34 @@ export class QuestionsComponent implements OnInit {
         this.showValUser = true;
       }
     });
+
+  }
+
+  conditional( data ){
+
+    if(data != ""){
+
+      let typeCondition = data.split('(');
+      let optionsCondition = typeCondition[1].split(')');
+          optionsCondition = optionsCondition[0].split(',');
+      let validCondition;
+
+      switch(typeCondition[0]) {
+         case 'rol': {
+            validCondition = optionsCondition.indexOf(localStorage.getItem('rol'));
+            break;
+         }
+      }
+
+      console.log(validCondition);
+
+      return validCondition;
+
+    } else {
+
+      return 0;
+
+    }
 
   }
 

@@ -48,14 +48,30 @@ body{
 .list-check-box .form-check{
   margin: 0;
 }
+.label-option{
+  margin-right: 10px;
+  font-weight: bold;
+}
 .two-box .form-check{
   /*width: 50%;*/
   color: #000000;
   background-color: #fdc82f;
   border: solid 1px #fff;
 }
+.items-options-list{
+  width: 900px;
+  margin: 12px;
+}
 .two-box .form-check-label{
   width: 100%;
+}
+.min-tab {
+    min-height: 90px !important;
+    -webkit-box-align: start !important;
+    align-items: flex-start !important;
+}
+.chl-bok{
+  min-height: 34px;
 }
 .two-box {
   padding-left: 8%;

@@ -34,7 +34,7 @@ export class ResponseService {
       let dataUpdate = [];
       dataUpdate[idQuestion] = data.question[idQuestion];
 
-        console.log(dataUpdate);
+      console.log(dataUpdate);
 
       return this.afs.collection(this.collection).doc(idDocumentFire).update({
         question: dataUpdate[idQuestion]
