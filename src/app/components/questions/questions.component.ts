@@ -60,21 +60,32 @@ export class QuestionsComponent implements OnInit {
 
   saveQuiz( idQuestion, options , question , idOp, typeQuestion, label?){
 
+    console.log(idQuestion);
     let datLabel:any;
+    if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple"){
 
-    if(typeQuestion == "check-mensaje"){
       let idQr = (idQuestion + "").split(".");
       let idLabel:any = Number(idQr[1])-1;
       idLabel = (idQr[0])+'.'+idLabel;
+      console.log(idLabel);
       for (let i = 0; i < label.length; i++) {
           if(label[i].id == idLabel){
-            datLabel = label[i].options[0];
-            console.log(label[i].options);
+            if(typeQuestion == "table-multiple"){
+
+              if(label[i].typeDesign == 'label'){
+                datLabel = label[i].options[0];
+                console.log(datLabel);
+              }
+
+
+            } else {
+              datLabel = label[i].options[0];
+              console.log(datLabel);
+            }
           }
       }
     }
 
-    this.actBox = idQuestion+'-'+idOp;
     this._response.getResponse( idQuestion , this.idDocumentFire ).subscribe( ( data:any )=>{
       let liRes = data.question;
       for (let i = 0; i < liRes.length; i++) {
@@ -88,7 +99,6 @@ export class QuestionsComponent implements OnInit {
 
       }
     });
-    console.log(options);
     this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date(),typeQuestion,datLabel);
 
     if(this.trueQuestion == idQuestion) {
@@ -103,7 +113,7 @@ export class QuestionsComponent implements OnInit {
 
   pushQuestions(idQuestion,message,options,date,typeQuestion,label){
 
-    console.log(options);
+    console.log(message);
 
     for (let i = 0; i < this.svQuestion.length; i++) {
         if(this.svQuestion[i].id == idQuestion){
@@ -118,7 +128,7 @@ export class QuestionsComponent implements OnInit {
       saveQuestion.message = message;
       saveQuestion.text = options;
       saveQuestion.date = date;
-    } if(typeQuestion == "check-mensaje") {
+    } if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple") {
       saveQuestion.id = idQuestion;
       saveQuestion.message = message;
       saveQuestion.option = { label: label , options: options};
@@ -188,13 +198,11 @@ export class QuestionsComponent implements OnInit {
          }
       }
 
-      console.log(validCondition);
-
       return validCondition;
 
     } else {
 
-      return 0;
+      return -1;
 
     }
 

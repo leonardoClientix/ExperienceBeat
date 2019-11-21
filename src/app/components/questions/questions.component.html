@@ -41,7 +41,7 @@ Carga de Usuarios
 
         <div *ngFor="let m of item.questions.option; let i = index" >
 
-          <div [hidden]="conditional(m.conditional) == 0" >
+          <div *ngIf="conditional(m.conditional) == 0" >
               <div *ngIf="m.typeDesign == 'label'" class="label-option">
                   <div *ngFor="let labData of m.options">
                     {{ labData }}
@@ -74,43 +74,62 @@ Carga de Usuarios
     <div class="list-check-box two-box" *ngIf="item.typeDesign == 'tabla-multiple'">
       <div class="row">
 
-        <div class="col-12 col-sm-3">
+        <div class="col-12 col-sm-4">
         </div>
 
-        <div class="col-12 col-sm-9">
-
+        <div class="col-12 col-sm-8 head-box">
         <div *ngFor="let m of item.questions.option; let i = index">
-          <div *ngIf="m.typeDesign == 'value'" >
+          <div *ngIf="m.typeDesign == 'value' && conditional(m.conditional) == 0 && i == 1" >
             <div class="form-check form-check-inline col-12 col-sm-3 min-tab" *ngFor="let opData of m.options; let idOpList = index">
               <label class="form-check-label" for="box1">{{ opData }}</label>
             </div>
           </div>
         </div>
-
         </div>
 
-        <div class="col-12 col-sm-3">
-          <div *ngFor="let m of item.questions.option; let i = index">
-              <div *ngIf="m.typeDesign == 'label'">
-              <div class="form-check form-check-inline col-12 col-sm-12 " *ngFor="let labData of m.options">
-                <label class="form-check-label">{{ labData }}</label>
-              </div>
-              </div>
-          </div>
-        </div>
+        <div class="col-12 col-sm-12 data-box">
+          <div *ngFor="let li of item.questions.option; let i = index" [ngClass]="{'col-sm-4': li.typeDesign == 'label', 'col-sm-8': li.typeDesign == 'value'}" class="ali-box">
 
-        <div class="col-12 col-sm-9">
-          <div *ngFor="let m of item.questions.option; let i = index">
-
-              <div *ngIf="m.typeDesign == 'value'">
-                <div class="form-check form-check-inline col-12 col-sm-3" [ngClass]="{'action': actBox == item.id+'-'+idOpList}" *ngFor="let opData of m.options; let idOpList = index">
-                  <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ idOpList }}" value="{{ opt }}" (change)="saveQuiz(item.id,dataTableMulti,item.questions.message,op,'table-multiple')" #dataTableMulti>
-                  <label class="form-check-label chl-bok" for="box{{ item.id }}-{{ idOpList }}"></label>
+              <div *ngIf="li.typeDesign == 'label' && conditional(li.conditional) == 0">
+                <div class="form-check form-check-inline col-12 col-sm-12" *ngFor="let labData of li.options">
+                  <label class="form-check-label">{{ labData }}</label>
                 </div>
               </div>
 
+              <div *ngIf="li.typeDesign == 'value' && conditional(li.conditional) == 0" class="col-sm-12 cn-box">
+                <div class="form-check form-check-inline col-12 col-sm-3 chl-bok"  [ngClass]="{'action': actBox == item.id+'-'+i}" *ngFor="let opData of li.options">
+                  <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ i }}" value="{{ opData }}" (change)="saveQuiz(li.id,dataTableMulti,item.questions.message,idOpList,'table-multiple',item.questions.option)" #dataTableMulti>
+                  <label class="form-check-label" for="box{{ item.id }}-{{ i }}">{{li | json}}</label>
+                </div>
+              </div>
           </div>
         </div>
+
+
+        <!--  <div class="col-12 col-sm-8" *ngFor="let ck of li.options">
+
+
+                <div *ngIf="li.typeDesign == 'value' && conditional(li.conditional) == 0 ">
+                  <div class="form-check form-check-inline col-12 col-sm-3 chl-bok" [ngClass]="{'action': actBox == item.id+'-'+idOpList}" *ngFor="let opData of m.options; let idOpList = index">
+                    <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ gh }}" value="{{ opData }}" (change)="saveQuiz(item.id,dataTableMulti,item.questions.message,idOpList,'table-multiple')" #dataTableMulti>
+                    <label class="form-check-label" for="box{{ item.id }}-{{ gh }}"></label>
+                  </div>
+                </div>
+
+
+          </div>-->
+
+
+        <!--<div class="col-12 col-sm-8">
+          <div *ngFor="let m of item.questions.option; let i = index">
+              <div *ngIf="m.typeDesign == 'value' && conditional(m.conditional) == 0">
+                <div class="form-check form-check-inline col-12 col-sm-3 chl-bok" [ngClass]="{'action': actBox == item.id+'-'+idOpList}" *ngFor="let opData of m.options; let idOpList = index">
+                  <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ i }}" value="{{ opData }}" (change)="saveQuiz(item.id,dataTableMulti,item.questions.message,idOpList,'table-multiple')" #dataTableMulti>
+                  <label class="form-check-label" for="box{{ item.id }}-{{ i }}"></label>
+                </div>
+              </div>
+          </div>
+        </div>-->
 
 
       <!--
