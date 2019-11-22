@@ -9,6 +9,7 @@ import * as firebase from 'firebase';
 export class ResponseService {
 
   collection:any = "response";
+  dataUpdate = [];
 
   private itemsCollection: AngularFirestoreCollection<any>;
 
@@ -31,13 +32,13 @@ export class ResponseService {
        return this.afs.collection(this.collection).doc(idDocumentFire).set( JSON.parse(JSON.stringify(data)) );
     } else {
 
-      let dataUpdate = [];
-      dataUpdate[idQuestion] = data.question[idQuestion];
+      
+      this.dataUpdate[idQuestion] = data.question[idQuestion];
 
-      console.log(dataUpdate);
+      console.log(this.dataUpdate);
 
       return this.afs.collection(this.collection).doc(idDocumentFire).update({
-        question: dataUpdate[idQuestion]
+        question: this.dataUpdate[idQuestion]
       });
 
       //return this.afs.collection(this.collection , ref => ref.where('id', '==', idQuestion)).doc(idDocumentFire).update( JSON.parse(JSON.stringify(data)) );

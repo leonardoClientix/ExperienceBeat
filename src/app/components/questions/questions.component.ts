@@ -58,29 +58,32 @@ export class QuestionsComponent implements OnInit {
 
   }
 
-  saveQuiz( idQuestion, options , question , idOp, typeQuestion, label?){
+  send(){
+    /*this.listResponse.state = 1;
+    this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);*/
+  }
 
-    console.log(idQuestion);
+  saveQuiz( idQuestion, options , question , idOp, typeQuestion, label?,idtem?){
+   
     let datLabel:any;
-    if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple"){
 
+    this.actBox = idtem+"-"+idOp+"-"+idQuestion;
+    if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple"){
+ 
       let idQr = (idQuestion + "").split(".");
-      let idLabel:any = Number(idQr[1])-1;
-      idLabel = (idQr[0])+'.'+idLabel;
-      console.log(idLabel);
+      let idLabel:any = parseFloat(idQr[1])-1;
+          idLabel = (idQr[0])+'.'+idLabel;
+      
+
       for (let i = 0; i < label.length; i++) {
+
           if(label[i].id == idLabel){
             if(typeQuestion == "table-multiple"){
-
               if(label[i].typeDesign == 'label'){
                 datLabel = label[i].options[0];
-                console.log(datLabel);
               }
-
-
             } else {
               datLabel = label[i].options[0];
-              console.log(datLabel);
             }
           }
       }
@@ -91,15 +94,20 @@ export class QuestionsComponent implements OnInit {
       for (let i = 0; i < liRes.length; i++) {
 
           if(liRes[i].id == idQuestion) {
-            console.log(liRes);
-            console.log(liRes[i].id);
             this.trueQuestion = liRes[i].id;
             this.idTrueQuestion = i;
           }
 
       }
     });
-    this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date(),typeQuestion,datLabel);
+
+    if(typeQuestion == "table-multiple"){
+      this.listResponse.question = this.pushQuestions(idQuestion,question,options, new Date(),typeQuestion,datLabel);
+    } else {
+      this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date(),typeQuestion,datLabel);
+    }
+   console.log(this.trueQuestion );
+   console.log(idQuestion);
 
     if(this.trueQuestion == idQuestion) {
       console.log('update');
@@ -307,7 +315,7 @@ export class QuestionsComponent implements OnInit {
 
       if (curruntRecord.length == headerLength) {
         let csvRecord: QuestionsModule = new QuestionsModule();
-        csvRecord.id = Number(curruntRecord[0]);
+        csvRecord.id = parseFloat(curruntRecord[0]);
 
         let listOption =  curruntRecord[0].split('.');
         // lista de preguntas
@@ -353,17 +361,10 @@ export class QuestionsComponent implements OnInit {
 
         if(listOption.length == 2 && idQuestion == listOption[0]){
 
-          //csvRecord = curruntRecord[1].split(',');
-          csvRecord.id = Number(curruntRecord[0]);
+
+          //csvRecord.id = Number(curruntRecord[0]);
+          csvRecord.id = curruntRecord[0];
           csvRecord.options = curruntRecord[1].split(',');
-          /*let datOp = curruntRecord[1].split(',');
-          console.log(datOp);
-          console.log(datOp.length);
-          if(datOp.length == 1){
-            csvRecord.options = datOp[0];
-          } else {
-            csvRecord.options = datOp;
-          }*/
           csvRecord.mandatory = curruntRecord[2];
           csvRecord.typeDesign = curruntRecord[3];
           csvRecord.assets = curruntRecord[4];

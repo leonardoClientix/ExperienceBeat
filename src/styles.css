@@ -51,6 +51,8 @@ body{
 .label-option{
   margin-right: 10px;
   font-weight: bold;
+  width: 154px;
+  margin-bottom: 28px;
 }
 .two-box .form-check{
   /*width: 50%;*/
@@ -59,7 +61,7 @@ body{
   border: solid 1px #fff;
 }
 .items-options-list{
-  width: 996px;
+  width: 300px;
   margin: 12px;
 }
 .two-box .form-check-label{
