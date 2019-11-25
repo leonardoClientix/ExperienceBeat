@@ -3,8 +3,8 @@ import { QuestionsComponent } from './components/questions/questions.component';
 
 
 const ROUTES: Routes = [
-    { path: 'preguntas', component: QuestionsComponent },
-    { path: '**', pathMatch: 'full' , redirectTo: 'preguntas'},
+    {  path: '**', pathMatch: 'full', component: QuestionsComponent },
+   // { path: '**', pathMatch: 'full' , redirectTo: 'preguntas'},
 ];
 
 

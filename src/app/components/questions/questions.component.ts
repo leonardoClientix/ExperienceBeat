@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild , Renderer2} from '@angular/core';
 import { QuestionsModule } from 'src/app/models/questions.module';
 import { QuestionsService } from 'src/app/services/questions.service';
 import { UserModule } from 'src/app/models/user.module';
@@ -29,17 +29,20 @@ export class QuestionsComponent implements OnInit {
   trueQuestion:any;
   idTrueQuestion:any;
   actBox: any;
+  sentTrue:boolean = false;
 
   public records: any[] = [];
   @ViewChild('csvReaderQuestions', { static: false })  csvReaderQuestions:any;
   @ViewChild('csvReaderUsers', { static: false })  csvReaderUsers:any;
   @ViewChild('camp', { static: false })  camp:any;
+  //@ViewChild('dcheck', { static: false })  dcheck:any;
 
 
   constructor(
     public _questions:QuestionsService,
     public _users:UsersService,
-    public _response:ResponseService
+    public _response:ResponseService,
+    private renderer: Renderer2
   ) {
 
     this._questions.getMessage().subscribe( ( res:any )=>{
@@ -48,7 +51,6 @@ export class QuestionsComponent implements OnInit {
     });
 
     this._questions.getQuestions().subscribe( ( data:any )=>{
-      console.log(data);
       this.questions = data;
     });
 
@@ -59,12 +61,22 @@ export class QuestionsComponent implements OnInit {
   }
 
   send(){
+    
+      this.sentTrue = true;
+      this.showQuestions = false;
+     
     /*this.listResponse.state = 1;
     this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);*/
   }
 
   saveQuiz( idQuestion, options , question , idOp, typeQuestion, label?,idtem?){
-   
+
+    if(typeQuestion == "table-multiple" || typeQuestion == "table") {
+      let result = document.getElementsByClassName("databx"+idtem+'-'+idOp+'-'+idQuestion);
+      console.log("databx"+idtem+'-'+idOp+'-'+idQuestion);
+      this.renderer.addClass(result[0], "action");
+    }
+
     let datLabel:any;
 
     this.actBox = idtem+"-"+idOp+"-"+idQuestion;
@@ -109,12 +121,19 @@ export class QuestionsComponent implements OnInit {
    console.log(this.trueQuestion );
    console.log(idQuestion);
 
-    if(this.trueQuestion == idQuestion) {
-      console.log('update');
-      this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);
-    } else {
-      console.log('add');
+
+    if(typeQuestion == "text"){
       this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
+    } else {
+
+      if(this.trueQuestion == idQuestion) {
+        console.log('update');
+        this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);
+      } else {
+        console.log('add');
+        this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
+      }
+
     }
 
   }
@@ -192,6 +211,7 @@ export class QuestionsComponent implements OnInit {
 
   conditional( data ){
 
+
     if(data != ""){
 
       let typeCondition = data.split('(');
@@ -204,6 +224,10 @@ export class QuestionsComponent implements OnInit {
             validCondition = optionsCondition.indexOf(localStorage.getItem('rol'));
             break;
          }
+      }
+
+      if(validCondition != -1){
+        validCondition = 0;
       }
 
       return validCondition;
@@ -239,6 +263,7 @@ export class QuestionsComponent implements OnInit {
 
         if( type == "questions") {
           this.records = this.getDataQuestions(csvRecordsArray, headersRow.length);
+     
           this._questions.addQuestion(this.records);
         }
 

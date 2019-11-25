@@ -63,6 +63,7 @@ body{
 .items-options-list{
   width: 300px;
   margin: 12px;
+  margin-top: 0;
 }
 .two-box .form-check-label{
   width: 100%;
@@ -104,8 +105,14 @@ body{
 .two-box .box-action:hover label{
     color: #ffffff;
 }
-.two-box .action{
-  background-color: #000000;
+.action{
+  background-color: #000000 !important;
+}
+
+.asc:active,
+.asc:focus,
+.asc:hover{ 
+  background-color: #000000 !important;
 }
 .two-box .box-action.action label{
   color: #ffffff;

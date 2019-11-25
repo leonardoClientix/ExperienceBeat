@@ -12,7 +12,7 @@ export class QuestionsService {
   ) { }
 
   addQuestion(data){
-    for (let i = 1; i < data.length; i++) {
+    for (let i = 0; i < data.length; i++) {
       const param = JSON.parse(JSON.stringify(data[i]));
       this.afs.collection("questions").add( param );
     }
