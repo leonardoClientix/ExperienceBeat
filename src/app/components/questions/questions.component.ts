@@ -30,7 +30,9 @@ export class QuestionsComponent  implements OnInit {
   idTrueQuestion:any;
   actBox: any;
   sentTrue:boolean = false;
-  databxPush = [];
+  contValcheck:any = [];
+  contRepeat:any = [];
+
 
   public records: any[] = [];
   @ViewChild('csvReaderQuestions', { static: false })  csvReaderQuestions:any;
@@ -40,25 +42,21 @@ export class QuestionsComponent  implements OnInit {
 
 
   constructor(
-   
     public _questions:QuestionsService,
     public _users:UsersService,
     public _response:ResponseService,
     private renderer: Renderer2
   ) {
-    
 
-   
     this._questions.getMessage().subscribe( ( res:any )=>{
       this.message = res[0].message;
       this.inputs = res[0].data;
     });
 
     this._questions.getQuestions().subscribe( ( data:any )=>{
+      console.log(data);
       this.questions = data;
     });
-
-   
 
   }
 
@@ -67,77 +65,100 @@ export class QuestionsComponent  implements OnInit {
   }
 
   send(){
-    
       this.sentTrue = true;
       this.showQuestions = false;
-     
-    /*this.listResponse.state = 1;
-    this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);*/
   }
 
- 
 
-  saveQuiz( dataQuestion, options , question , idOp, typeQuestion, label?,idtem?){
 
-    
-    let idQuestion = dataQuestion.id;
-    this.databxPush.push("databx"+idtem+'-'+idOp+'-'+idQuestion);
-    dataQuestion.repeat = this.databxPush;
-    let datLabel:any;
+  saveQuiz( dataQuestion, options , question , idOp, typeQuestion, label?,idtem? ){
 
-    this.actBox = idtem+"-"+idOp+"-"+idQuestion;
-    if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple"){
- 
-      let idQr = (idQuestion + "").split(".");
-      let idLabel:any = parseFloat(idQr[1])-1;
-          idLabel = (idQr[0])+'.'+idLabel;
-      
+      let idQuestion = dataQuestion.id;
 
-      for (let i = 0; i < label.length; i++) {
 
-          if(label[i].id == idLabel){
-            if(typeQuestion == "table-multiple"){
-              if(label[i].typeDesign == 'label'){
+      if( typeQuestion == "table-multiple" ){
+
+        let valAction = dataQuestion.valcheck.indexOf("databx"+idtem+'-'+idOp+'-'+idQuestion);
+
+        if(valAction  != -1){
+          //  dataQuestion.valcheck.splice(valAction,1);
+        } else {
+            if(dataQuestion.repeat > dataQuestion.valcheck.length){
+              dataQuestion.valcheck.push("databx"+idtem+'-'+idOp+'-'+idQuestion);
+              console.log(dataQuestion);
+            }
+        }
+
+      } else {
+
+        let valAction = dataQuestion.questions.valcheck.indexOf("databx"+idtem+'-'+idOp+'-'+idQuestion);
+
+        if(valAction  != -1){
+            dataQuestion.questions.valcheck.splice(valAction,1);
+        } else {
+            if(dataQuestion.questions.repeat > dataQuestion.questions.valcheck.length){
+              dataQuestion.questions.valcheck.push("databx"+idtem+'-'+idOp+'-'+idQuestion);
+              console.log(dataQuestion);
+            }
+        }
+
+      }
+
+
+
+      let datLabel:any;
+      this.actBox = idtem+"-"+idOp+"-"+idQuestion;
+
+      if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple"){
+
+        let idQr = (idQuestion + "").split(".");
+        let idLabel:any = parseFloat(idQr[1])-1;
+            idLabel = (idQr[0])+'.'+idLabel;
+
+        for (let i = 0; i < label.length; i++) {
+
+            if(label[i].id == idLabel){
+              if(typeQuestion == "table-multiple"){
+                if(label[i].typeDesign == 'label'){
+                  datLabel = label[i].options[0];
+                }
+              } else {
                 datLabel = label[i].options[0];
               }
-            } else {
-              datLabel = label[i].options[0];
             }
-          }
-      }
-    }
-
-    this._response.getResponse( idQuestion , this.idDocumentFire ).subscribe( ( data:any )=>{
-      let liRes = data.question;
-      for (let i = 0; i < liRes.length; i++) {
-
-          if(liRes[i].id == idQuestion) {
-            this.trueQuestion = liRes[i].id;
-            this.idTrueQuestion = i;
-          }
+        }
 
       }
-    });
 
-    if(typeQuestion == "table-multiple"){
-      this.listResponse.question = this.pushQuestions(idQuestion,question,options, new Date(),typeQuestion,datLabel);
-    } else {
-      this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date(),typeQuestion,datLabel);
-    }
+      this._response.getResponse( idQuestion , this.idDocumentFire ).subscribe( ( data:any )=>{
+        let liRes = data.question;
+        for (let i = 0; i < liRes.length; i++) {
+            if(liRes[i].id == idQuestion) {
+              this.trueQuestion = liRes[i].id;
+              this.idTrueQuestion = i;
+            }
+        }
+      });
 
-    if(typeQuestion == "text"){
-      this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
-    } else {
-
-      if(this.trueQuestion == idQuestion) {
-        console.log('update');
-        this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);
+      if(typeQuestion == "table-multiple"){
+        this.listResponse.question = this.pushQuestions(idQuestion,question,options, new Date(),typeQuestion,datLabel);
       } else {
-        console.log('add');
-        this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
+        this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date(),typeQuestion,datLabel);
       }
 
-    }
+      if(typeQuestion == "text"){
+        this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
+      } else {
+
+        if(this.trueQuestion == idQuestion) {
+          console.log('update');
+          this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);
+        } else {
+          console.log('add');
+          this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
+        }
+
+     }
 
   }
 
@@ -156,7 +177,9 @@ export class QuestionsComponent  implements OnInit {
       saveQuestion.message = message;
       saveQuestion.text = options;
       saveQuestion.date = date;
-    } if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple") {
+    }
+
+    if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple"){
       saveQuestion.id = idQuestion;
       saveQuestion.message = message;
       saveQuestion.option = { label: label , options: options};
@@ -205,21 +228,35 @@ export class QuestionsComponent  implements OnInit {
 
   }
 
-  indexOfElement( element){
+  indexOfElement( data,element,typeQuestion ){
 
-    let resp;
+    let resp ;
 
-    if(this.databxPush.indexOf(element) != -1 ){
-      resp = 0;
+    if( typeQuestion == "table-multiple" ){
+      resp = -1;
+
+
+        if( data.valcheck.indexOf(element) != -1 ){
+          resp = 0;
+        }
+
+
+    } else {
+      resp = -1;
+
+
+        if( data.questions.valcheck.indexOf(element) != -1 ){
+          resp = 0;
+        }
+      
+
     }
 
-    
-
     return resp;
+
   }
 
   conditional( data ){
-
 
     if(data != ""){
 
@@ -242,9 +279,7 @@ export class QuestionsComponent  implements OnInit {
       return validCondition;
 
     } else {
-
       return -1;
-
     }
 
   }
@@ -272,7 +307,6 @@ export class QuestionsComponent  implements OnInit {
 
         if( type == "questions") {
           this.records = this.getDataQuestions(csvRecordsArray, headersRow.length);
-     
           this._questions.addQuestion(this.records);
         }
 
@@ -346,6 +380,7 @@ export class QuestionsComponent  implements OnInit {
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
       let curruntRecord = (<string>csvRecordsArray[i]).split(';');
+      console.log(curruntRecord[0]);
 
       if (curruntRecord.length == headerLength) {
         let csvRecord: QuestionsModule = new QuestionsModule();
@@ -357,21 +392,21 @@ export class QuestionsComponent  implements OnInit {
           // lista de opciones de cada pregunta
           let valueOption = this.getOptions(curruntRecord[0], csvRecordsArray, headerLength );
           //console.log(valueOption);
-          csvRecord.questions = { message: curruntRecord[1], option: valueOption };
+          csvRecord.questions = { message: curruntRecord[1], option: valueOption, repeat: curruntRecord[4], valcheck: [] };
           csvRecord.mandatory = curruntRecord[2];
           csvRecord.typeDesign = curruntRecord[3];
-          csvRecord.assets = curruntRecord[4];
-          csvRecord.conditional = curruntRecord[5];
-          csvRecord.variable = curruntRecord[6];
-          csvRecord.multiple = curruntRecord[7];
-          csvRecord.text = curruntRecord[8];
-          csvRecord.rack = curruntRecord[9];
-          csvRecord.order = curruntRecord[10];
-          csvRecord.comparator = curruntRecord[11];
-          csvRecord.check = curruntRecord[12];
-          csvRecord.matriz = curruntRecord[13];
-          csvRecord.miltiCheck = curruntRecord[14];
-          csvRecord.alerts = curruntRecord[15];
+          csvRecord.assets = curruntRecord[5];
+          csvRecord.conditional = curruntRecord[6];
+          csvRecord.variable = curruntRecord[7];
+          csvRecord.multiple = curruntRecord[8];
+          csvRecord.text = curruntRecord[9];
+          csvRecord.rack = curruntRecord[10];
+          csvRecord.order = curruntRecord[11];
+          csvRecord.comparator = curruntRecord[12];
+          csvRecord.check = curruntRecord[13];
+          csvRecord.matriz = curruntRecord[14];
+          csvRecord.miltiCheck = curruntRecord[15];
+          csvRecord.alerts = curruntRecord[16];
           csvArr.push(csvRecord);
 
         }
@@ -387,7 +422,9 @@ export class QuestionsComponent  implements OnInit {
     let csvOption = [];
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
+
       let curruntRecord = (<string>csvRecordsArray[i]).split(';');
+
       if (curruntRecord.length == headerLength) {
 
         let csvRecord:QuestionsModule = new QuestionsModule();
@@ -395,27 +432,34 @@ export class QuestionsComponent  implements OnInit {
 
         if(listOption.length == 2 && idQuestion == listOption[0]){
 
-
           //csvRecord.id = Number(curruntRecord[0]);
           csvRecord.id = curruntRecord[0];
-          csvRecord.options = curruntRecord[1].split(',');
+          if(curruntRecord[3] == "value"){
+            csvRecord.options = curruntRecord[1].split(',');
+          } else {
+            csvRecord.options = curruntRecord[1];
+          }
           csvRecord.mandatory = curruntRecord[2];
+          csvRecord.valcheck = [];
+          csvRecord.repeat = curruntRecord[4];
           csvRecord.typeDesign = curruntRecord[3];
-          csvRecord.assets = curruntRecord[4];
-          csvRecord.conditional = curruntRecord[5];
-          csvRecord.variable = curruntRecord[6];
-          csvRecord.multiple = curruntRecord[7];
-          csvRecord.text = curruntRecord[8];
-          csvRecord.rack = curruntRecord[9];
-          csvRecord.order = curruntRecord[10];
-          csvRecord.comparator = curruntRecord[11];
-          csvRecord.check = curruntRecord[12];
-          csvRecord.matriz = curruntRecord[13];
-          csvRecord.miltiCheck = curruntRecord[14];
-          csvRecord.alerts = curruntRecord[15];
+          csvRecord.assets = curruntRecord[5];
+          csvRecord.conditional = curruntRecord[6];
+          csvRecord.variable = curruntRecord[7];
+          csvRecord.multiple = curruntRecord[8];
+          csvRecord.text = curruntRecord[9];
+          csvRecord.rack = curruntRecord[10];
+          csvRecord.order = curruntRecord[11];
+          csvRecord.comparator = curruntRecord[12];
+          csvRecord.check = curruntRecord[13];
+          csvRecord.matriz = curruntRecord[14];
+          csvRecord.miltiCheck = curruntRecord[15];
+          csvRecord.alerts = curruntRecord[16];
           csvOption.push(csvRecord);
+
         }
       }
+
     }
 
     return csvOption;
@@ -424,9 +468,11 @@ export class QuestionsComponent  implements OnInit {
   getHeaderArray(csvRecordsArr: any) {
     let headers = (<string>csvRecordsArr[0]).split(';');
     let headerArray = [];
+
     for (let j = 0; j < headers.length; j++) {
       headerArray.push(headers[j]);
     }
+
     return headerArray;
   }
 
