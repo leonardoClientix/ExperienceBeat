@@ -11,7 +11,7 @@ import { ResponseModule } from 'src/app/models/response.module';
   templateUrl: './questions.component.html',
   styleUrls: ['./questions.component.css']
 })
-export class QuestionsComponent implements OnInit {
+export class QuestionsComponent  implements OnInit {
 
   stateBox:number;
   dataCheck:number;
@@ -30,6 +30,7 @@ export class QuestionsComponent implements OnInit {
   idTrueQuestion:any;
   actBox: any;
   sentTrue:boolean = false;
+  databxPush = [];
 
   public records: any[] = [];
   @ViewChild('csvReaderQuestions', { static: false })  csvReaderQuestions:any;
@@ -39,12 +40,15 @@ export class QuestionsComponent implements OnInit {
 
 
   constructor(
+   
     public _questions:QuestionsService,
     public _users:UsersService,
     public _response:ResponseService,
     private renderer: Renderer2
   ) {
+    
 
+   
     this._questions.getMessage().subscribe( ( res:any )=>{
       this.message = res[0].message;
       this.inputs = res[0].data;
@@ -53,6 +57,8 @@ export class QuestionsComponent implements OnInit {
     this._questions.getQuestions().subscribe( ( data:any )=>{
       this.questions = data;
     });
+
+   
 
   }
 
@@ -69,14 +75,14 @@ export class QuestionsComponent implements OnInit {
     this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);*/
   }
 
-  saveQuiz( idQuestion, options , question , idOp, typeQuestion, label?,idtem?){
+ 
 
-    if(typeQuestion == "table-multiple" || typeQuestion == "table") {
-      let result = document.getElementsByClassName("databx"+idtem+'-'+idOp+'-'+idQuestion);
-      console.log("databx"+idtem+'-'+idOp+'-'+idQuestion);
-      this.renderer.addClass(result[0], "action");
-    }
+  saveQuiz( dataQuestion, options , question , idOp, typeQuestion, label?,idtem?){
 
+    
+    let idQuestion = dataQuestion.id;
+    this.databxPush.push("databx"+idtem+'-'+idOp+'-'+idQuestion);
+    dataQuestion.repeat = this.databxPush;
     let datLabel:any;
 
     this.actBox = idtem+"-"+idOp+"-"+idQuestion;
@@ -118,9 +124,6 @@ export class QuestionsComponent implements OnInit {
     } else {
       this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date(),typeQuestion,datLabel);
     }
-   console.log(this.trueQuestion );
-   console.log(idQuestion);
-
 
     if(typeQuestion == "text"){
       this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
@@ -139,8 +142,6 @@ export class QuestionsComponent implements OnInit {
   }
 
   pushQuestions(idQuestion,message,options,date,typeQuestion,label){
-
-    console.log(message);
 
     for (let i = 0; i < this.svQuestion.length; i++) {
         if(this.svQuestion[i].id == idQuestion){
@@ -167,8 +168,6 @@ export class QuestionsComponent implements OnInit {
       saveQuestion.date = date;
     }
 
-    console.log(saveQuestion);
-
     this.svQuestion.push(saveQuestion);
     return this.svQuestion;
 
@@ -176,9 +175,7 @@ export class QuestionsComponent implements OnInit {
 
   openQuiz(){
     let email = this.camp.nativeElement.value;
-    console.log(email);
     this._users.getUser(email).subscribe( ( data:any )=>{
-      console.log(data.length);
       if( data.length > 0) {
         data = data[0];
         localStorage.setItem("name", data.name);
@@ -194,7 +191,6 @@ export class QuestionsComponent implements OnInit {
         this.listResponse.state = 0;
 
         this._response.addResponse(this.listResponse).then( (data:any) =>{
-          console.log(data);
           this.idDocumentFire = data.id;
         });
 
@@ -207,6 +203,19 @@ export class QuestionsComponent implements OnInit {
       }
     });
 
+  }
+
+  indexOfElement( element){
+
+    let resp;
+
+    if(this.databxPush.indexOf(element) != -1 ){
+      resp = 0;
+    }
+
+    
+
+    return resp;
   }
 
   conditional( data ){

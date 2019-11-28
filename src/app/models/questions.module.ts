@@ -25,4 +25,5 @@ export class QuestionsModule {
    public matriz: any;
    public miltiCheck: any;
    public alerts: any;
+   public repeat : any = '';
 }
