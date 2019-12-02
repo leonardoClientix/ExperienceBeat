@@ -1,7 +1,7 @@
-Carga de preguntas
+<!--Carga de preguntas
 <input type="file" #csvReaderQuestions name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event,'questions')" accept=".csv" />
 Carga de Usuarios
-<input type="file" #csvReaderUsers name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event,'users')" accept=".csv" />
+<input type="file" #csvReaderUsers name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event,'users')" accept=".csv" />-->
 
 <div class="card animated fadeInDown mens-data" *ngIf="showMessage">
   <div class="card-body cnt-message">
@@ -29,7 +29,8 @@ Carga de Usuarios
 <form class="list-cont-questions" *ngIf="showQuestions">
 
 <div *ngFor="let item of questions; let pre = index">
-  <div class="form-group animated bounceInUp fast" [ngClass]="{'active': stateBox == 1}"  *ngIf="item.id != '0.2' && validateQuestion(item.typeDesign,item.questions.option)" #{{i}}>
+  <div class="form-group animated bounceInUp fast" [ngClass]="{'active': stateBox == 1}"  *ngIf="item.id != '0.2' && validateQuestion(item.typeDesign,item.questions.option) == 0" #{{i}}>
+
     <label class="item-num">{{ pre + 1 }}</label>  <label class="txt-question" for="formGroupExampleInput" [innerHTML]="item.questions.message"></label>
 
     <div class="list-check" *ngIf="item.typeDesign == 'check'">
@@ -96,7 +97,7 @@ Carga de Usuarios
               </div>
 
               <div *ngIf="li.typeDesign == 'value' && conditional(li.conditional) == 0" class="col-sm-12 cn-box " >
-                <div class="asc form-check form-check-inline col-12 col-sm-3 chl-bok databx{{ item.id }}-{{ da }}-{{ li.id }}" [ngClass]="{'action': indexOfElement( item,'databx'+item.id+'-'+da+'-'+li.id, 'tabla-multiple' ) == 0 }" *ngFor="let opData of li.options; let da = index" (click)="saveQuiz(li,opData,item.questions.message,da,'table-multiple',item.questions.option,item.id)" >
+                <div class="asc form-check form-check-inline col-12 col-sm-3 chl-bok databx{{ item.id }}-{{ da }}-{{ li.id }}" [ngClass]="{'action': indexOfElement( item,'databx'+item.id+'-'+da+'-'+li.id, 'table-multiple' ) == 0 }" *ngFor="let opData of li.options; let da = index" (click)="saveQuiz(li,opData,item.questions.message,da,'table-multiple',item.questions.option,item.id)" >
                   <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ da }}-{{ li.id }}" value="{{ opData }}"  #dataTableMulti>
                   <label class="form-check-label" for="box{{ item.id }}-{{ da }}-{{ li.id }}"></label>
                 </div>

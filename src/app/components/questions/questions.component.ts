@@ -54,7 +54,7 @@ export class QuestionsComponent  implements OnInit {
     });
 
     this._questions.getQuestions().subscribe( ( data:any )=>{
-      console.log(data);
+      //console.log(data);
       this.questions = data;
     });
 
@@ -72,6 +72,8 @@ export class QuestionsComponent  implements OnInit {
 
   saveQuiz( dataQuestion, options , question , idOp, typeQuestion, label?,idtem? ){
 
+    console.log(dataQuestion);
+
       let idQuestion = dataQuestion.id;
 
 
@@ -84,7 +86,7 @@ export class QuestionsComponent  implements OnInit {
         } else {
             if(dataQuestion.repeat > dataQuestion.valcheck.length){
               dataQuestion.valcheck.push("databx"+idtem+'-'+idOp+'-'+idQuestion);
-              console.log(dataQuestion);
+            //  console.log(dataQuestion);
             }
         }
 
@@ -97,7 +99,7 @@ export class QuestionsComponent  implements OnInit {
         } else {
             if(dataQuestion.questions.repeat > dataQuestion.questions.valcheck.length){
               dataQuestion.questions.valcheck.push("databx"+idtem+'-'+idOp+'-'+idQuestion);
-              console.log(dataQuestion);
+              //console.log(dataQuestion);
             }
         }
 
@@ -228,10 +230,12 @@ export class QuestionsComponent  implements OnInit {
   }
 
   indexOfElement( data,element,typeQuestion ){
+  //  console.log(element);
+  //  console.log(data);
     let resp ;
-    if( typeQuestion == "table-multiple" ){
+   if( typeQuestion == "tabla-multiple" ){
       resp = -1;
-        if( data.valcheck.indexOf(element) != -1 ){
+        if( data.questions.valcheck.indexOf(element) != -1 ){
           resp = 0;
         }
     } else {
@@ -246,10 +250,10 @@ export class QuestionsComponent  implements OnInit {
   conditional( data ){
 
     if(data != ""){
-      let typeCondition = data.split('(');
-      let optionsCondition = typeCondition[1].split(')');
+      let typeCondition = data.split('|');
+      let optionsCondition = typeCondition[1].split('|');
           optionsCondition = optionsCondition[0].split(',');
-          console.log(optionsCondition);
+        //  console.log(optionsCondition);
       let validCondition;
       switch(typeCondition[0]) {
          case 'rol': {
@@ -260,6 +264,7 @@ export class QuestionsComponent  implements OnInit {
       if(validCondition != -1){
         validCondition = 0;
       }
+    //  console.log(validCondition);
       return validCondition;
     } else {
       return -1;
@@ -362,7 +367,7 @@ export class QuestionsComponent  implements OnInit {
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
       let curruntRecord = (<string>csvRecordsArray[i]).split(';');
-      console.log(curruntRecord[0]);
+      //console.log(curruntRecord[0]);
 
       if (curruntRecord.length == headerLength) {
         let csvRecord: QuestionsModule = new QuestionsModule();
@@ -469,21 +474,19 @@ export class QuestionsComponent  implements OnInit {
   }
 
   validateQuestion(item,data){
+    //console.log(data);
 
-    if(item == 'check-mensaje' || item == 'tabla-multiple' ){
+   if(item == 'check-mensaje' || item == 'tabla-multiple' ){
       for (let i = 0; i < data.length; i++) {
-        //console.log(data[i].conditional);
-        if(this.conditional(data[i].conditional) == 0){
-          console.log("si");
-          return true;
-        } else {
-          console.log("no");
-          return false;
-        }
+
+      if( this.conditional(data[i].conditional) == 0){
+        return 0;
       }
-    } else {
-      return true;
-    }
+
+      }
+   } else {
+      return 0;
+   }
 
   }
 
