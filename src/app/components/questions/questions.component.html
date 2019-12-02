@@ -29,9 +29,8 @@ Carga de Usuarios
 <form class="list-cont-questions" *ngIf="showQuestions">
 
 <div *ngFor="let item of questions; let pre = index">
-
-  <div class="form-group animated bounceInUp fast" [ngClass]="{'active': stateBox == 1}"  *ngIf="item.id != '0.2'" #{{i}}>
-    <label class="txt-question" for="formGroupExampleInput" [innerHTML]="item.questions.message"></label>
+  <div class="form-group animated bounceInUp fast" [ngClass]="{'active': stateBox == 1}"  *ngIf="item.id != '0.2' && validateQuestion(item.typeDesign,item.questions.option)" #{{i}}>
+    <label class="item-num">{{ pre + 1 }}</label>  <label class="txt-question" for="formGroupExampleInput" [innerHTML]="item.questions.message"></label>
 
     <div class="list-check" *ngIf="item.typeDesign == 'check'">
       <div class="form-check form-check-inline" *ngFor="let opt of item.questions.option[0].options; let op = index" >
@@ -42,27 +41,19 @@ Carga de Usuarios
 
     <div class="list-check" *ngIf="item.typeDesign == 'check-mensaje'">
       <div class="row">
-
         <div *ngFor="let m of item.questions.option; let i = index" >
-
           <div *ngIf="conditional(m.conditional) == 0" >
               <div *ngIf="m.typeDesign == 'label'" class="label-option">
-                <!--  <div *ngFor="let labData of m.options">-->
                     {{ m.options }}
-                <!--  </div>-->
               </div>
-
               <div *ngIf="m.typeDesign == 'value'"  class="items-options-list">
                 <div class="form-check form-check-inline" *ngFor="let opData of m.options; let idOpList = index" >
                  <input class="form-check-input" type="radio" name="question{{ m.id }}"  id="inlineCheckbox{{ m.id }}-{{ idOpList }}" value="{{ opData }}" (change)="saveQuiz(m,dataCkMensaje,item.questions.message,idOpList,'check-mensaje',item.questions.option)" #dataCkMensaje>
                  <label class="form-check-label" for="inlineCheckbox{{ m.id }}-{{ idOpList }}">{{ opData }}</label>
                 </div>
               </div>
-
           </div>
-
         </div>
-
       </div>
     </div>
 
@@ -75,7 +66,7 @@ Carga de Usuarios
       </div>
     </div>
 
-    <div class="list-check-box two-box" *ngIf="item.typeDesign == 'tabla-multiple'">
+    <div class="list-check-box two-box tb-mul" *ngIf="item.typeDesign == 'tabla-multiple'">
       <div class="row">
 
         <div class="col-12 col-sm-4">

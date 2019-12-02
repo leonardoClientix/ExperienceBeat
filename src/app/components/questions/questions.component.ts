@@ -70,7 +70,6 @@ export class QuestionsComponent  implements OnInit {
   }
 
 
-
   saveQuiz( dataQuestion, options , question , idOp, typeQuestion, label?,idtem? ){
 
       let idQuestion = dataQuestion.id;
@@ -229,55 +228,39 @@ export class QuestionsComponent  implements OnInit {
   }
 
   indexOfElement( data,element,typeQuestion ){
-
     let resp ;
-
     if( typeQuestion == "table-multiple" ){
       resp = -1;
-
-
         if( data.valcheck.indexOf(element) != -1 ){
           resp = 0;
         }
-
-
     } else {
       resp = -1;
-
-
         if( data.questions.valcheck.indexOf(element) != -1 ){
           resp = 0;
         }
-      
-
     }
-
     return resp;
-
   }
 
   conditional( data ){
 
     if(data != ""){
-
       let typeCondition = data.split('(');
       let optionsCondition = typeCondition[1].split(')');
           optionsCondition = optionsCondition[0].split(',');
+          console.log(optionsCondition);
       let validCondition;
-
       switch(typeCondition[0]) {
          case 'rol': {
             validCondition = optionsCondition.indexOf(localStorage.getItem('rol'));
             break;
          }
       }
-
       if(validCondition != -1){
         validCondition = 0;
       }
-
       return validCondition;
-
     } else {
       return -1;
     }
@@ -293,7 +276,6 @@ export class QuestionsComponent  implements OnInit {
 
     let text = [];
     let files = $event.srcElement.files;
-
     if (this.isValidCSVFile(files[0])) {
 
       let input = $event.target;
@@ -345,8 +327,8 @@ export class QuestionsComponent  implements OnInit {
 
       }
     }
-
     return csvDataUser;
+
   }
 
   getDataQuestions(csvRecordsArray: any, headerLength: any) {
@@ -484,6 +466,25 @@ export class QuestionsComponent  implements OnInit {
      this.csvReaderQuestions.nativeElement.value = "";
      this.csvReaderUsers.nativeElement.value = "";
      this.records = [];
+  }
+
+  validateQuestion(item,data){
+
+    if(item == 'check-mensaje' || item == 'tabla-multiple' ){
+      for (let i = 0; i < data.length; i++) {
+        //console.log(data[i].conditional);
+        if(this.conditional(data[i].conditional) == 0){
+          console.log("si");
+          return true;
+        } else {
+          console.log("no");
+          return false;
+        }
+      }
+    } else {
+      return true;
+    }
+
   }
 
 }
