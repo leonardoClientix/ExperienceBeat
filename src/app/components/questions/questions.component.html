@@ -5,7 +5,7 @@ Carga de Usuarios
 
 <div class="card animated fadeInDown mens-data" *ngIf="showMessage">
   <div class="card-body cnt-message">
-    <p class="card-text" [innerHTML]="message"></p>
+    <p class="card-text" [innerHTML]="message" translate="no"></p>
     <button type="button" class="btn btn-primary bg-col" (click)="openInputs()">Continuar</button>
   </div>
 </div>
@@ -27,16 +27,18 @@ Carga de Usuarios
 </div>
 
 <form class="list-cont-questions" *ngIf="showQuestions">
-
+<ol>
 <div *ngFor="let item of questions; let pre = index">
+
   <div class="form-group animated bounceInUp fast" [ngClass]="{'active': stateBox == 1}"  *ngIf="item.id != '0.2' && validateQuestion(item.typeDesign,item.questions.option) == 0" #{{i}}>
 
-    <label class="item-num">{{ pre + 1 }}</label>  <label class="txt-question" for="formGroupExampleInput" [innerHTML]="item.questions.message"></label>
+    <!--<label class="item-num">{{ preNumber }}</label>-->
+     <li class="txt-question" for="formGroupExampleInput" [innerHTML]="item.questions.message" translate="no"></li>
 
     <div class="list-check" *ngIf="item.typeDesign == 'check'">
       <div class="form-check form-check-inline" *ngFor="let opt of item.questions.option[0].options; let op = index" >
         <input class="form-check-input" type="radio" name="question{{ item.id }}"  id="inlineCheckbox{{ item.id }}-{{ op }}" value="{{ opt }}" (change)="saveQuiz(item,data,item.questions.message,op,'check')" #data>
-        <label class="form-check-label" for="inlineCheckbox{{ item.id }}-{{ op }}">{{ opt }}</label>
+        <label class="form-check-label" for="inlineCheckbox{{ item.id }}-{{ op }}"><span  translate="no">{{ opt }}</span></label>
       </div>
     </div>
 
@@ -50,7 +52,7 @@ Carga de Usuarios
               <div *ngIf="m.typeDesign == 'value'"  class="items-options-list">
                 <div class="form-check form-check-inline" *ngFor="let opData of m.options; let idOpList = index" >
                  <input class="form-check-input" type="radio" name="question{{ m.id }}"  id="inlineCheckbox{{ m.id }}-{{ idOpList }}" value="{{ opData }}" (change)="saveQuiz(m,dataCkMensaje,item.questions.message,idOpList,'check-mensaje',item.questions.option)" #dataCkMensaje>
-                 <label class="form-check-label" for="inlineCheckbox{{ m.id }}-{{ idOpList }}">{{ opData }}</label>
+                 <label class="form-check-label" for="inlineCheckbox{{ m.id }}-{{ idOpList }}" translate="no">{{ opData }}</label>
                 </div>
               </div>
           </div>
@@ -62,57 +64,61 @@ Carga de Usuarios
       <div class="row">
       <div class="form-check box-action col-12 col-sm-3 databx0-{{ op }}-{{ item.id }}" *ngFor="let opt of item.questions.option[0].options; let op = index" [ngClass]="{'action': indexOfElement(  item, 'databx0-'+op+'-'+item.id, 'table' ) == 0 }" >
         <input class="form-check-input" type="radio" id="box{{ item.id }}-{{ op }}" value="{{ opt }}" (click)="saveQuiz(item,dataTable,item.questions.message,op,'table',0,0)" #dataTable>
-        <label class="form-check-label" for="box{{ item.id }}-{{ op }}">{{ opt }}</label>
+        <label class="form-check-label" for="box{{ item.id }}-{{ op }}" translate="no">{{ opt }}</label>
       </div>
       </div>
     </div>
 
     <div class="list-check-box two-box tb-mul" *ngIf="item.typeDesign == 'tabla-multiple'">
-      <div class="row">
 
-        <div class="col-12 col-sm-4">
-        </div>
+      <div class="scroll-table">
+        <div class="row">
+          <div class="col-12 col-sm-2">
+          </div>
 
-        <div class="col-12 col-sm-8 head-box">
+          <div class="col-12 col-sm-8 head-box">
 
-          <div *ngFor="let m of item.questions.option; let i = index" >
-            <div *ngIf="m.id == '8.2' || m.id == '9.2' ">
-              <div class="form-check form-check-inline col-12 col-sm-3 min-tab"  *ngFor="let opData of m.options; let idOpList = index">
-                <label class="form-check-label" for="box1">{{ opData }}</label>
+            <div *ngFor="let m of item.questions.option; let i = index" >
+              <div *ngIf="m.id == '8.2' || m.id == '9.2' ">
+                <div class="form-check form-check-inline col-12 col-sm-1 min-tab"  *ngFor="let opData of m.options; let idOpList = index">
+                  <label class="form-check-label" for="box1" translate="no">{{ opData }}</label>
+                </div>
               </div>
             </div>
+
           </div>
 
-        </div>
+          <div class="col-12 col-sm-12 data-box">
 
-        <div class="col-12 col-sm-12 data-box">
+            <div *ngFor="let li of item.questions.option; let o = index" [ngClass]="{'col-sm-2 head-left': li.typeDesign == 'label', 'col-sm-10': li.typeDesign == 'value'}" class="ali-box">
 
-          <div *ngFor="let li of item.questions.option; let o = index" [ngClass]="{'col-sm-4': li.typeDesign == 'label', 'col-sm-8': li.typeDesign == 'value'}" class="ali-box">
-
-              <div *ngIf="li.typeDesign == 'label' && conditional(li.conditional) == 0">
-
-                <div class="form-check form-check-inline col-12 col-sm-12" >
-                  <label class="form-check-label" [innerHTML]="li.options"></label>
+                <div *ngIf="li.typeDesign == 'label' && conditional(li.conditional) == 0">
+                  <div class="form-check form-check-inline col-12 col-sm-12" >
+                    <label class="form-check-label" [innerHTML]="li.options" translate="no"></label>
+                  </div>
                 </div>
-              </div>
 
-              <div *ngIf="li.typeDesign == 'value' && conditional(li.conditional) == 0" class="col-sm-12 cn-box " >
-                <div class="asc form-check form-check-inline col-12 col-sm-3 chl-bok databx{{ item.id }}-{{ da }}-{{ li.id }}" [ngClass]="{'action': indexOfElement( li,'databx'+item.id+'-'+da+'-'+li.id, 'table-multiple' ) == 0 }" *ngFor="let opData of li.options; let da = index" (click)="saveQuiz(li,opData,item.questions.message,da,'table-multiple',item.questions.option,item.id)" >
-                  <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ da }}-{{ li.id }}" value="{{ opData }}"  #dataTableMulti>
-                  <label class="form-check-label" for="box{{ item.id }}-{{ da }}-{{ li.id }}"></label>
+                <div *ngIf="li.typeDesign == 'value' && conditional(li.conditional) == 0" class="col-sm-12 cn-box " >
+                  <div class="asc form-check form-check-inline col-12 col-sm-3 chl-bok databx{{ item.id }}-{{ da }}-{{ li.id }}" [ngClass]="{'action': indexOfElement( li,'databx'+item.id+'-'+da+'-'+li.id, 'table-multiple' ) == 0 }" *ngFor="let opData of li.options; let da = index" (click)="saveQuiz(li,opData,item.questions.message,da,'table-multiple',item.questions.option,item.id)" >
+                    <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ da }}-{{ li.id }}" value="{{ opData }}"  #dataTableMulti>
+                    <label class="form-check-label" for="box{{ item.id }}-{{ da }}-{{ li.id }}"></label>
+                  </div>
                 </div>
-              </div>
+            </div>
           </div>
         </div>
-
       </div>
+
+
     </div>
 
     <textarea class="form-control" id="exampleFormControlTextarea1" *ngIf="item.typeDesign == 'textbox'" rows="3" (keypress)="saveQuiz(item,dataText,item.questions.message,'','text')" #dataText></textarea>
 
   </div>
 
-</div>
+  </div>
+
+</ol>
 
   <button type="button" class="btn btn-primary btn-lg bg-col float-right" (click)="send()">Enviar</button>
 

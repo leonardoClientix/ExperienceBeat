@@ -32,6 +32,7 @@ export class QuestionsComponent  implements OnInit {
   sentTrue:boolean = false;
   contValcheck:any = [];
   contRepeat:any = [];
+  preNumber:any = 1;
 
 
   public records: any[] = [];
@@ -236,7 +237,7 @@ export class QuestionsComponent  implements OnInit {
   indexOfElement( data,element,typeQuestion ){
    //console.log(element);
    //console.log(data);
- 
+
     let resp ;
    if( typeQuestion != "table-multiple" ){
       resp = -1;
@@ -482,17 +483,21 @@ export class QuestionsComponent  implements OnInit {
   }
 
   validateQuestion(item,data){
-    //console.log(data);
+
 
    if(item == 'check-mensaje' || item == 'tabla-multiple' ){
       for (let i = 0; i < data.length; i++) {
 
       if( this.conditional(data[i].conditional) == 0){
+
         return 0;
+      } else {
+
       }
 
       }
    } else {
+    
       return 0;
    }
 

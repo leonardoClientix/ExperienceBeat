@@ -28,6 +28,18 @@ body{
   color: #000000;
   font-family: 'Poppins', sans-serif;
   width: 95%;
+  margin-left: 23px !important;
+}
+ol {
+  list-style: none;
+  counter-reset: my-awesome-counter;
+}
+ol li {
+  counter-increment: my-awesome-counter;
+}
+ol li::before {
+  content: counter(my-awesome-counter) ". ";
+  font-weight: bold;
 }
 label.item-num {
     float: left;
@@ -59,7 +71,8 @@ label.item-num {
 .label-option{
   margin-right: 10px;
   font-weight: bold;
-  width: 154px;
+/*  width: 154px;*/
+  width: 122px;
   margin-bottom: 28px;
 }
 .two-box .form-check{
@@ -68,8 +81,34 @@ label.item-num {
   background-color: #fdc82f;
   border: solid 1px #fff;
 }
+/*.tb-mul .form-check {
+  height: 49px;
+  min-width: 312px;
+}*/
+/*.tb-mul .form-check {
+    height: 49px;
+    min-width: 156px;
+    font-size: 11px;
+}*/
+.head-left .form-check{
+  width: 100% !important;
+}
+.head-box {
+    padding: 11px;
+    padding-bottom: 6px;
+    padding-left: 10px !important;
+}
 .tb-mul .form-check {
     height: 49px;
+    width: 156px;
+    min-width: 156px;
+    font-size: 72%;
+}
+.scroll-table {
+  overflow: auto;
+}
+.scroll-table .row{
+  width: 1918px;
 }
 .items-options-list{
   width: 300px;
@@ -111,22 +150,24 @@ label.item-num {
   margin-top: 8%;
 }
 .two-box .box-action:hover{
-  background-color: #000000;
+  background-color: #ffffff;
 }
 .two-box .box-action:hover label{
-    color: #ffffff;
+    color: #fdc82f;
 }
 .action{
-  background-color: #000000 !important;
+  background-color: #ffffff !important;
+  border: solid 1px #fdc82f !important;
 }
 
 .asc:active,
 .asc:focus,
 .asc:hover{
-  background-color: #000000 !important;
+  background-color: #ffffff !important;
+  border: solid 1px #fdc82f !important;
 }
 .two-box .box-action.action label{
-  color: #ffffff;
+  color: #fdc82f;
 }
 .list-cont-questions{
   margin-bottom: 25%;
