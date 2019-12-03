@@ -60,7 +60,7 @@ Carga de Usuarios
 
     <div class="list-check-box two-box"  *ngIf="item.typeDesign == 'tabla'">
       <div class="row">
-      <div class="form-check box-action col-12 col-sm-3 databx0-{{ op }}-{{ item.id }}" *ngFor="let opt of item.questions.option[0].options; let op = index" [ngClass]="{'action': indexOfElement( item, 'databx0-'+op+'-'+item.id, 'table' ) == 0 }" >
+      <div class="form-check box-action col-12 col-sm-3 databx0-{{ op }}-{{ item.id }}" *ngFor="let opt of item.questions.option[0].options; let op = index" [ngClass]="{'action': indexOfElement(  item, 'databx0-'+op+'-'+item.id, 'table' ) == 0 }" >
         <input class="form-check-input" type="radio" id="box{{ item.id }}-{{ op }}" value="{{ opt }}" (click)="saveQuiz(item,dataTable,item.questions.message,op,'table',0,0)" #dataTable>
         <label class="form-check-label" for="box{{ item.id }}-{{ op }}">{{ opt }}</label>
       </div>
@@ -97,7 +97,7 @@ Carga de Usuarios
               </div>
 
               <div *ngIf="li.typeDesign == 'value' && conditional(li.conditional) == 0" class="col-sm-12 cn-box " >
-                <div class="asc form-check form-check-inline col-12 col-sm-3 chl-bok databx{{ item.id }}-{{ da }}-{{ li.id }}" [ngClass]="{'action': indexOfElement( item,'databx'+item.id+'-'+da+'-'+li.id, 'table-multiple' ) == 0 }" *ngFor="let opData of li.options; let da = index" (click)="saveQuiz(li,opData,item.questions.message,da,'table-multiple',item.questions.option,item.id)" >
+                <div class="asc form-check form-check-inline col-12 col-sm-3 chl-bok databx{{ item.id }}-{{ da }}-{{ li.id }}" [ngClass]="{'action': indexOfElement( li,'databx'+item.id+'-'+da+'-'+li.id, 'table-multiple' ) == 0 }" *ngFor="let opData of li.options; let da = index" (click)="saveQuiz(li,opData,item.questions.message,da,'table-multiple',item.questions.option,item.id)" >
                   <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ da }}-{{ li.id }}" value="{{ opData }}"  #dataTableMulti>
                   <label class="form-check-label" for="box{{ item.id }}-{{ da }}-{{ li.id }}"></label>
                 </div>

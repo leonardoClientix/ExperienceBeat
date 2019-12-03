@@ -32,11 +32,8 @@ export class ResponseService {
        return this.afs.collection(this.collection).doc(idDocumentFire).set( JSON.parse(JSON.stringify(data)) );
     } else {
 
-      
       this.dataUpdate[idQuestion] = data.question[idQuestion];
-
-      console.log(this.dataUpdate);
-
+      //console.log(this.dataUpdate);
       return this.afs.collection(this.collection).doc(idDocumentFire).update({
         question: this.dataUpdate[idQuestion]
       });

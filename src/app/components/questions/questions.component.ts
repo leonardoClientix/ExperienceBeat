@@ -72,7 +72,7 @@ export class QuestionsComponent  implements OnInit {
 
   saveQuiz( dataQuestion, options , question , idOp, typeQuestion, label?,idtem? ){
 
-    console.log(dataQuestion);
+    //console.log(dataQuestion);
 
       let idQuestion = dataQuestion.id;
 
@@ -80,14 +80,18 @@ export class QuestionsComponent  implements OnInit {
       if( typeQuestion == "table-multiple" ){
 
         let valAction = dataQuestion.valcheck.indexOf("databx"+idtem+'-'+idOp+'-'+idQuestion);
-
+        console.log("databx"+idtem+'-'+idOp+'-'+idQuestion);
+        console.log(valAction);
+        console.log(dataQuestion.valcheck);
         if(valAction  != -1){
-          //  dataQuestion.valcheck.splice(valAction,1);
+          console.log('encontro');
+            dataQuestion.valcheck.splice(valAction,1);
         } else {
             if(dataQuestion.repeat > dataQuestion.valcheck.length){
               dataQuestion.valcheck.push("databx"+idtem+'-'+idOp+'-'+idQuestion);
             //  console.log(dataQuestion);
             }
+            return false;
         }
 
       } else {
@@ -230,19 +234,23 @@ export class QuestionsComponent  implements OnInit {
   }
 
   indexOfElement( data,element,typeQuestion ){
-  //  console.log(element);
-  //  console.log(data);
+   //console.log(element);
+   //console.log(data);
+ 
     let resp ;
-   if( typeQuestion == "tabla-multiple" ){
+   if( typeQuestion != "table-multiple" ){
       resp = -1;
         if( data.questions.valcheck.indexOf(element) != -1 ){
           resp = 0;
         }
     } else {
-      resp = -1;
-        if( data.questions.valcheck.indexOf(element) != -1 ){
+      if(data.valcheck !== undefined){
+        resp = -1;
+        if( data.valcheck.indexOf(element) != -1 ){
           resp = 0;
         }
+      }
+
     }
     return resp;
   }
