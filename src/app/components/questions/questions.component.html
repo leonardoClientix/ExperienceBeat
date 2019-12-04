@@ -26,18 +26,18 @@ Carga de Usuarios
   <h4 class="alert-heading text-center"> Encuesta enviada correctamente </h4>
 </div>
 
-<form class="list-cont-questions" *ngIf="showQuestions">
+<form class="list-cont-questions" *ngIf="showQuestions" (ngSubmit)="send(forma)" #forma novalidate>
 <ol>
 <div *ngFor="let item of questions; let pre = index">
 
-  <div class="form-group animated bounceInUp fast" [ngClass]="{'active': stateBox == 1}"  *ngIf="item.id != '0.2' && validateQuestion(item.typeDesign,item.questions.option) == 0" #{{i}}>
+  <div class="form-group animated bounceInUp fast" [ngClass]="{'active': stateBox == 1}"  *ngIf="item.id != '0.2' && validateQuestion(item.typeDesign,item.questions.option) == 0" >
 
     <!--<label class="item-num">{{ preNumber }}</label>-->
      <li class="txt-question" for="formGroupExampleInput" [innerHTML]="item.questions.message" translate="no"></li>
 
     <div class="list-check" *ngIf="item.typeDesign == 'check'">
       <div class="form-check form-check-inline" *ngFor="let opt of item.questions.option[0].options; let op = index" >
-        <input class="form-check-input" type="radio" name="question{{ item.id }}"  id="inlineCheckbox{{ item.id }}-{{ op }}" value="{{ opt }}" (change)="saveQuiz(item,data,item.questions.message,op,'check')" #data>
+        <input class="form-check-input" type="radio" name="question{{ item.id }}"  [value]="opt"  id="inlineCheckbox{{ item.id }}-{{ op }}" (change)="saveQuiz(item,data,item.questions.message,op,'check')"  #data>
         <label class="form-check-label" for="inlineCheckbox{{ item.id }}-{{ op }}"><span  translate="no">{{ opt }}</span></label>
       </div>
     </div>
@@ -120,6 +120,11 @@ Carga de Usuarios
 
 </ol>
 
-  <button type="button" class="btn btn-primary btn-lg bg-col float-right" (click)="send()">Enviar</button>
+<div class="alert alert-danger" role="alert" *ngIf="errorValid">
+  <h4 class="alert-heading text-center"> Todas las preguntas son obligatorias </h4>
+</div>
+
+
+  <button type="submit" class="btn btn-primary btn-lg bg-col float-right" >Enviar</button>
 
 </form>

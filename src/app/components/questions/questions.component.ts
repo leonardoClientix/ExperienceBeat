@@ -5,6 +5,7 @@ import { UserModule } from 'src/app/models/user.module';
 import { UsersService } from 'src/app/services/users.service';
 import { ResponseService } from 'src/app/services/response.service';
 import { ResponseModule } from 'src/app/models/response.module';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-questions',
@@ -30,6 +31,7 @@ export class QuestionsComponent  implements OnInit {
   idTrueQuestion:any;
   actBox: any;
   sentTrue:boolean = false;
+  errorValid:boolean = false;
   contValcheck:any = [];
   contRepeat:any = [];
   preNumber:any = 1;
@@ -65,15 +67,27 @@ export class QuestionsComponent  implements OnInit {
 
   }
 
-  send(){
-      this.sentTrue = true;
-      this.showQuestions = false;
+  send(forma){
+      /*this.sentTrue = true;
+      this.showQuestions = false;*/
+
+    if(this.listResponse.question){
+
+      if(this.listResponse.question.length == 6){
+        this.sentTrue = true;
+        this.showQuestions = false;
+        this.errorValid = false;
+      } else {
+        this.errorValid = true;
+      }
+
+    } else {
+      this.errorValid = true;
+    }
   }
 
 
   saveQuiz( dataQuestion, options , question , idOp, typeQuestion, label?,idtem? ){
-
-    //console.log(dataQuestion);
 
       let idQuestion = dataQuestion.id;
 

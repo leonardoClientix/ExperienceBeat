@@ -7,7 +7,8 @@ import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { KeyArrayPipe } from './pipes/key-array.pipe';
-import {Nl2BrPipeModule} from 'nl2br-pipe';
+import { Nl2BrPipeModule } from 'nl2br-pipe';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,9 @@ import {Nl2BrPipeModule} from 'nl2br-pipe';
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     APP_ROUTES,
-    Nl2BrPipeModule
+    Nl2BrPipeModule,
+    FormsModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
