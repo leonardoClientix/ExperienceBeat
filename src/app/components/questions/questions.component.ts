@@ -35,6 +35,7 @@ export class QuestionsComponent  implements OnInit {
   contValcheck:any = [];
   contRepeat:any = [];
   preNumber:any = 1;
+  headTop:any = 1;
 
 
   public records: any[] = [];
@@ -249,11 +250,13 @@ export class QuestionsComponent  implements OnInit {
   }
 
   indexOfElement( data,element,typeQuestion ){
+    data.topB = 0;
    //console.log(element);
    //console.log(data);
 
     let resp ;
    if( typeQuestion != "table-multiple" ){
+      
       resp = -1;
         if( data.questions.valcheck.indexOf(element) != -1 ){
           resp = 0;
@@ -271,7 +274,7 @@ export class QuestionsComponent  implements OnInit {
   }
 
   conditional( data ){
-
+   
     if(data != ""){
       let typeCondition = data.split('|');
       let optionsCondition = typeCondition[1].split('|');
@@ -285,11 +288,15 @@ export class QuestionsComponent  implements OnInit {
          }
       }
       if(validCondition != -1){
+        
         validCondition = 0;
+    
       }
     //  console.log(validCondition);
       return validCondition;
+      
     } else {
+      
       return -1;
     }
 

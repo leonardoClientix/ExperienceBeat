@@ -97,6 +97,7 @@ label.item-num {
 .head-left .form-check{
   width: 100% !important;
 }
+
 .head-box {
     padding: 11px;
     padding-bottom: 6px;
@@ -107,6 +108,13 @@ label.item-num {
     width: 156px;
     min-width: 156px;
     font-size: 72%;
+}
+.min-tab , .head-left .form-check{
+  background: #fdc82f14 !important;
+  border: solid 1px #fdc82f8c !important;
+}
+.min-tab label, .head-left label{
+  color: #ca980a !important;
 }
 .scroll-table {
   overflow: auto;

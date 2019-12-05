@@ -90,7 +90,7 @@ Carga de Usuarios
 
           <div class="col-12 col-sm-12 data-box">
 
-            <div *ngFor="let li of item.questions.option; let o = index" [ngClass]="{'col-sm-2 head-left': li.typeDesign == 'label', 'col-sm-10': li.typeDesign == 'value'}" class="ali-box">
+            <div *ngFor="let li of item.questions.option; let o = index" [ngClass]="{'col-sm-2 head-left': li.typeDesign == 'label', 'col-sm-10': li.typeDesign == 'value'}" class="ali-box"  >
 
                 <div *ngIf="li.typeDesign == 'label' && conditional(li.conditional) == 0">
                   <div class="form-check form-check-inline col-12 col-sm-12" >
@@ -104,7 +104,9 @@ Carga de Usuarios
                     <label class="form-check-label" for="box{{ item.id }}-{{ da }}-{{ li.id }}"></label>
                   </div>
                 </div>
+
             </div>
+            
           </div>
         </div>
       </div>
