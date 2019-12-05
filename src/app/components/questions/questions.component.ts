@@ -36,6 +36,7 @@ export class QuestionsComponent  implements OnInit {
   contRepeat:any = [];
   preNumber:any = 1;
   headTop:any = 1;
+  arrayAcum:any = [];
 
 
   public records: any[] = [];
@@ -69,12 +70,29 @@ export class QuestionsComponent  implements OnInit {
   }
 
   send(forma){
-      /*this.sentTrue = true;
-      this.showQuestions = false;*/
+
 
     if(this.listResponse.question){
 
-      if(this.listResponse.question.length == 6){
+    let cont =  this.listResponse.question;
+
+      for (let i = 0; i < cont.length; i++) {
+        let itemSpli = cont[i].id;
+
+            try {
+              itemSpli = itemSpli.split(".");
+              this.arrayAcum.push(Number(itemSpli[0]));
+            } catch {
+              this.arrayAcum.push(cont[i].id);
+            }
+
+      }
+
+      this.arrayAcum = this.arrayAcum.filter((valor, indiceActual, arreglo) => arreglo.indexOf(valor) === indiceActual);
+
+      console.log(this.arrayAcum);
+
+      if(this.arrayAcum.length == 10){
         this.sentTrue = true;
         this.showQuestions = false;
         this.errorValid = false;
@@ -102,7 +120,7 @@ export class QuestionsComponent  implements OnInit {
         console.log(dataQuestion.valcheck);
         if(valAction  != -1){
           console.log('encontro');
-            dataQuestion.valcheck.splice(valAction,1);
+          dataQuestion.valcheck.splice(valAction,1);
         } else {
             console.log("2");
             if(dataQuestion.repeat > dataQuestion.valcheck.length){
@@ -143,7 +161,8 @@ export class QuestionsComponent  implements OnInit {
             if(label[i].id == idLabel){
               if(typeQuestion == "table-multiple"){
                 if(label[i].typeDesign == 'label'){
-                  datLabel = label[i].options[0];
+                //  datLabel = label[i].options[0];
+                  datLabel = label[i].options;
                 }
               } else {
                 datLabel = label[i].options[0];
@@ -166,7 +185,7 @@ export class QuestionsComponent  implements OnInit {
       });
 
       if(typeQuestion == "table-multiple"){
-        console.log(idQuestion);
+        console.log(this.trueQuestion);
         console.log(question);
         console.log(options);
         console.log(typeQuestion);
@@ -180,13 +199,12 @@ export class QuestionsComponent  implements OnInit {
         this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
       } else {
 
-        if(this.trueQuestion == idQuestion) {
-          console.log('update');
-          this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);
-        } else {
+        //if(this.trueQuestion == idQuestion) {
+          //this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);
+        //} else {
           console.log('add');
           this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
-        }
+      //  }
 
      }
 
