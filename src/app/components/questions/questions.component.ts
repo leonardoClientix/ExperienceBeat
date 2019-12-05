@@ -92,6 +92,7 @@ export class QuestionsComponent  implements OnInit {
 
       let idQuestion = dataQuestion.id;
 
+      console.log(typeQuestion);
 
       if( typeQuestion == "table-multiple" ){
 
@@ -103,14 +104,17 @@ export class QuestionsComponent  implements OnInit {
           console.log('encontro');
             dataQuestion.valcheck.splice(valAction,1);
         } else {
+            console.log("2");
             if(dataQuestion.repeat > dataQuestion.valcheck.length){
               dataQuestion.valcheck.push("databx"+idtem+'-'+idOp+'-'+idQuestion);
             //  console.log(dataQuestion);
             }
-            return false;
+            //return true;
         }
 
-      } else {
+      }
+
+      if( typeQuestion == "table" ){
 
         let valAction = dataQuestion.questions.valcheck.indexOf("databx"+idtem+'-'+idOp+'-'+idQuestion);
 
@@ -124,8 +128,6 @@ export class QuestionsComponent  implements OnInit {
         }
 
       }
-
-
 
       let datLabel:any;
       this.actBox = idtem+"-"+idOp+"-"+idQuestion;
@@ -151,6 +153,8 @@ export class QuestionsComponent  implements OnInit {
 
       }
 
+
+
       this._response.getResponse( idQuestion , this.idDocumentFire ).subscribe( ( data:any )=>{
         let liRes = data.question;
         for (let i = 0; i < liRes.length; i++) {
@@ -162,6 +166,11 @@ export class QuestionsComponent  implements OnInit {
       });
 
       if(typeQuestion == "table-multiple"){
+        console.log(idQuestion);
+        console.log(question);
+        console.log(options);
+        console.log(typeQuestion);
+        console.log(datLabel);
         this.listResponse.question = this.pushQuestions(idQuestion,question,options, new Date(),typeQuestion,datLabel);
       } else {
         this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date(),typeQuestion,datLabel);
@@ -256,7 +265,7 @@ export class QuestionsComponent  implements OnInit {
 
     let resp ;
    if( typeQuestion != "table-multiple" ){
-      
+
       resp = -1;
         if( data.questions.valcheck.indexOf(element) != -1 ){
           resp = 0;
@@ -274,7 +283,7 @@ export class QuestionsComponent  implements OnInit {
   }
 
   conditional( data ){
-   
+
     if(data != ""){
       let typeCondition = data.split('|');
       let optionsCondition = typeCondition[1].split('|');
@@ -288,15 +297,15 @@ export class QuestionsComponent  implements OnInit {
          }
       }
       if(validCondition != -1){
-        
+
         validCondition = 0;
-    
+
       }
     //  console.log(validCondition);
       return validCondition;
-      
+
     } else {
-      
+
       return -1;
     }
 
@@ -505,20 +514,14 @@ export class QuestionsComponent  implements OnInit {
 
   validateQuestion(item,data){
 
-
    if(item == 'check-mensaje' || item == 'tabla-multiple' ){
       for (let i = 0; i < data.length; i++) {
-
       if( this.conditional(data[i].conditional) == 0){
-
         return 0;
       } else {
-
       }
-
       }
    } else {
-    
       return 0;
    }
 

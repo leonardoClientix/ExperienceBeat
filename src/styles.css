@@ -52,8 +52,8 @@ label.item-num {
     font-size: 19px;
     font-weight: bold;
 }
-.list-check , .list-check-box {
-  margin-left: 27px;
+.list-check  {
+  margin-left: 44px;
   margin-top: 34px;
 }
 .list-check label, .list-check-box label{
@@ -94,6 +94,17 @@ label.item-num {
     min-width: 156px;
     font-size: 11px;
 }*/
+.cont-left {
+  margin-left: -34px;
+  position: fixed !important;
+  min-width: 301px;
+  z-index: 99;
+  margin-top: 105px;
+}
+.opt-right{
+  z-index: 1;
+  margin-left: 314px;
+}
 .head-left .form-check{
   width: 100% !important;
 }
@@ -110,8 +121,8 @@ label.item-num {
     font-size: 72%;
 }
 .min-tab , .head-left .form-check{
-  background: #fdc82f14 !important;
-  border: solid 1px #fdc82f8c !important;
+  background: #ffffff !important;
+  border: solid 1px #fdc82f61 !important;
 }
 .min-tab label, .head-left label{
   color: #ca980a !important;
@@ -160,6 +171,9 @@ label.item-num {
   padding-left: 3%;
   padding-right: 3%;
   margin-top: 8%;
+}
+.tb-mul {
+    margin-left: 40px;
 }
 .two-box .box-action:hover{
   background-color: #ffffff;

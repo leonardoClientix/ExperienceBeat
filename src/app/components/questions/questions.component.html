@@ -87,16 +87,22 @@ Carga de Usuarios
             </div>
 
           </div>
+          <div class="col-12 col-sm-4 data-box cont-left ">
 
-          <div class="col-12 col-sm-12 data-box">
+            <div *ngFor="let li of item.questions.option; let o = index" [ngClass]="{'col-sm-12 head-left': li.typeDesign == 'label'}" class="ali-box"  >
 
-            <div *ngFor="let li of item.questions.option; let o = index" [ngClass]="{'col-sm-2 head-left': li.typeDesign == 'label', 'col-sm-10': li.typeDesign == 'value'}" class="ali-box"  >
-
-                <div *ngIf="li.typeDesign == 'label' && conditional(li.conditional) == 0">
-                  <div class="form-check form-check-inline col-12 col-sm-12" >
-                    <label class="form-check-label" [innerHTML]="li.options" translate="no"></label>
-                  </div>
+              <div *ngIf="li.typeDesign == 'label' && conditional(li.conditional) == 0">
+                <div class="form-check form-check-inline col-12 col-sm-12" >
+                  <label class="form-check-label" [innerHTML]="li.options" translate="no"></label>
                 </div>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="col-12 col-sm-10 opt-right">
+
+            <div *ngFor="let li of item.questions.option; let o = index" [ngClass]="{'col-sm-10': li.typeDesign == 'value'}" class="ali-box"  >
 
                 <div *ngIf="li.typeDesign == 'value' && conditional(li.conditional) == 0" class="col-sm-12 cn-box " >
                   <div class="asc form-check form-check-inline col-12 col-sm-3 chl-bok databx{{ item.id }}-{{ da }}-{{ li.id }}" [ngClass]="{'action': indexOfElement( li,'databx'+item.id+'-'+da+'-'+li.id, 'table-multiple' ) == 0 }" *ngFor="let opData of li.options; let da = index" (click)="saveQuiz(li,opData,item.questions.message,da,'table-multiple',item.questions.option,item.id)" >
@@ -106,8 +112,9 @@ Carga de Usuarios
                 </div>
 
             </div>
-            
+
           </div>
+
         </div>
       </div>
 
