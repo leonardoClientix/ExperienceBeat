@@ -28,6 +28,8 @@ export class ResponseService {
 
   updateResponsew(idDocumentFire,data,type,idQuestion){
 
+    console.log(idDocumentFire);
+
     if(type  == "add") {
        return this.afs.collection(this.collection).doc(idDocumentFire).set( JSON.parse(JSON.stringify(data)) );
     } else {
