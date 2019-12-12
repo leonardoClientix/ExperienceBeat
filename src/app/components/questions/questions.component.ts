@@ -37,6 +37,7 @@ export class QuestionsComponent  implements OnInit {
   preNumber:any = 1;
   headTop:any = 1;
   arrayAcum:any = [];
+  fechaD = "2019-12-10T14:43:10.557Z";
 
 
   public records: any[] = [];
@@ -110,14 +111,9 @@ export class QuestionsComponent  implements OnInit {
 
       let idQuestion = dataQuestion.id;
 
-      console.log(typeQuestion);
-
       if( typeQuestion == "table-multiple" ){
 
         let valAction = dataQuestion.valcheck.indexOf("databx"+idtem+'-'+idOp+'-'+idQuestion);
-        console.log("databx"+idtem+'-'+idOp+'-'+idQuestion);
-        console.log(valAction);
-        console.log(dataQuestion.valcheck);
         if(valAction  != -1){
           console.log('encontro');
           dataQuestion.valcheck.splice(valAction,1);
@@ -185,11 +181,6 @@ export class QuestionsComponent  implements OnInit {
       });
 
       if(typeQuestion == "table-multiple"){
-        console.log(this.trueQuestion);
-        console.log(question);
-        console.log(options);
-        console.log(typeQuestion);
-        console.log(datLabel);
         this.listResponse.question = this.pushQuestions(idQuestion,question,options, new Date(),typeQuestion,datLabel);
       } else {
         this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date(),typeQuestion,datLabel);

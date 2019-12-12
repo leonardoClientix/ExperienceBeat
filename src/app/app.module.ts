@@ -9,12 +9,15 @@ import { environment } from '../environments/environment';
 import { KeyArrayPipe } from './pipes/key-array.pipe';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { ReportComponent } from './components/report/report.component';
+import { ChartsModule } from 'ng2-charts';
 
 @NgModule({
   declarations: [
     AppComponent,
     QuestionsComponent,
-    KeyArrayPipe
+    KeyArrayPipe,
+    ReportComponent
   ],
   imports: [
     BrowserModule,
@@ -23,9 +26,12 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     APP_ROUTES,
     Nl2BrPipeModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ChartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+
+}

@@ -232,6 +232,23 @@ label.item-num {
   width: 60%;
   margin: 0 auto;
 }
+.cn-leb{
+  display: contents;
+}
+.cn-leb td{
+  background-color: #ccc;
+}
+.cn-leb td.msg{
+  min-width: 350px;
+}
+.cn-leb td.opt{
+  min-width: 250px;
+  background-color: #bce6ff;
+}
+.cn-leb td.id{
+  background-color: #8da9fc;
+  max-width: 10px !important;
+}
 @media (max-width: 576px){
   .two-box{
     padding: 0;

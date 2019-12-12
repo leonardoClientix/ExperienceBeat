@@ -1,0 +1,87 @@
+
+<div class="container">
+  <div class="row">
+    <div class="col-4">
+      <h1>Reportes</h1>
+    </div>
+    <div class="col-8"  >
+      <canvas  baseChart *ngIf="doughnutChartData" [data]="doughnutChartData"  chart-labels="labels" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
+    </div>
+    <div class="col">
+
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Nombre</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Macro Proceso</th>
+            <th scope="col">N° preguntas contestadas</th>
+            <th scope="col">Fecha</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of dataReport; let i = index">
+            <th scope="row">{{ i + 1}}</th>
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.macro_process}}</td>
+            <td  *ngIf="item.question" >{{ numQuestion(item.question) }}</td>
+            <td *ngIf="item.question">{{ item.question[0].date  | date:'short' }}</td>
+          </tr>
+        </tbody>
+      </table>
+
+<!--
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">Nombre</th>
+            <th scope="col">E-mail</th>
+            <th scope="col">Macro Proceso</th>
+            <th scope="col">Fecha</th>
+            <th scope="col">Id</th>
+            <th scope="col">Pregunta</th>
+            <th scope="col">Opciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of dataReport">
+
+            <td>{{ item.name }}</td>
+            <td>{{ item.email }}</td>
+            <td>{{ item.macro_process}}</td>
+            <td *ngIf="item.question">{{ item.question[0].date  | date:'short' }}</td>
+
+            <label *ngFor="let qt of dataQuestions" class="cn-leb">
+              <td class="id">{{ qt.id }}</td>
+              <td class="msg">{{ qt.questions.message }}</td>
+              <label *ngFor="let op of qt.questions.option | keyArray; let o = index" class="cn-leb">
+
+                <td *ngIf="qt.questions.option[o].typeDesign == 'label'" class="opt">{{ qt.questions.option[o].options }}</td>
+
+                <label *ngIf="qt.questions.option[o].typeDesign != 'label'" class="cn-leb">
+                  <label *ngFor="let tn of qt.questions.option[o].options | keyArray; let t = index" class="cn-leb">
+                    <td class="opt">{{ qt.questions.option[o].options[t] }}</td>
+                  </label>
+                </label>
+
+              </label>
+            </label>-->
+
+
+            <!--<label *ngFor="let k of item.question | keyArray; let i = index" class="cn-leb">
+              <td>{{ item.question[i].id }}</td>
+              <td>{{ item.question[i].message }}</td>
+              <td *ngIf="item.question[i].options">{{ item.question[i].options }}</td>
+              <td >{{ item.question[i].option?.label }}</td>
+              <td>{{ item.question[i].option?.options }}</td>
+            </label>-->
+
+        <!--  </tr>
+        </tbody>
+      </table> -->
+
+    </div>
+  </div>
+</div>

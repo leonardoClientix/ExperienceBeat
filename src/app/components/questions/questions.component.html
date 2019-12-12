@@ -1,8 +1,9 @@
+<!--
 Carga de preguntas
 <input type="file" #csvReaderQuestions name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event,'questions')" accept=".csv" />
 Carga de Usuarios
 <input type="file" #csvReaderUsers name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event,'users')" accept=".csv" />
-
+-->
 <div class="card animated fadeInDown mens-data" *ngIf="showMessage">
   <div class="card-body cnt-message">
     <p class="card-text" [innerHTML]="message" translate="no"></p>
