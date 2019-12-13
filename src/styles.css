@@ -223,6 +223,9 @@ label.item-num {
   background-color: aliceblue;
   transition-duration: 1s;
 }
+.tb-report thead {
+    border-bottom: solid 30px #fff;
+}
 .cnt-message{
   text-align: center;
   padding: 55px !important;
@@ -235,19 +238,22 @@ label.item-num {
 .cn-leb{
   display: contents;
 }
-.cn-leb td{
+.cn-leb td , .cn-leb th{
   background-color: #ccc;
 }
-.cn-leb td.msg{
+.cn-leb .msg{
   min-width: 350px;
 }
-.cn-leb td.opt{
+.cn-leb .opt{
   min-width: 250px;
   background-color: #bce6ff;
 }
-.cn-leb td.id{
+.cn-leb .id{
   background-color: #8da9fc;
   max-width: 10px !important;
+}
+.lab-text{
+  background-color: #f9a8ff !important;
 }
 @media (max-width: 576px){
   .two-box{

@@ -4,12 +4,12 @@
     <div class="col-4">
       <h1>Reportes</h1>
     </div>
-    <div class="col-8"  >
+    <!--<div class="col-8"  >
       <canvas  baseChart *ngIf="doughnutChartData" [data]="doughnutChartData"  chart-labels="labels" [labels]="doughnutChartLabels" [chartType]="doughnutChartType" (chartHover)="chartHovered($event)" (chartClick)="chartClicked($event)"></canvas>
-    </div>
+    </div>-->
     <div class="col">
 
-      <table class="table table-striped">
+    <!-- <table class="table table-striped">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -26,23 +26,41 @@
             <td>{{ item.name }}</td>
             <td>{{ item.email }}</td>
             <td>{{ item.macro_process}}</td>
-            <td  *ngIf="item.question" >{{ numQuestion(item.question) }}</td>
+            <td  *ngIf="item.question" >
+                <label *ngFor="let dt of item.question | keyArray; let i = index">
+                  {{ numQuestion(item.question[dt].id) }}
+                </label>
+            </td>
             <td *ngIf="item.question">{{ item.question[0].date  | date:'short' }}</td>
           </tr>
         </tbody>
-      </table>
+      </table>-->
 
-<!--
-    <table class="table table-striped">
+
+     <table class="table table-striped tb-report">
         <thead>
           <tr>
             <th scope="col">Nombre</th>
             <th scope="col">E-mail</th>
             <th scope="col">Macro Proceso</th>
-            <th scope="col">Fecha</th>
-            <th scope="col">Id</th>
-            <th scope="col">Pregunta</th>
-            <th scope="col">Opciones</th>
+          
+
+            <label *ngFor="let qt of dataQuestions" class="cn-leb">
+              <th class="id">{{ qt.id }}</th>
+              <th class="msg">{{ qt.questions.message }}</th>
+              <label *ngFor="let op of qt.questions.option | keyArray; let o = index" class="cn-leb">
+
+                <th *ngIf="qt.questions.option[o].typeDesign == 'label'" class="opt lab-text">{{ qt.questions.option[o].options }}</th>
+
+                <label *ngIf="qt.questions.option[o].typeDesign != 'label'" class="cn-leb">
+                  <label *ngFor="let tn of qt.questions.option[o].options | keyArray; let t = index" class="cn-leb">
+                    <th class="opt">{{ qt.questions.option[o].options[t] }}</th>
+                  </label>
+                </label>
+
+              </label>
+            </label>
+
           </tr>
         </thead>
         <tbody>
@@ -56,9 +74,13 @@
             <label *ngFor="let qt of dataQuestions" class="cn-leb">
               <td class="id">{{ qt.id }}</td>
               <td class="msg">{{ qt.questions.message }}</td>
-              <label *ngFor="let op of qt.questions.option | keyArray; let o = index" class="cn-leb">
 
-                <td *ngIf="qt.questions.option[o].typeDesign == 'label'" class="opt">{{ qt.questions.option[o].options }}</td>
+              <label *ngFor="let op of qt.questions.option | keyArray; let o = index" class="cn-leb"><!--Datos de la estructura-->
+
+
+                <!--Datos de las respuestas-->
+
+                <td *ngIf="qt.questions.option[o].typeDesign == 'label'" class="opt lab-text">{{ qt.questions.option[o].options }}</td>
 
                 <label *ngIf="qt.questions.option[o].typeDesign != 'label'" class="cn-leb">
                   <label *ngFor="let tn of qt.questions.option[o].options | keyArray; let t = index" class="cn-leb">
@@ -66,8 +88,9 @@
                   </label>
                 </label>
 
-              </label>
-            </label>-->
+
+              </label> <!--Datos de la estructura-->
+            </label>
 
 
             <!--<label *ngFor="let k of item.question | keyArray; let i = index" class="cn-leb">
@@ -78,9 +101,9 @@
               <td>{{ item.question[i].option?.options }}</td>
             </label>-->
 
-        <!--  </tr>
+          </tr>
         </tbody>
-      </table> -->
+      </table>
 
     </div>
   </div>

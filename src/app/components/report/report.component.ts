@@ -22,7 +22,7 @@ export class ReportComponent implements OnInit {
     public _report: ReportsService,
     public _question: QuestionsService
   ) {
-    this.countResponse = this._report.getData().subscribe( data => {
+  /*  this.countResponse = this._report.getData().subscribe( data => {
       let dataLoad = [];
       this.countResponse = data.size;
       dataLoad =  [655,this.countResponse]; //153
@@ -30,7 +30,7 @@ export class ReportComponent implements OnInit {
       this.doughnutChartData = dataLoad;
       this.doughnutChartType = 'doughnut';
         this.loading = true;
-    });
+    });*/
 
     this._report.getReports().subscribe( data => {
     // console.log(data);
@@ -46,23 +46,22 @@ export class ReportComponent implements OnInit {
   ngOnInit(){
 
   }
-
-  numQuestion(cont){
-    let arrayAcum:any = [];
-    for (let i = 0; i < cont.length; i++) {
-      let itemSpli = cont[i].id;
-          try {
-            itemSpli = itemSpli.split(".");
-            arrayAcum.push(Number(itemSpli[0]));
-          } catch {
-            arrayAcum.push(cont[i].id);
-          }
-    }
-    arrayAcum = arrayAcum.filter((valor, indiceActual, arreglo) => arreglo.indexOf(valor) === indiceActual);
-    return arrayAcum;
+  printResponse(option,response){
+  //  console.log(option);
+    //console.log(response);
   }
 
+  dataQuestion(questions , id){
+    console.log(questions);
+    console.log(id);
+    //return questions;
+  }
 
+  numQuestion(nums){
+    nums = ""+nums+"";
+    nums = nums.split(".");
+    return nums[0]+"|";
+  }
 
     // events
     public chartClicked(e: any): void {

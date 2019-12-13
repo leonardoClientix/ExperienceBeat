@@ -26,6 +26,7 @@ export class QuestionsComponent  implements OnInit {
   showValUser:boolean = false;
   listResponse: ResponseModule = new ResponseModule();
   svQuestion:any = [];
+
   idDocumentFire:any;
   trueQuestion:any;
   idTrueQuestion:any;
@@ -37,7 +38,7 @@ export class QuestionsComponent  implements OnInit {
   preNumber:any = 1;
   headTop:any = 1;
   arrayAcum:any = [];
-  fechaD = "2019-12-10T14:43:10.557Z";
+  ad:any = [];
 
 
   public records: any[] = [];
@@ -111,6 +112,8 @@ export class QuestionsComponent  implements OnInit {
 
       let idQuestion = dataQuestion.id;
 
+      console.log(options);
+
       if( typeQuestion == "table-multiple" ){
 
         let valAction = dataQuestion.valcheck.indexOf("databx"+idtem+'-'+idOp+'-'+idQuestion);
@@ -155,7 +158,7 @@ export class QuestionsComponent  implements OnInit {
         for (let i = 0; i < label.length; i++) {
 
             if(label[i].id == idLabel){
-              if(typeQuestion == "table-multiple"){
+              if(typeQuestion == "table-multiple" || typeQuestion == "check-mensaje"){
                 if(label[i].typeDesign == 'label'){
                 //  datLabel = label[i].options[0];
                   datLabel = label[i].options;
@@ -179,10 +182,26 @@ export class QuestionsComponent  implements OnInit {
             }
         }
       });
+      console.log(this.trueQuestion);
+      console.log(question);
+      console.log(options);
+      console.log(typeQuestion);
+      console.log(datLabel);
 
       if(typeQuestion == "table-multiple"){
+
         this.listResponse.question = this.pushQuestions(idQuestion,question,options, new Date(),typeQuestion,datLabel);
-      } else {
+
+      } else if(typeQuestion == "table"){
+
+        let dataop;
+
+        if(this.trueQuestion != idQuestion) {
+          dataop = [options.value];
+        }
+
+        this.listResponse.question = this.pushQuestions(idQuestion,question,dataop, new Date(),typeQuestion,datLabel);
+      }  else {
         this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date(),typeQuestion,datLabel);
       }
 
@@ -193,7 +212,7 @@ export class QuestionsComponent  implements OnInit {
         //if(this.trueQuestion == idQuestion) {
           //this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);
         //} else {
-          console.log('add');
+          //console.log('add');
           this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
       //  }
 
@@ -223,12 +242,19 @@ export class QuestionsComponent  implements OnInit {
       saveQuestion.message = message;
       saveQuestion.option = { label: label , options: options};
       saveQuestion.date = date;
+    } else if(typeQuestion == "table") {
+      saveQuestion.option = options;
+      saveQuestion.id = idQuestion;
+      saveQuestion.message = message;
+      saveQuestion.date = date;
     } else {
       saveQuestion.id = idQuestion;
       saveQuestion.message = message;
       saveQuestion.options = options;
       saveQuestion.date = date;
     }
+
+
 
     this.svQuestion.push(saveQuestion);
     return this.svQuestion;
