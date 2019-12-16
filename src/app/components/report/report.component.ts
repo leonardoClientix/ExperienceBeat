@@ -46,9 +46,16 @@ export class ReportComponent implements OnInit {
   ngOnInit(){
 
   }
-  printResponse(option,response){
-  //  console.log(option);
-    //console.log(response);
+  response(option,idQuestion,response){
+    console.log(option);
+    console.log(idQuestion);
+
+    if(response !== undefined){
+      for (let i = 0; i < response.length; i++) {
+          console.log(response[i]);
+      }
+    }
+
   }
 
   dataQuestion(questions , id){

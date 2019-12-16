@@ -235,6 +235,9 @@ label.item-num {
   width: 60%;
   margin: 0 auto;
 }
+.col-check .opt{
+  background-color: #ffea55 !important;
+}
 .cn-leb{
   display: contents;
 }

@@ -21,7 +21,7 @@ export class ReportsService {
   return this.afs.collection<ResponseModule>(this.collection).get();
   }
   getReports(){
-    this.itemsCollection = this.afs.collection<ResponseModule>(this.collection, ref => ref.limit(13));
+    this.itemsCollection = this.afs.collection<ResponseModule>(this.collection, ref => ref.limit(160));
     return this.itemsCollection.valueChanges();
   }
 

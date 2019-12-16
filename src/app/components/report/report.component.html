@@ -43,7 +43,7 @@
             <th scope="col">Nombre</th>
             <th scope="col">E-mail</th>
             <th scope="col">Macro Proceso</th>
-          
+
 
             <label *ngFor="let qt of dataQuestions" class="cn-leb">
               <th class="id">{{ qt.id }}</th>
@@ -69,28 +69,35 @@
             <td>{{ item.name }}</td>
             <td>{{ item.email }}</td>
             <td>{{ item.macro_process}}</td>
-            <td *ngIf="item.question">{{ item.question[0].date  | date:'short' }}</td>
 
-            <label *ngFor="let qt of dataQuestions" class="cn-leb">
-              <td class="id">{{ qt.id }}</td>
-              <td class="msg">{{ qt.questions.message }}</td>
+            <label *ngFor="let qt of dataQuestions" class="cn-leb">  <!-- Estructura -->
+              <label *ngFor="let resp of item.question | keyArray; let r = index" class="cn-leb"> <!-- lista de respuestas -->
 
-              <label *ngFor="let op of qt.questions.option | keyArray; let o = index" class="cn-leb"><!--Datos de la estructura-->
+                <label *ngIf="item.question[r].id == qt.id" class="cn-leb"> <!--if id pregunta-->
+
+                  <td class="id">{{ qt.id }}</td>
+                  <td class="msg">{{ qt.questions.message }}</td>
+
+                </label> <!--if id pregunta-->
+                  <label *ngFor="let op of qt.questions.option | keyArray; let o = index" class="cn-leb"> <!--Opciones de la estructura-->
+
+                      <td *ngIf="qt.questions.option[o].typeDesign == 'label'" class="opt lab-text">{{ qt.questions.option[o].options }}</td>
+
+                      <label *ngIf="qt.questions.option[o].typeDesign != 'label'" class="cn-leb">
+                        <label *ngFor="let tn of qt.questions.option[o].options | keyArray; let t = index" class="cn-leb">
+                          <label *ngIf="item.question[r].options == qt.questions.option[o].options[t]" class="cn-leb col-check">
+                            <td class="opt">{{ item.question[r].options }}</td>
+                          </label>
+                          <td *ngIf="item.question[r].options != qt.questions.option[o].options[t]" class="opt"></td>
+                        </label>
+                      </label>
+
+                  </label> <!--Opciones de la estructura-->
 
 
-                <!--Datos de las respuestas-->
 
-                <td *ngIf="qt.questions.option[o].typeDesign == 'label'" class="opt lab-text">{{ qt.questions.option[o].options }}</td>
-
-                <label *ngIf="qt.questions.option[o].typeDesign != 'label'" class="cn-leb">
-                  <label *ngFor="let tn of qt.questions.option[o].options | keyArray; let t = index" class="cn-leb">
-                    <td class="opt">{{ qt.questions.option[o].options[t] }}</td>
-                  </label>
-                </label>
-
-
-              </label> <!--Datos de la estructura-->
-            </label>
+              </label> <!-- lista de respuestas -->
+            </label> <!-- Estructura -->
 
 
             <!--<label *ngFor="let k of item.question | keyArray; let i = index" class="cn-leb">
