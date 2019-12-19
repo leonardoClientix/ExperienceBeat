@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   firebase: {
-  /*  apiKey: "AIzaSyBmEyOSY2atjD7SEcWDURpMBTdMKxS20l8",
+    /*apiKey: "AIzaSyBmEyOSY2atjD7SEcWDURpMBTdMKxS20l8",
     authDomain: "encuestas-a0bd4.firebaseapp.com",
     databaseURL: "https://encuestas-a0bd4.firebaseio.com",
     projectId: "encuestas-a0bd4",

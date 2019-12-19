@@ -21,7 +21,9 @@ export class ReportsService {
   return this.afs.collection<ResponseModule>(this.collection).get();
   }
   getReports(){
-    this.itemsCollection = this.afs.collection<ResponseModule>(this.collection, ref => ref.limit(160));
+    let start = new Date('2019-12-09');
+    let end = new Date('2019-12-17');
+    this.itemsCollection = this.afs.collection<ResponseModule>(this.collection, ref => ref);
     return this.itemsCollection.valueChanges();
   }
 
