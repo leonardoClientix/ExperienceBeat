@@ -50,10 +50,13 @@
 
              <label *ngFor="let qt of dataQuestions" class="cn-leb">
 
-                 <th class="id">{{ qt.id }}</th>
-                 <th class="msg">{{ qt.questions.message }}</th>
-                 <label *ngFor="let op of qt.questions.option | keyArray; let o = index" class="cn-leb">
+               <label *ngIf="qt.id > 5" class="cn-leb">
+              <!-- <label  class="cn-leb">-->
 
+
+                <!-- <th class="msg">{{ qt.questions.message }}</th>-->
+                 <label *ngFor="let op of qt.questions.option | keyArray; let o = index" class="cn-leb">
+                    <th class="id" *ngIf="qt.questions.option[o].typeDesign == 'label'">{{ qt.id }}</th>
                    <th *ngIf="qt.questions.option[o].typeDesign == 'label'" class="opt lab-text">{{ qt.questions.option[o].options }}</th>
 
                    <label *ngIf="qt.questions.option[o].typeDesign != 'label'" class="cn-leb">
@@ -64,13 +67,16 @@
 
                  </label>
 
+                 </label>
+
              </label>
 
            </tr>
          </thead>
          <tbody>
            <label  *ngFor="let item of dataReport; let con = index" class="cn-leb">
-           <tr *ngIf="con >= 260 && con <= 270">
+           <!-- <tr *ngIf="con >= 260 && con <= 270"> repo 2-->
+           <tr *ngIf="con >= 220 && con <= 230">
              <!--<label class="cn-leb" *ngIf="con >= 320 && con <= 330"> PRIMER BD-->
              <label class="cn-leb" >
 
@@ -85,14 +91,14 @@
 
                  <label  class="cn-leb">
 
-                     <label *ngIf="item.question[r].id == qt.id" class="cn-leb">
+                     <!--<label *ngIf="item.question[r].id == qt.id" class="cn-leb">
                        <td class="id">{{ qt.id }}</td>
                        <td class="msg">{{ qt.questions.message }}</td>
-                     </label>
+                     </label>-->
 
 
                      <label *ngFor="let op of qt.questions.option | keyArray; let o = index" class="cn-leb">
-                             <label *ngIf="item.question[r].id == qt.id" class="cn-leb">
+                            <!-- <label *ngIf="item.question[r].id == qt.id" class="cn-leb">
                                <label *ngIf="qt.questions.option[o].typeDesign != 'label'" class="cn-leb">
                                  <label *ngFor="let tn of qt.questions.option[o].options | keyArray; let t = index" class="cn-leb">
                                    <label *ngIf="item.question[r].options == qt.questions.option[o].options[t]" class="cn-leb col-check">
@@ -101,23 +107,23 @@
                                    <td *ngIf="item.question[r].options != qt.questions.option[o].options[t]" class="opt"></td>
                                  </label>
                                </label>
-                             </label>
+                             </label>-->
 
                              <!-- PREGUNTAS DE LA 6 A LA 9 -->
 
-                            <!-- <label *ngIf="item.question[r].id == qt.questions.option[o].id" class="cn-leb">
+                            <label *ngIf="item.question[r].id == qt.questions.option[o].id" class="cn-leb">
 
-                               <label *ngIf="r == 5" class="cn-leb">
+                               <label class="cn-leb">
                                  <td class="id">{{ qt.id }}</td>
-                                 <td class="msg">{{ qt.questions.message }}</td>
+                                <!-- <td class="msg">{{ qt.questions.message }}</td>-->
                                </label>
 
-                             </label>-->
+                             </label>
 
 
-                            <!--<label *ngIf="item.question[r].id == qt.questions.option[o].id" class="cn-leb">
+                             <label *ngIf="item.question[r].id == qt.questions.option[o].id" class="cn-leb">
 
-                                 <td class="opt lab-text">{{ item.question[r].option?.label }}</td>
+                                 <td class="opt lab-text">{{ dataItem(item.question[r].option?.label) }}</td>
 
                                  <label *ngIf="item.question[r].option.options" class="cn-leb">
                                    <label *ngFor="let tn of qt.questions.option[o].options | keyArray; let t = index" class="cn-leb">
@@ -128,7 +134,7 @@
                                    </label>
                                  </label>
 
-                             </label>-->
+                             </label>
 
                      </label> <!--Opciones de la estructura-->
 

@@ -23,7 +23,6 @@ export class ReportComponent implements OnInit {
     public _report: ReportsService,
     public _question: QuestionsService
   ) {
-    console.log(this.dataEnd);
   /*  this.countResponse = this._report.getData().subscribe( data => {
       let dataLoad = [];
       this.countResponse = data.size;
@@ -81,7 +80,36 @@ export class ReportComponent implements OnInit {
         //triggering the function
         downloadLink.click();
     }
-}
+
+  }
+
+  dataItem(question){
+
+    let dataQuestion = ['Análisis de negocios ','Planeación Estratégica','Modelo E (Medición, Análisis y mejora, normalización)','Investigación de mercados','Diseño y desarrollo de producto','Infraestructura','Bases de datos','Sistemas de Información','soluciones tecnológicas','Desarrollo','Mesa de ayuda (Soporte de servicios tecnológicos)','Planeación de TI (Proyectos)','Seguridad física','Seguridad de la información','Riesgos','Jurídico','Experiencia de cliente','CMI','Mercadeo','Ventas','Aseguramiento del Canal','Canal retail','Canal Corporativo','Operaciones','Tesorería administrativa','Tesorería operativa','Contabilidad','Compras','Recursos físicos','Planeación financiera','Control financiero (Presupuestos)','Cartera','Impuestos','Costos y multiprecio','Selección','Administración del Talento Humano','Formación y Desarrollo','Calidad de Vida','Seguridad y salud laboral','Gestión Ambiental','Comunicación Interna','Regional Norte','Regional Caribe','Regional Oriente','Regional Occidente','Regional Antioquia','Regional Sur','Regional Centro','Regional Bogotá','Regional Eje'];
+
+    let res;
+    let item = {};
+    let qsArray = {};
+        qsArray = question;
+
+        if(dataQuestion.indexOf(question) != -1){
+              res = question;
+        } else {
+
+            for (let i = 0; i < dataQuestion.length; i++) {
+              item = dataQuestion[i];
+
+              if(question == item[0]){
+                res = dataQuestion[i];
+              }
+
+            }
+
+        }
+
+        return res;
+
+  }
 
 
   response(option,idQuestion,response){
