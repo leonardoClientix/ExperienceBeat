@@ -92,8 +92,7 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": [
-              ]
+            "scripts": []
           }
         },
         "lint": {
@@ -122,6 +121,10 @@
           }
         }
       }
-    }},
-  "defaultProject": "encuestas"
+    }
+  },
+  "defaultProject": "encuestas",
+  "cli": {
+    "analytics": "743bd663-750d-4f53-ae26-778abe082b26"
+  }
 }
