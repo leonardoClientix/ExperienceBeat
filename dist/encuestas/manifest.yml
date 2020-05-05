@@ -1,0 +1,10 @@
+---
+applications:
+ - name: Encuestas
+   random-route: true
+   memory: 128M
+---
+applications:
+ - name: Encuestas
+   random-route: true
+   memory: 128M
