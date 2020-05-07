@@ -309,36 +309,290 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/index.js!./src/app/app.component.html":
-/*!**************************************************************!*\
-  !*** ./node_modules/raw-loader!./src/app/app.component.html ***!
-  \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/app.component.html":
+/*!**************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/app.component.html ***!
+  \**************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "<nav class=\"navbar navbar-light bg-light nav-float\">\n  <a class=\"navbar-brand logo\"><img src=\"assets/img/logo.png\"></a>\n  <a class=\" my-2 my-lg-0 navbar-brand logo\"><img src=\"assets/img/LogoClientix.png\"></a>\n</nav>\n<div class=\"container top-50\">\n  <router-outlet></router-outlet>\n</div>\n"
-
-/***/ }),
-
-/***/ "./node_modules/raw-loader/index.js!./src/app/components/questions/questions.component.html":
-/*!*****************************************************************************************!*\
-  !*** ./node_modules/raw-loader!./src/app/components/questions/questions.component.html ***!
-  \*****************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
-
-module.exports = "\nCarga de preguntas\n<input type=\"file\" #csvReaderQuestions name=\"Upload CSV\" id=\"txtFileUpload\" (change)=\"uploadListener($event,'questions')\" accept=\".csv\" />\nCarga de Usuarios\n<input type=\"file\" #csvReaderUsers name=\"Upload CSV\" id=\"txtFileUpload\" (change)=\"uploadListener($event,'users')\" accept=\".csv\" />\n\n<div class=\"card animated fadeInDown mens-data\" *ngIf=\"showMessage\">\n  <div class=\"card-body cnt-message\">\n    <p class=\"card-text\" [innerHTML]=\"message\" translate=\"no\"></p>\n    <button type=\"button\" class=\"btn btn-primary bg-col\" (click)=\"openInputs()\">Continuar</button>\n  </div>\n</div>\n\n<div class=\"card animated fadeIn mens-data\" *ngIf=\"showInput\">\n  <div class=\"cnt-message\">\n    <div class=\"form-group\" *ngFor=\"let item of inputs\">\n      <input [type]=\"item.type\" class=\"form-control\" [id]=\"item.name\" aria-describedby=\"emailHelp\" [placeholder]=\"item.placeholder\" #camp>\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary bg-col\" (click)=\"openQuiz()\">Enviar</button>\n  </div>\n  <div class=\"alert alert-danger\" role=\"alert\" *ngIf=\"showValUser\">\n    Este usuario no existe\n  </div>\n</div>\n\n<div class=\"alert alert-success\" role=\"alert\" *ngIf=\"sentTrue\">\n  <h4 class=\"alert-heading text-center\"> Encuesta enviada correctamente </h4>\n</div>\n\n<form class=\"list-cont-questions\" *ngIf=\"showQuestions\" (ngSubmit)=\"send(forma)\" #forma novalidate>\n<ol>\n<div *ngFor=\"let item of questions; let pre = index\">\n\n  <div class=\"form-group animated bounceInUp fast\" [ngClass]=\"{'active': stateBox == 1}\"  *ngIf=\"item.id != '0.2' && validateQuestion(item.typeDesign,item.questions.option) == 0\" >\n\n    <!--<label class=\"item-num\">{{ preNumber }}</label>-->\n     <li class=\"txt-question\" for=\"formGroupExampleInput\" [innerHTML]=\"item.questions.message\" translate=\"no\"></li>\n\n    <div class=\"list-check\" *ngIf=\"item.typeDesign == 'check'\">\n      <div class=\"form-check form-check-inline\" *ngFor=\"let opt of item.questions.option[0].options; let op = index\" >\n        <input class=\"form-check-input\" type=\"radio\" name=\"question{{ item.id }}\"  [value]=\"opt\"  id=\"inlineCheckbox{{ item.id }}-{{ op }}\" (change)=\"saveQuiz(item,data,item.questions.message,op,'check')\"  #data>\n        <label class=\"form-check-label\" for=\"inlineCheckbox{{ item.id }}-{{ op }}\"><span  translate=\"no\">{{ opt }}</span></label>\n      </div>\n    </div>\n\n    <div class=\"list-check\" *ngIf=\"item.typeDesign == 'check-mensaje'\">\n      <div class=\"row\">\n        <div *ngFor=\"let m of item.questions.option; let i = index\" >\n          <div *ngIf=\"conditional(m.conditional) == 0\" >\n              <div *ngIf=\"m.typeDesign == 'label'\" class=\"label-option\">\n                    {{ m.options }}\n              </div>\n              <div *ngIf=\"m.typeDesign == 'value'\"  class=\"items-options-list\">\n                <div class=\"form-check form-check-inline\" *ngFor=\"let opData of m.options; let idOpList = index\" >\n                 <input class=\"form-check-input\" type=\"radio\" name=\"question{{ m.id }}\"  id=\"inlineCheckbox{{ m.id }}-{{ idOpList }}\" value=\"{{ opData }}\" (change)=\"saveQuiz(m,dataCkMensaje,item.questions.message,idOpList,'check-mensaje',item.questions.option)\" #dataCkMensaje>\n                 <label class=\"form-check-label\" for=\"inlineCheckbox{{ m.id }}-{{ idOpList }}\" translate=\"no\">{{ opData }}</label>\n                </div>\n              </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"list-check-box two-box\"  *ngIf=\"item.typeDesign == 'tabla'\">\n      <div class=\"row\">\n      <div class=\"form-check box-action col-12 col-sm-3 databx0-{{ op }}-{{ item.id }}\" *ngFor=\"let opt of item.questions.option[0].options; let op = index\" [ngClass]=\"{'action': indexOfElement(  item, 'databx0-'+op+'-'+item.id, 'table' ) == 0 }\" >\n        <input class=\"form-check-input\" type=\"checkbox\" id=\"box{{ item.id }}-{{ op }}\" value=\"{{ opt }}\" (click)=\"saveQuiz(item,dataTable,item.questions.message,op,'table',0,0)\" #dataTable>\n        <label class=\"form-check-label\" for=\"box{{ item.id }}-{{ op }}\" translate=\"no\">{{ opt }}</label>\n      </div>\n      </div>\n    </div>\n\n    <div class=\"list-check-box two-box tb-mul\" *ngIf=\"item.typeDesign == 'tabla-multiple'\">\n\n      <div class=\"scroll-table\">\n        <div class=\"row\">\n          <div class=\"col-12 col-sm-2\">\n          </div>\n\n          <div class=\"col-12 col-sm-8 head-box\">\n\n            <div *ngFor=\"let m of item.questions.option; let i = index\" >\n              <div *ngIf=\"m.id == '8.2' || m.id == '9.2' \">\n                <div class=\"form-check form-check-inline col-12 col-sm-1 min-tab\"  *ngFor=\"let opData of m.options; let idOpList = index\">\n                  <label class=\"form-check-label\" for=\"box1\" translate=\"no\">{{ opData }}</label>\n                </div>\n              </div>\n            </div>\n\n          </div>\n          <div class=\"col-12 col-sm-4 data-box cont-left \">\n\n            <div *ngFor=\"let li of item.questions.option; let o = index\" [ngClass]=\"{'col-sm-12 head-left': li.typeDesign == 'label'}\" class=\"ali-box\"  >\n\n              <div *ngIf=\"li.typeDesign == 'label' && conditional(li.conditional) == 0\">\n                <div class=\"form-check form-check-inline col-12 col-sm-12\" >\n                  <label class=\"form-check-label\" [innerHTML]=\"li.options\" translate=\"no\"></label>\n                </div>\n              </div>\n\n            </div>\n\n          </div>\n          <div class=\"col-12 col-sm-10 opt-right\">\n\n            <div *ngFor=\"let li of item.questions.option; let o = index\" [ngClass]=\"{'col-sm-10': li.typeDesign == 'value'}\" class=\"ali-box\"  >\n\n                <div *ngIf=\"li.typeDesign == 'value' && conditional(li.conditional) == 0\" class=\"col-sm-12 cn-box \" >\n                  <div class=\"asc form-check form-check-inline col-12 col-sm-3 chl-bok databx{{ item.id }}-{{ da }}-{{ li.id }}\" [ngClass]=\"{'action': indexOfElement( li,'databx'+item.id+'-'+da+'-'+li.id, 'table-multiple' ) == 0 }\" *ngFor=\"let opData of li.options; let da = index\" (click)=\"saveQuiz(li,opData,item.questions.message,da,'table-multiple',item.questions.option,item.id)\" >\n                    <input class=\"form-check-input\" type=\"checkbox\" id=\"box{{ item.id }}-{{ da }}-{{ li.id }}\" value=\"{{ opData }}\"  #dataTableMulti>\n                    <label class=\"form-check-label\" for=\"box{{ item.id }}-{{ da }}-{{ li.id }}\"></label>\n                  </div>\n                </div>\n\n            </div>\n\n          </div>\n\n        </div>\n      </div>\n\n\n    </div>\n\n    <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" *ngIf=\"item.typeDesign == 'textbox'\" rows=\"3\" (keypress)=\"saveQuiz(item,dataText,item.questions.message,'','text')\" #dataText></textarea>\n\n  </div>\n\n  </div>\n\n</ol>\n\n<div class=\"alert alert-danger\" role=\"alert\" *ngIf=\"errorValid\">\n  <h4 class=\"alert-heading text-center\"> Todas las preguntas son obligatorias </h4>\n</div>\n\n\n  <button type=\"submit\" class=\"btn btn-primary btn-lg bg-col float-right\" >Enviar</button>\n\n</form>\n"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<nav class=\"navbar navbar-light bg-light nav-float\">\n  <a class=\"navbar-brand logo\"><img src=\"assets/img/logo.png\"></a>\n  <a class=\" my-2 my-lg-0 navbar-brand logo\"><img src=\"assets/img/LogoClientix.png\"></a>\n</nav>\n<div class=\"container top-50\">\n  <router-outlet></router-outlet>\n</div>\n");
 
 /***/ }),
 
-/***/ "./node_modules/raw-loader/index.js!./src/app/components/report/report.component.html":
-/*!***********************************************************************************!*\
-  !*** ./node_modules/raw-loader!./src/app/components/report/report.component.html ***!
-  \***********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/questions/questions.component.html":
+/*!*****************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/questions/questions.component.html ***!
+  \*****************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "\n<div (click)=\"exportTableToExcel('tblReporte','prueba')\">descargar</div>\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-4\">\n      <h1>Reportes</h1>\n    </div>\n    <!--<div class=\"col-8\"  >\n      <canvas  baseChart *ngIf=\"doughnutChartData\" [data]=\"doughnutChartData\"  chart-labels=\"labels\" [labels]=\"doughnutChartLabels\" [chartType]=\"doughnutChartType\" (chartHover)=\"chartHovered($event)\" (chartClick)=\"chartClicked($event)\"></canvas>\n    </div>-->\n    <div class=\"col\">\n\n     <!--<table class=\"table table-striped\">\n        <thead>\n          <tr>\n            <th scope=\"col\">#</th>\n            <th scope=\"col\">Nombre</th>\n            <th scope=\"col\">E-mail</th>\n            <th scope=\"col\">Macro Proceso</th>\n            <th scope=\"col\">Cargo</th>\n            <th scope=\"col\">N° preguntas contestadas</th>\n            <th scope=\"col\">Fecha</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr *ngFor=\"let item of dataReport; let i = index\">\n            <th scope=\"row\">{{ i + 1}}</th>\n            <td>{{ item.name }}</td>\n            <td>{{ item.email }}</td>\n            <td>{{ item.macro_process}}</td>\n            <td>{{ item.rol}}</td>\n            <td  *ngIf=\"item.question\" >\n                <label *ngFor=\"let dt of item.question | keyArray; let i = index\">\n                  {{ numQuestion(item.question[dt].id) }}\n                </label>\n            </td>\n            <td *ngIf=\"item.question\">{{ item.question[0].date  | date:'d/M/yy - h:mm:ss a ' }}</td>\n          </tr>\n        </tbody>\n      </table>-->\n\n      <table class=\"table table-striped tb-report\" id=\"tblReporte\">\n         <thead>\n           <tr>\n             <th scope=\"col\">Nombre</th>\n             <th scope=\"col\">E-mail</th>\n             <th scope=\"col\">Macro Proceso</th>\n             <th scope=\"col\">Cargo</th>\n             <th scope=\"col\">Fecha</th>\n\n             <label *ngFor=\"let qt of dataQuestions\" class=\"cn-leb\">\n\n               <label *ngIf=\"qt.id > 5\" class=\"cn-leb\">\n              <!-- <label  class=\"cn-leb\">-->\n\n\n                <!-- <th class=\"msg\">{{ qt.questions.message }}</th>-->\n                 <label *ngFor=\"let op of qt.questions.option | keyArray; let o = index\" class=\"cn-leb\">\n                    <th class=\"id\" *ngIf=\"qt.questions.option[o].typeDesign == 'label'\">{{ qt.id }}</th>\n                   <th *ngIf=\"qt.questions.option[o].typeDesign == 'label'\" class=\"opt lab-text\">{{ qt.questions.option[o].options }}</th>\n\n                   <label *ngIf=\"qt.questions.option[o].typeDesign != 'label'\" class=\"cn-leb\">\n                     <label *ngFor=\"let tn of qt.questions.option[o].options | keyArray; let t = index\" class=\"cn-leb\">\n                       <th class=\"opt\">{{ qt.questions.option[o].options[t] }}</th>\n                     </label>\n                   </label>\n\n                 </label>\n\n                 </label>\n\n             </label>\n\n           </tr>\n         </thead>\n         <tbody>\n           <label  *ngFor=\"let item of dataReport; let con = index\" class=\"cn-leb\">\n           <!-- <tr *ngIf=\"con >= 260 && con <= 270\"> repo 2-->\n           <tr *ngIf=\"con >= 220 && con <= 230\">\n             <!--<label class=\"cn-leb\" *ngIf=\"con >= 320 && con <= 330\"> PRIMER BD-->\n             <label class=\"cn-leb\" >\n\n             <td>{{ item.name }}</td>\n             <td>{{ item.email }}</td>\n             <td>{{ item.macro_process}}</td>\n             <td>{{ item.rol }}</td>\n             <td *ngIf=\"item.question\">{{ item.question[0].date | date:'d/M/yy - h:mm:ss a ' }}</td>\n\n             <label *ngFor=\"let qt of dataQuestions\" class=\"cn-leb\">\n               <label *ngFor=\"let resp of item.question | keyArray; let r = index\" class=\"cn-leb\">\n\n                 <label  class=\"cn-leb\">\n\n                     <!--<label *ngIf=\"item.question[r].id == qt.id\" class=\"cn-leb\">\n                       <td class=\"id\">{{ qt.id }}</td>\n                       <td class=\"msg\">{{ qt.questions.message }}</td>\n                     </label>-->\n\n\n                     <label *ngFor=\"let op of qt.questions.option | keyArray; let o = index\" class=\"cn-leb\">\n                            <!-- <label *ngIf=\"item.question[r].id == qt.id\" class=\"cn-leb\">\n                               <label *ngIf=\"qt.questions.option[o].typeDesign != 'label'\" class=\"cn-leb\">\n                                 <label *ngFor=\"let tn of qt.questions.option[o].options | keyArray; let t = index\" class=\"cn-leb\">\n                                   <label *ngIf=\"item.question[r].options == qt.questions.option[o].options[t]\" class=\"cn-leb col-check\">\n                                     <td class=\"opt\">{{ item.question[r].options }}</td>\n                                   </label>\n                                   <td *ngIf=\"item.question[r].options != qt.questions.option[o].options[t]\" class=\"opt\"></td>\n                                 </label>\n                               </label>\n                             </label>-->\n\n                             <!-- PREGUNTAS DE LA 6 A LA 9 -->\n\n                            <label *ngIf=\"item.question[r].id == qt.questions.option[o].id\" class=\"cn-leb\">\n\n                               <label class=\"cn-leb\">\n                                 <td class=\"id\">{{ qt.id }}</td>\n                                <!-- <td class=\"msg\">{{ qt.questions.message }}</td>-->\n                               </label>\n\n                             </label>\n\n\n                             <label *ngIf=\"item.question[r].id == qt.questions.option[o].id\" class=\"cn-leb\">\n\n                                 <td class=\"opt lab-text\">{{ dataItem(item.question[r].option?.label) }}</td>\n\n                                 <label *ngIf=\"item.question[r].option.options\" class=\"cn-leb\">\n                                   <label *ngFor=\"let tn of qt.questions.option[o].options | keyArray; let t = index\" class=\"cn-leb\">\n                                     <label *ngIf=\"item.question[r].option.options == qt.questions.option[o].options[t]\" class=\"cn-leb col-check\">\n                                       <td class=\"opt\">{{ item.question[r].option.options }}</td>\n                                     </label>\n                                     <td *ngIf=\"item.question[r].option.options != qt.questions.option[o].options[t]\" class=\"opt\"></td>\n                                   </label>\n                                 </label>\n\n                             </label>\n\n                     </label> <!--Opciones de la estructura-->\n\n                 </label> <!-- fecha -->\n               </label> <!-- lista de respuestas -->\n             </label> <!-- Estructura -->\n\n\n             <!--<label *ngFor=\"let k of item.question | keyArray; let i = index\" class=\"cn-leb\">\n               <td>{{ item.question[i].id }}</td>\n               <td>{{ item.question[i].message }}</td>\n               <td *ngIf=\"item.question[i].options\">{{ item.question[i].options }}</td>\n               <td >{{ item.question[i].option?.label }}</td>\n               <td>{{ item.question[i].option?.options }}</td>\n             </label>-->\n\n             </label>\n\n           </tr>\n           </label>\n         </tbody>\n       </table>\n\n    </div>\n  </div>\n</div>\n"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n<!-- Carga de preguntas\n<input type=\"file\" #csvReaderQuestions name=\"Upload CSV\" id=\"txtFileUpload\" (change)=\"uploadListener($event,'questions')\" accept=\".csv\" />\nCarga de Usuarios\n<input type=\"file\" #csvReaderUsers name=\"Upload CSV\" id=\"txtFileUpload\" (change)=\"uploadListener($event,'users')\" accept=\".csv\" /> -->\n\n<div class=\"card animated fadeInDown mens-data\" *ngIf=\"showMessage\">\n  <div class=\"card-body cnt-message\">\n    <p class=\"card-text\" [innerHTML]=\"message\" translate=\"no\"></p>\n    <button type=\"button\" class=\"btn btn-primary bg-col\" (click)=\"openInputs()\">Continuar</button>\n  </div>\n</div>\n\n<div class=\"card animated fadeIn mens-data\" *ngIf=\"showInput\">\n  <div class=\"cnt-message\">\n    <div class=\"form-group\" *ngFor=\"let item of inputs\">\n      <input [type]=\"item.type\" class=\"form-control\" [id]=\"item.name\" aria-describedby=\"emailHelp\" [placeholder]=\"item.placeholder\" #camp>\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary bg-col\" (click)=\"openQuiz()\">Enviar</button>\n  </div>\n  <div class=\"alert alert-danger\" role=\"alert\" *ngIf=\"showValUser\">\n    Este usuario no existe\n  </div>\n</div>\n\n<div class=\"alert alert-success\" role=\"alert\" *ngIf=\"sentTrue\">\n  <h4 class=\"alert-heading text-center\"> Encuesta enviada correctamente </h4>\n</div>\n\n<form class=\"list-cont-questions\" *ngIf=\"showQuestions\" (ngSubmit)=\"send(forma)\" #forma novalidate>\n<ol>\n<div *ngFor=\"let item of questions; let pre = index\">\n\n  <div class=\"form-group animated bounceInUp fast\" [ngClass]=\"{'active': stateBox == 1}\"  *ngIf=\"item.id != '0.2' && validateQuestion(item.typeDesign,item.questions.option) == 0\" >\n\n    <!--<label class=\"item-num\">{{ preNumber }}</label>-->\n     <li class=\"txt-question\" for=\"formGroupExampleInput\" [innerHTML]=\"item.questions.message\" translate=\"no\"></li>\n\n    <div class=\"list-check\" *ngIf=\"item.typeDesign == 'check'\">\n      <div class=\"form-check form-check-inline\" *ngFor=\"let opt of item.questions.option[0].options; let op = index\" >\n        <input class=\"form-check-input\" type=\"radio\" name=\"question{{ item.id }}\"  [value]=\"opt\"  id=\"inlineCheckbox{{ item.id }}-{{ op }}\" (change)=\"saveQuiz(item,data,item.questions.message,op,'check')\"  #data>\n        <label class=\"form-check-label\" for=\"inlineCheckbox{{ item.id }}-{{ op }}\"><span  translate=\"no\">{{ opt }}</span></label>\n      </div>\n    </div>\n\n    <div class=\"list-check\" *ngIf=\"item.typeDesign == 'check-mensaje'\">\n      <div class=\"row\">\n        <div *ngFor=\"let m of item.questions.option; let i = index\" >\n          <div *ngIf=\"conditional(m.conditional) == 0\" >\n              <div *ngIf=\"m.typeDesign == 'label'\" class=\"label-option\">\n                    {{ m.options }}\n              </div>\n              <div *ngIf=\"m.typeDesign == 'value'\"  class=\"items-options-list\">\n                <div class=\"form-check form-check-inline\" *ngFor=\"let opData of m.options; let idOpList = index\" >\n                 <input class=\"form-check-input\" type=\"radio\" name=\"question{{ m.id }}\"  id=\"inlineCheckbox{{ m.id }}-{{ idOpList }}\" value=\"{{ opData }}\" (change)=\"saveQuiz(m,dataCkMensaje,item.questions.message,idOpList,'check-mensaje',item.questions.option)\" #dataCkMensaje>\n                 <label class=\"form-check-label\" for=\"inlineCheckbox{{ m.id }}-{{ idOpList }}\" translate=\"no\">{{ opData }}</label>\n                </div>\n              </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"list-check-box two-box\"  *ngIf=\"item.typeDesign == 'tabla'\">\n      <div class=\"row\">\n      <div class=\"form-check box-action col-12 col-sm-3 databx0-{{ op }}-{{ item.id }}\" *ngFor=\"let opt of item.questions.option[0].options; let op = index\" [ngClass]=\"{'action': indexOfElement(  item, 'databx0-'+op+'-'+item.id, 'table' ) == 0 }\" >\n        <input class=\"form-check-input\" type=\"checkbox\" id=\"box{{ item.id }}-{{ op }}\" value=\"{{ opt }}\" (click)=\"saveQuiz(item,dataTable,item.questions.message,op,'table',0,0)\" #dataTable>\n        <label class=\"form-check-label\" for=\"box{{ item.id }}-{{ op }}\" translate=\"no\">{{ opt }}</label>\n      </div>\n      </div>\n    </div>\n\n    <div class=\"list-check-box two-box tb-mul\" *ngIf=\"item.typeDesign == 'tabla-multiple'\">\n\n      <div class=\"scroll-table\">\n        <div class=\"row\">\n          <div class=\"col-12 col-sm-2\">\n          </div>\n\n          <div class=\"col-12 col-sm-8 head-box\">\n\n            <div *ngFor=\"let m of item.questions.option; let i = index\" >\n              <div *ngIf=\"m.id == '8.2' || m.id == '9.2' \">\n                <div class=\"form-check form-check-inline col-12 col-sm-1 min-tab\"  *ngFor=\"let opData of m.options; let idOpList = index\">\n                  <label class=\"form-check-label\" for=\"box1\" translate=\"no\">{{ opData }}</label>\n                </div>\n              </div>\n            </div>\n\n          </div>\n          <div class=\"col-12 col-sm-4 data-box cont-left \">\n\n            <div *ngFor=\"let li of item.questions.option; let o = index\" [ngClass]=\"{'col-sm-12 head-left': li.typeDesign == 'label'}\" class=\"ali-box\"  >\n\n              <div *ngIf=\"li.typeDesign == 'label' && conditional(li.conditional) == 0\">\n                <div class=\"form-check form-check-inline col-12 col-sm-12\" >\n                  <label class=\"form-check-label\" [innerHTML]=\"li.options\" translate=\"no\"></label>\n                </div>\n              </div>\n\n            </div>\n\n          </div>\n          <div class=\"col-12 col-sm-10 opt-right\">\n\n            <div *ngFor=\"let li of item.questions.option; let o = index\" [ngClass]=\"{'col-sm-10': li.typeDesign == 'value'}\" class=\"ali-box\"  >\n\n                <div *ngIf=\"li.typeDesign == 'value' && conditional(li.conditional) == 0\" class=\"col-sm-12 cn-box \" >\n                  <div class=\"asc form-check form-check-inline col-12 col-sm-3 chl-bok databx{{ item.id }}-{{ da }}-{{ li.id }}\" [ngClass]=\"{'action': indexOfElement( li,'databx'+item.id+'-'+da+'-'+li.id, 'table-multiple' ) == 0 }\" *ngFor=\"let opData of li.options; let da = index\" (click)=\"saveQuiz(li,opData,item.questions.message,da,'table-multiple',item.questions.option,item.id)\" >\n                    <input class=\"form-check-input\" type=\"checkbox\" id=\"box{{ item.id }}-{{ da }}-{{ li.id }}\" value=\"{{ opData }}\"  #dataTableMulti>\n                    <label class=\"form-check-label\" for=\"box{{ item.id }}-{{ da }}-{{ li.id }}\"></label>\n                  </div>\n                </div>\n\n            </div>\n\n          </div>\n\n        </div>\n      </div>\n\n\n    </div>\n\n    <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" *ngIf=\"item.typeDesign == 'textbox'\" rows=\"3\" (keypress)=\"saveQuiz(item,dataText,item.questions.message,'','text')\" #dataText></textarea>\n\n  </div>\n\n  </div>\n\n</ol>\n\n<div class=\"alert alert-danger\" role=\"alert\" *ngIf=\"errorValid\">\n  <h4 class=\"alert-heading text-center\"> Todas las preguntas son obligatorias </h4>\n</div>\n\n\n  <button type=\"submit\" class=\"btn btn-primary btn-lg bg-col float-right\" >Enviar</button>\n\n</form>\n");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/report/report.component.html":
+/*!***********************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/report/report.component.html ***!
+  \***********************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n<div (click)=\"exportTableToExcel('tblReporte','prueba')\">descargar</div>\n<div class=\"container\">\n  <div class=\"row\">\n    <div class=\"col-4\">\n      <h1>Reportes</h1>\n    </div>\n    <!--<div class=\"col-8\"  >\n      <canvas  baseChart *ngIf=\"doughnutChartData\" [data]=\"doughnutChartData\"  chart-labels=\"labels\" [labels]=\"doughnutChartLabels\" [chartType]=\"doughnutChartType\" (chartHover)=\"chartHovered($event)\" (chartClick)=\"chartClicked($event)\"></canvas>\n    </div>-->\n    <div class=\"col\">\n\n     <!--<table class=\"table table-striped\">\n        <thead>\n          <tr>\n            <th scope=\"col\">#</th>\n            <th scope=\"col\">Nombre</th>\n            <th scope=\"col\">E-mail</th>\n            <th scope=\"col\">Macro Proceso</th>\n            <th scope=\"col\">Cargo</th>\n            <th scope=\"col\">N° preguntas contestadas</th>\n            <th scope=\"col\">Fecha</th>\n          </tr>\n        </thead>\n        <tbody>\n          <tr *ngFor=\"let item of dataReport; let i = index\">\n            <th scope=\"row\">{{ i + 1}}</th>\n            <td>{{ item.name }}</td>\n            <td>{{ item.email }}</td>\n            <td>{{ item.macro_process}}</td>\n            <td>{{ item.rol}}</td>\n            <td  *ngIf=\"item.question\" >\n                <label *ngFor=\"let dt of item.question | keyArray; let i = index\">\n                  {{ numQuestion(item.question[dt].id) }}\n                </label>\n            </td>\n            <td *ngIf=\"item.question\">{{ item.question[0].date  | date:'d/M/yy - h:mm:ss a ' }}</td>\n          </tr>\n        </tbody>\n      </table>-->\n\n      <table class=\"table table-striped tb-report\" id=\"tblReporte\">\n         <thead>\n           <tr>\n             <th scope=\"col\">Nombre</th>\n             <th scope=\"col\">E-mail</th>\n             <th scope=\"col\">Macro Proceso</th>\n             <th scope=\"col\">Cargo</th>\n             <th scope=\"col\">Fecha</th>\n\n             <label *ngFor=\"let qt of dataQuestions\" class=\"cn-leb\">\n\n               <label *ngIf=\"qt.id > 5\" class=\"cn-leb\">\n              <!-- <label  class=\"cn-leb\">-->\n\n\n                <!-- <th class=\"msg\">{{ qt.questions.message }}</th>-->\n                 <label *ngFor=\"let op of qt.questions.option | keyArray; let o = index\" class=\"cn-leb\">\n                    <th class=\"id\" *ngIf=\"qt.questions.option[o].typeDesign == 'label'\">{{ qt.id }}</th>\n                   <th *ngIf=\"qt.questions.option[o].typeDesign == 'label'\" class=\"opt lab-text\">{{ qt.questions.option[o].options }}</th>\n\n                   <label *ngIf=\"qt.questions.option[o].typeDesign != 'label'\" class=\"cn-leb\">\n                     <label *ngFor=\"let tn of qt.questions.option[o].options | keyArray; let t = index\" class=\"cn-leb\">\n                       <th class=\"opt\">{{ qt.questions.option[o].options[t] }}</th>\n                     </label>\n                   </label>\n\n                 </label>\n\n                 </label>\n\n             </label>\n\n           </tr>\n         </thead>\n         <tbody>\n           <label  *ngFor=\"let item of dataReport; let con = index\" class=\"cn-leb\">\n           <!-- <tr *ngIf=\"con >= 260 && con <= 270\"> repo 2-->\n           <tr *ngIf=\"con >= 220 && con <= 230\">\n             <!--<label class=\"cn-leb\" *ngIf=\"con >= 320 && con <= 330\"> PRIMER BD-->\n             <label class=\"cn-leb\" >\n\n             <td>{{ item.name }}</td>\n             <td>{{ item.email }}</td>\n             <td>{{ item.macro_process}}</td>\n             <td>{{ item.rol }}</td>\n             <td *ngIf=\"item.question\">{{ item.question[0].date | date:'d/M/yy - h:mm:ss a ' }}</td>\n\n             <label *ngFor=\"let qt of dataQuestions\" class=\"cn-leb\">\n               <label *ngFor=\"let resp of item.question | keyArray; let r = index\" class=\"cn-leb\">\n\n                 <label  class=\"cn-leb\">\n\n                     <!--<label *ngIf=\"item.question[r].id == qt.id\" class=\"cn-leb\">\n                       <td class=\"id\">{{ qt.id }}</td>\n                       <td class=\"msg\">{{ qt.questions.message }}</td>\n                     </label>-->\n\n\n                     <label *ngFor=\"let op of qt.questions.option | keyArray; let o = index\" class=\"cn-leb\">\n                            <!-- <label *ngIf=\"item.question[r].id == qt.id\" class=\"cn-leb\">\n                               <label *ngIf=\"qt.questions.option[o].typeDesign != 'label'\" class=\"cn-leb\">\n                                 <label *ngFor=\"let tn of qt.questions.option[o].options | keyArray; let t = index\" class=\"cn-leb\">\n                                   <label *ngIf=\"item.question[r].options == qt.questions.option[o].options[t]\" class=\"cn-leb col-check\">\n                                     <td class=\"opt\">{{ item.question[r].options }}</td>\n                                   </label>\n                                   <td *ngIf=\"item.question[r].options != qt.questions.option[o].options[t]\" class=\"opt\"></td>\n                                 </label>\n                               </label>\n                             </label>-->\n\n                             <!-- PREGUNTAS DE LA 6 A LA 9 -->\n\n                            <label *ngIf=\"item.question[r].id == qt.questions.option[o].id\" class=\"cn-leb\">\n\n                               <label class=\"cn-leb\">\n                                 <td class=\"id\">{{ qt.id }}</td>\n                                <!-- <td class=\"msg\">{{ qt.questions.message }}</td>-->\n                               </label>\n\n                             </label>\n\n\n                             <label *ngIf=\"item.question[r].id == qt.questions.option[o].id\" class=\"cn-leb\">\n\n                                 <td class=\"opt lab-text\">{{ dataItem(item.question[r].option?.label) }}</td>\n\n                                 <label *ngIf=\"item.question[r].option.options\" class=\"cn-leb\">\n                                   <label *ngFor=\"let tn of qt.questions.option[o].options | keyArray; let t = index\" class=\"cn-leb\">\n                                     <label *ngIf=\"item.question[r].option.options == qt.questions.option[o].options[t]\" class=\"cn-leb col-check\">\n                                       <td class=\"opt\">{{ item.question[r].option.options }}</td>\n                                     </label>\n                                     <td *ngIf=\"item.question[r].option.options != qt.questions.option[o].options[t]\" class=\"opt\"></td>\n                                   </label>\n                                 </label>\n\n                             </label>\n\n                     </label> <!--Opciones de la estructura-->\n\n                 </label> <!-- fecha -->\n               </label> <!-- lista de respuestas -->\n             </label> <!-- Estructura -->\n\n\n             <!--<label *ngFor=\"let k of item.question | keyArray; let i = index\" class=\"cn-leb\">\n               <td>{{ item.question[i].id }}</td>\n               <td>{{ item.question[i].message }}</td>\n               <td *ngIf=\"item.question[i].options\">{{ item.question[i].options }}</td>\n               <td >{{ item.question[i].option?.label }}</td>\n               <td>{{ item.question[i].option?.options }}</td>\n             </label>-->\n\n             </label>\n\n           </tr>\n           </label>\n         </tbody>\n       </table>\n\n    </div>\n  </div>\n</div>\n");
+
+/***/ }),
+
+/***/ "./node_modules/tslib/tslib.es6.js":
+/*!*****************************************!*\
+  !*** ./node_modules/tslib/tslib.es6.js ***!
+  \*****************************************/
+/*! exports provided: __extends, __assign, __rest, __decorate, __param, __metadata, __awaiter, __generator, __exportStar, __values, __read, __spread, __spreadArrays, __await, __asyncGenerator, __asyncDelegator, __asyncValues, __makeTemplateObject, __importStar, __importDefault, __classPrivateFieldGet, __classPrivateFieldSet */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__extends", function() { return __extends; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__assign", function() { return __assign; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__rest", function() { return __rest; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__decorate", function() { return __decorate; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__param", function() { return __param; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__metadata", function() { return __metadata; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__awaiter", function() { return __awaiter; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__generator", function() { return __generator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__exportStar", function() { return __exportStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__values", function() { return __values; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__read", function() { return __read; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__spread", function() { return __spread; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__spreadArrays", function() { return __spreadArrays; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__await", function() { return __await; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncGenerator", function() { return __asyncGenerator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncDelegator", function() { return __asyncDelegator; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__asyncValues", function() { return __asyncValues; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__makeTemplateObject", function() { return __makeTemplateObject; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__importStar", function() { return __importStar; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__importDefault", function() { return __importDefault; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__classPrivateFieldGet", function() { return __classPrivateFieldGet; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "__classPrivateFieldSet", function() { return __classPrivateFieldSet; });
+/*! *****************************************************************************
+Copyright (c) Microsoft Corporation. All rights reserved.
+Licensed under the Apache License, Version 2.0 (the "License"); you may not use
+this file except in compliance with the License. You may obtain a copy of the
+License at http://www.apache.org/licenses/LICENSE-2.0
+
+THIS CODE IS PROVIDED ON AN *AS IS* BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+KIND, EITHER EXPRESS OR IMPLIED, INCLUDING WITHOUT LIMITATION ANY IMPLIED
+WARRANTIES OR CONDITIONS OF TITLE, FITNESS FOR A PARTICULAR PURPOSE,
+MERCHANTABLITY OR NON-INFRINGEMENT.
+
+See the Apache Version 2.0 License for specific language governing permissions
+and limitations under the License.
+***************************************************************************** */
+/* global Reflect, Promise */
+
+var extendStatics = function(d, b) {
+    extendStatics = Object.setPrototypeOf ||
+        ({ __proto__: [] } instanceof Array && function (d, b) { d.__proto__ = b; }) ||
+        function (d, b) { for (var p in b) if (b.hasOwnProperty(p)) d[p] = b[p]; };
+    return extendStatics(d, b);
+};
+
+function __extends(d, b) {
+    extendStatics(d, b);
+    function __() { this.constructor = d; }
+    d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
+}
+
+var __assign = function() {
+    __assign = Object.assign || function __assign(t) {
+        for (var s, i = 1, n = arguments.length; i < n; i++) {
+            s = arguments[i];
+            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p)) t[p] = s[p];
+        }
+        return t;
+    }
+    return __assign.apply(this, arguments);
+}
+
+function __rest(s, e) {
+    var t = {};
+    for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p) && e.indexOf(p) < 0)
+        t[p] = s[p];
+    if (s != null && typeof Object.getOwnPropertySymbols === "function")
+        for (var i = 0, p = Object.getOwnPropertySymbols(s); i < p.length; i++) {
+            if (e.indexOf(p[i]) < 0 && Object.prototype.propertyIsEnumerable.call(s, p[i]))
+                t[p[i]] = s[p[i]];
+        }
+    return t;
+}
+
+function __decorate(decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+}
+
+function __param(paramIndex, decorator) {
+    return function (target, key) { decorator(target, key, paramIndex); }
+}
+
+function __metadata(metadataKey, metadataValue) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(metadataKey, metadataValue);
+}
+
+function __awaiter(thisArg, _arguments, P, generator) {
+    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
+    return new (P || (P = Promise))(function (resolve, reject) {
+        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
+        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
+        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
+        step((generator = generator.apply(thisArg, _arguments || [])).next());
+    });
+}
+
+function __generator(thisArg, body) {
+    var _ = { label: 0, sent: function() { if (t[0] & 1) throw t[1]; return t[1]; }, trys: [], ops: [] }, f, y, t, g;
+    return g = { next: verb(0), "throw": verb(1), "return": verb(2) }, typeof Symbol === "function" && (g[Symbol.iterator] = function() { return this; }), g;
+    function verb(n) { return function (v) { return step([n, v]); }; }
+    function step(op) {
+        if (f) throw new TypeError("Generator is already executing.");
+        while (_) try {
+            if (f = 1, y && (t = op[0] & 2 ? y["return"] : op[0] ? y["throw"] || ((t = y["return"]) && t.call(y), 0) : y.next) && !(t = t.call(y, op[1])).done) return t;
+            if (y = 0, t) op = [op[0] & 2, t.value];
+            switch (op[0]) {
+                case 0: case 1: t = op; break;
+                case 4: _.label++; return { value: op[1], done: false };
+                case 5: _.label++; y = op[1]; op = [0]; continue;
+                case 7: op = _.ops.pop(); _.trys.pop(); continue;
+                default:
+                    if (!(t = _.trys, t = t.length > 0 && t[t.length - 1]) && (op[0] === 6 || op[0] === 2)) { _ = 0; continue; }
+                    if (op[0] === 3 && (!t || (op[1] > t[0] && op[1] < t[3]))) { _.label = op[1]; break; }
+                    if (op[0] === 6 && _.label < t[1]) { _.label = t[1]; t = op; break; }
+                    if (t && _.label < t[2]) { _.label = t[2]; _.ops.push(op); break; }
+                    if (t[2]) _.ops.pop();
+                    _.trys.pop(); continue;
+            }
+            op = body.call(thisArg, _);
+        } catch (e) { op = [6, e]; y = 0; } finally { f = t = 0; }
+        if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
+    }
+}
+
+function __exportStar(m, exports) {
+    for (var p in m) if (!exports.hasOwnProperty(p)) exports[p] = m[p];
+}
+
+function __values(o) {
+    var s = typeof Symbol === "function" && Symbol.iterator, m = s && o[s], i = 0;
+    if (m) return m.call(o);
+    if (o && typeof o.length === "number") return {
+        next: function () {
+            if (o && i >= o.length) o = void 0;
+            return { value: o && o[i++], done: !o };
+        }
+    };
+    throw new TypeError(s ? "Object is not iterable." : "Symbol.iterator is not defined.");
+}
+
+function __read(o, n) {
+    var m = typeof Symbol === "function" && o[Symbol.iterator];
+    if (!m) return o;
+    var i = m.call(o), r, ar = [], e;
+    try {
+        while ((n === void 0 || n-- > 0) && !(r = i.next()).done) ar.push(r.value);
+    }
+    catch (error) { e = { error: error }; }
+    finally {
+        try {
+            if (r && !r.done && (m = i["return"])) m.call(i);
+        }
+        finally { if (e) throw e.error; }
+    }
+    return ar;
+}
+
+function __spread() {
+    for (var ar = [], i = 0; i < arguments.length; i++)
+        ar = ar.concat(__read(arguments[i]));
+    return ar;
+}
+
+function __spreadArrays() {
+    for (var s = 0, i = 0, il = arguments.length; i < il; i++) s += arguments[i].length;
+    for (var r = Array(s), k = 0, i = 0; i < il; i++)
+        for (var a = arguments[i], j = 0, jl = a.length; j < jl; j++, k++)
+            r[k] = a[j];
+    return r;
+};
+
+function __await(v) {
+    return this instanceof __await ? (this.v = v, this) : new __await(v);
+}
+
+function __asyncGenerator(thisArg, _arguments, generator) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var g = generator.apply(thisArg, _arguments || []), i, q = [];
+    return i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i;
+    function verb(n) { if (g[n]) i[n] = function (v) { return new Promise(function (a, b) { q.push([n, v, a, b]) > 1 || resume(n, v); }); }; }
+    function resume(n, v) { try { step(g[n](v)); } catch (e) { settle(q[0][3], e); } }
+    function step(r) { r.value instanceof __await ? Promise.resolve(r.value.v).then(fulfill, reject) : settle(q[0][2], r); }
+    function fulfill(value) { resume("next", value); }
+    function reject(value) { resume("throw", value); }
+    function settle(f, v) { if (f(v), q.shift(), q.length) resume(q[0][0], q[0][1]); }
+}
+
+function __asyncDelegator(o) {
+    var i, p;
+    return i = {}, verb("next"), verb("throw", function (e) { throw e; }), verb("return"), i[Symbol.iterator] = function () { return this; }, i;
+    function verb(n, f) { i[n] = o[n] ? function (v) { return (p = !p) ? { value: __await(o[n](v)), done: n === "return" } : f ? f(v) : v; } : f; }
+}
+
+function __asyncValues(o) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var m = o[Symbol.asyncIterator], i;
+    return m ? m.call(o) : (o = typeof __values === "function" ? __values(o) : o[Symbol.iterator](), i = {}, verb("next"), verb("throw"), verb("return"), i[Symbol.asyncIterator] = function () { return this; }, i);
+    function verb(n) { i[n] = o[n] && function (v) { return new Promise(function (resolve, reject) { v = o[n](v), settle(resolve, reject, v.done, v.value); }); }; }
+    function settle(resolve, reject, d, v) { Promise.resolve(v).then(function(v) { resolve({ value: v, done: d }); }, reject); }
+}
+
+function __makeTemplateObject(cooked, raw) {
+    if (Object.defineProperty) { Object.defineProperty(cooked, "raw", { value: raw }); } else { cooked.raw = raw; }
+    return cooked;
+};
+
+function __importStar(mod) {
+    if (mod && mod.__esModule) return mod;
+    var result = {};
+    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
+    result.default = mod;
+    return result;
+}
+
+function __importDefault(mod) {
+    return (mod && mod.__esModule) ? mod : { default: mod };
+}
+
+function __classPrivateFieldGet(receiver, privateMap) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to get private field on non-instance");
+    }
+    return privateMap.get(receiver);
+}
+
+function __classPrivateFieldSet(receiver, privateMap, value) {
+    if (!privateMap.has(receiver)) {
+        throw new TypeError("attempted to set private field on non-instance");
+    }
+    privateMap.set(receiver, value);
+    return value;
+}
+
 
 /***/ }),
 
@@ -352,18 +606,20 @@ module.exports = "\n<div (click)=\"exportTableToExcel('tblReporte','prueba')\">d
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "APP_ROUTES", function() { return APP_ROUTES; });
-/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/fesm2015/router.js");
-/* harmony import */ var _components_questions_questions_component__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/questions/questions.component */ "./src/app/components/questions/questions.component.ts");
-/* harmony import */ var _components_report_report_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/report/report.component */ "./src/app/components/report/report.component.ts");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+/* harmony import */ var _components_questions_questions_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/questions/questions.component */ "./src/app/components/questions/questions.component.ts");
+/* harmony import */ var _components_report_report_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/report/report.component */ "./src/app/components/report/report.component.ts");
+
 
 
 
 const ROUTES = [
-    { path: 'report', component: _components_report_report_component__WEBPACK_IMPORTED_MODULE_2__["ReportComponent"] },
-    { path: '**', pathMatch: 'full', component: _components_questions_questions_component__WEBPACK_IMPORTED_MODULE_1__["QuestionsComponent"] }
+    { path: 'report', component: _components_report_report_component__WEBPACK_IMPORTED_MODULE_3__["ReportComponent"] },
+    { path: '**', pathMatch: 'full', component: _components_questions_questions_component__WEBPACK_IMPORTED_MODULE_2__["QuestionsComponent"] }
     // { path: '**', pathMatch: 'full' , redirectTo: 'preguntas'},
 ];
-const APP_ROUTES = _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].forRoot(ROUTES);
+const APP_ROUTES = _angular_router__WEBPACK_IMPORTED_MODULE_1__["RouterModule"].forRoot(ROUTES);
 
 
 /***/ }),
@@ -372,10 +628,12 @@ const APP_ROUTES = _angular_router__WEBPACK_IMPORTED_MODULE_0__["RouterModule"].
 /*!***********************************!*\
   !*** ./src/app/app.component.css ***!
   \***********************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FwcC5jb21wb25lbnQuY3NzIn0= */"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2FwcC5jb21wb25lbnQuY3NzIn0= */");
 
 /***/ }),
 
@@ -390,7 +648,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppComponent", function() { return AppComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 
 
 let AppComponent = class AppComponent {
@@ -398,11 +656,11 @@ let AppComponent = class AppComponent {
         this.title = 'encuestas';
     }
 };
-AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+AppComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-root',
-        template: __webpack_require__(/*! raw-loader!./app.component.html */ "./node_modules/raw-loader/index.js!./src/app/app.component.html"),
-        styles: [__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")]
+        template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./app.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/app.component.html")).default,
+        styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./app.component.css */ "./src/app/app.component.css")).default]
     })
 ], AppComponent);
 
@@ -421,19 +679,19 @@ AppComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AppModule", function() { return AppModule; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/fesm2015/platform-browser.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/platform-browser */ "./node_modules/@angular/platform-browser/__ivy_ngcc__/fesm2015/platform-browser.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var _app_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app.component */ "./src/app/app.component.ts");
 /* harmony import */ var _components_questions_questions_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/questions/questions.component */ "./src/app/components/questions/questions.component.ts");
 /* harmony import */ var _app_routing__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./app-routing */ "./src/app/app-routing.ts");
-/* harmony import */ var _angular_fire__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/fire */ "./node_modules/@angular/fire/es2015/index.js");
-/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/es2015/index.js");
+/* harmony import */ var _angular_fire__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! @angular/fire */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm2015/angular-fire.js");
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm2015/angular-fire-firestore.js");
 /* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ../environments/environment */ "./src/environments/environment.ts");
 /* harmony import */ var _pipes_key_array_pipe__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pipes/key-array.pipe */ "./src/app/pipes/key-array.pipe.ts");
-/* harmony import */ var nl2br_pipe__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! nl2br-pipe */ "./node_modules/nl2br-pipe/fesm2015/nl2br-pipe.js");
-/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/fesm2015/forms.js");
+/* harmony import */ var nl2br_pipe__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! nl2br-pipe */ "./node_modules/nl2br-pipe/__ivy_ngcc__/fesm2015/nl2br-pipe.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
 /* harmony import */ var _components_report_report_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/report/report.component */ "./src/app/components/report/report.component.ts");
-/* harmony import */ var ng2_charts__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ng2-charts */ "./node_modules/ng2-charts/fesm2015/ng2-charts.js");
+/* harmony import */ var ng2_charts__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ng2-charts */ "./node_modules/ng2-charts/__ivy_ngcc__/fesm2015/ng2-charts.js");
 
 
 
@@ -450,7 +708,7 @@ __webpack_require__.r(__webpack_exports__);
 
 let AppModule = class AppModule {
 };
-AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_2__["NgModule"])({
         declarations: [
             _app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"],
@@ -481,10 +739,12 @@ AppModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*!**************************************************************!*\
   !*** ./src/app/components/questions/questions.component.css ***!
   \**************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvcXVlc3Rpb25zL3F1ZXN0aW9ucy5jb21wb25lbnQuY3NzIn0= */"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvcXVlc3Rpb25zL3F1ZXN0aW9ucy5jb21wb25lbnQuY3NzIn0= */");
 
 /***/ }),
 
@@ -499,7 +759,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QuestionsComponent", function() { return QuestionsComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var src_app_models_questions_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/models/questions.module */ "./src/app/models/questions.module.ts");
 /* harmony import */ var src_app_services_questions_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/questions.service */ "./src/app/services/questions.service.ts");
 /* harmony import */ var src_app_models_user_module__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! src/app/models/user.module */ "./src/app/models/user.module.ts");
@@ -949,20 +1209,20 @@ QuestionsComponent.ctorParameters = () => [
     { type: src_app_services_response_service__WEBPACK_IMPORTED_MODULE_6__["ResponseService"] },
     { type: _angular_core__WEBPACK_IMPORTED_MODULE_1__["Renderer2"] }
 ];
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('csvReaderQuestions', { static: false })
 ], QuestionsComponent.prototype, "csvReaderQuestions", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('csvReaderUsers', { static: false })
 ], QuestionsComponent.prototype, "csvReaderUsers", void 0);
-tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])('camp', { static: false })
 ], QuestionsComponent.prototype, "camp", void 0);
-QuestionsComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+QuestionsComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-questions',
-        template: __webpack_require__(/*! raw-loader!./questions.component.html */ "./node_modules/raw-loader/index.js!./src/app/components/questions/questions.component.html"),
-        styles: [__webpack_require__(/*! ./questions.component.css */ "./src/app/components/questions/questions.component.css")]
+        template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./questions.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/questions/questions.component.html")).default,
+        styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./questions.component.css */ "./src/app/components/questions/questions.component.css")).default]
     })
 ], QuestionsComponent);
 
@@ -974,10 +1234,12 @@ QuestionsComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 /*!********************************************************!*\
   !*** ./src/app/components/report/report.component.css ***!
   \********************************************************/
-/*! no static exports found */
-/***/ (function(module, exports) {
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvcmVwb3J0L3JlcG9ydC5jb21wb25lbnQuY3NzIn0= */"
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvcmVwb3J0L3JlcG9ydC5jb21wb25lbnQuY3NzIn0= */");
 
 /***/ }),
 
@@ -992,7 +1254,7 @@ module.exports = "\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReportComponent", function() { return ReportComponent; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 /* harmony import */ var src_app_services_reports_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! src/app/services/reports.service */ "./src/app/services/reports.service.ts");
 /* harmony import */ var src_app_services_questions_service__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! src/app/services/questions.service */ "./src/app/services/questions.service.ts");
 
@@ -1113,11 +1375,11 @@ ReportComponent.ctorParameters = () => [
     { type: src_app_services_reports_service__WEBPACK_IMPORTED_MODULE_2__["ReportsService"] },
     { type: src_app_services_questions_service__WEBPACK_IMPORTED_MODULE_3__["QuestionsService"] }
 ];
-ReportComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+ReportComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
         selector: 'app-report',
-        template: __webpack_require__(/*! raw-loader!./report.component.html */ "./node_modules/raw-loader/index.js!./src/app/components/report/report.component.html"),
-        styles: [__webpack_require__(/*! ./report.component.css */ "./src/app/components/report/report.component.css")]
+        template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./report.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/report/report.component.html")).default,
+        styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./report.component.css */ "./src/app/components/report/report.component.css")).default]
     })
 ], ReportComponent);
 
@@ -1136,8 +1398,8 @@ ReportComponent = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QuestionsModule", function() { return QuestionsModule; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
 
 
 
@@ -1146,7 +1408,7 @@ let QuestionsModule = class QuestionsModule {
         this.repeat = '';
     }
 };
-QuestionsModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+QuestionsModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         declarations: [],
         imports: [
@@ -1170,14 +1432,14 @@ QuestionsModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResponseModule", function() { return ResponseModule; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
 
 
 
 let ResponseModule = class ResponseModule {
 };
-ResponseModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+ResponseModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         declarations: [],
         imports: [
@@ -1201,14 +1463,14 @@ ResponseModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UserModule", function() { return UserModule; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/fesm2015/common.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_common__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/common */ "./node_modules/@angular/common/__ivy_ngcc__/fesm2015/common.js");
 
 
 
 let UserModule = class UserModule {
 };
-UserModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+UserModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["NgModule"])({
         declarations: [],
         imports: [
@@ -1232,7 +1494,7 @@ UserModule = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "KeyArrayPipe", function() { return KeyArrayPipe; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
 
 
 let KeyArrayPipe = class KeyArrayPipe {
@@ -1244,7 +1506,7 @@ let KeyArrayPipe = class KeyArrayPipe {
         return keys;
     }
 };
-KeyArrayPipe = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+KeyArrayPipe = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Pipe"])({
         name: 'keyArray'
     })
@@ -1265,8 +1527,8 @@ KeyArrayPipe = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "QuestionsService", function() { return QuestionsService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/es2015/index.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm2015/angular-fire-firestore.js");
 
 
 
@@ -1295,7 +1557,7 @@ let QuestionsService = class QuestionsService {
 QuestionsService.ctorParameters = () => [
     { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"] }
 ];
-QuestionsService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+QuestionsService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root'
     })
@@ -1316,8 +1578,8 @@ QuestionsService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ReportsService", function() { return ReportsService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/es2015/index.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm2015/angular-fire-firestore.js");
 
 
 
@@ -1339,7 +1601,7 @@ let ReportsService = class ReportsService {
 ReportsService.ctorParameters = () => [
     { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"] }
 ];
-ReportsService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+ReportsService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root'
     })
@@ -1360,15 +1622,15 @@ ReportsService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ResponseService", function() { return ResponseService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/es2015/index.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm2015/angular-fire-firestore.js");
 
 
 
 let ResponseService = class ResponseService {
     constructor(afs) {
         this.afs = afs;
-        this.collection = "response";
+        this.collection = "response_pruebas";
         this.dataUpdate = [];
     }
     getResponse(idQuestion, idDocumentFire) {
@@ -1396,7 +1658,7 @@ let ResponseService = class ResponseService {
 ResponseService.ctorParameters = () => [
     { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"] }
 ];
-ResponseService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+ResponseService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root'
     })
@@ -1417,8 +1679,8 @@ ResponseService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "UsersService", function() { return UsersService; });
 /* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/firestore/es2015/index.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm2015/angular-fire-firestore.js");
 
 
 
@@ -1440,7 +1702,7 @@ let UsersService = class UsersService {
 UsersService.ctorParameters = () => [
     { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"] }
 ];
-UsersService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
+UsersService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
     Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
         providedIn: 'root'
     })
@@ -1460,9 +1722,11 @@ UsersService = tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"]([
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "environment", function() { return environment; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
 // This file can be replaced during build by using the `fileReplacements` array.
 // `ng build --prod` replaces `environment.ts` with `environment.prod.ts`.
 // The list of file replacements can be found in `angular.json`.
+
 const environment = {
     production: false,
     firebase: {
@@ -1505,18 +1769,20 @@ const environment = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/fesm2015/core.js");
-/* harmony import */ var _angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/platform-browser-dynamic */ "./node_modules/@angular/platform-browser-dynamic/fesm2015/platform-browser-dynamic.js");
-/* harmony import */ var _app_app_module__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./app/app.module */ "./src/app/app.module.ts");
-/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./environments/environment */ "./src/environments/environment.ts");
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/platform-browser-dynamic */ "./node_modules/@angular/platform-browser-dynamic/__ivy_ngcc__/fesm2015/platform-browser-dynamic.js");
+/* harmony import */ var _app_app_module__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./app/app.module */ "./src/app/app.module.ts");
+/* harmony import */ var _environments_environment__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./environments/environment */ "./src/environments/environment.ts");
 
 
 
 
-if (_environments_environment__WEBPACK_IMPORTED_MODULE_3__["environment"].production) {
-    Object(_angular_core__WEBPACK_IMPORTED_MODULE_0__["enableProdMode"])();
+
+if (_environments_environment__WEBPACK_IMPORTED_MODULE_4__["environment"].production) {
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["enableProdMode"])();
 }
-Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_1__["platformBrowserDynamic"])().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_2__["AppModule"])
+Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformBrowserDynamic"])().bootstrapModule(_app_app_module__WEBPACK_IMPORTED_MODULE_3__["AppModule"])
     .catch(err => console.error(err));
 
 

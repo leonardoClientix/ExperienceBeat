@@ -8,7 +8,7 @@ import * as firebase from 'firebase';
 })
 export class ResponseService {
 
-  collection:any = "response";
+  collection:any = "response_leonardo";
   dataUpdate = [];
 
   private itemsCollection: AngularFirestoreCollection<any>;

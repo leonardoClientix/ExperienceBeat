@@ -73,7 +73,6 @@ export class QuestionsComponent  implements OnInit {
 
   send(forma){
 
-
     if(this.listResponse.question){
 
     let cont =  this.listResponse.question;

@@ -11,13 +11,17 @@ import { Nl2BrPipeModule } from 'nl2br-pipe';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ReportComponent } from './components/report/report.component';
 import { ChartsModule } from 'ng2-charts';
+import { LoginComponent } from './components/admin/login/login.component';
+import { ConfigQuestionsComponent } from './components/admin/config-questions/config-questions.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     QuestionsComponent,
     KeyArrayPipe,
-    ReportComponent
+    ReportComponent,
+    LoginComponent,
+    ConfigQuestionsComponent
   ],
   imports: [
     BrowserModule,
