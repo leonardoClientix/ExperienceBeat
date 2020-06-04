@@ -1,6 +1,31 @@
-<nav class="navbar navbar-light bg-light nav-float">
-  <a class="navbar-brand logo"><img src="assets/img/logo.png"></a>
-  <a class=" my-2 my-lg-0 navbar-brand logo"><img src="assets/img/LogoClientix.png"></a>
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <a class="navbar-brand" href="#">
+    <img src="https://getbootstrap.com/docs/4.4/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
+    Experience<b>Beat</b>
+  </a>
+
+  <div class="collapse navbar-collapse" id="navbarTogglerDemo03">
+    <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+      <li class="nav-item" routerLinkActive="active" >
+        <a class="nav-link" [routerLink]="['config-questions']">Nueva Encuesta</a>
+      </li>
+      <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Encuestas
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item" href="#">Listado de encuestas</a>
+          <a class="dropdown-item" href="#">Reportes</a>
+        </div>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <button class="btn btn-outline-info my-2 my-sm-0" type="submit">Salir</button>
+    </form>
+  </div>
 </nav>
 <div class="container top-50">
   <router-outlet></router-outlet>

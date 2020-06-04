@@ -13,6 +13,9 @@ import { ReportComponent } from './components/report/report.component';
 import { ChartsModule } from 'ng2-charts';
 import { LoginComponent } from './components/admin/login/login.component';
 import { ConfigQuestionsComponent } from './components/admin/config-questions/config-questions.component';
+import { ColorPickerModule } from 'ngx-color-picker';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { NgxSortableModule } from 'ngx-sortable'
 
 @NgModule({
   declarations: [
@@ -31,7 +34,10 @@ import { ConfigQuestionsComponent } from './components/admin/config-questions/co
     Nl2BrPipeModule,
     FormsModule,
     ReactiveFormsModule,
-    ChartsModule
+    ChartsModule,
+    ColorPickerModule,
+    FontAwesomeModule,
+    NgxSortableModule
   ],
   providers: [],
   bootstrap: [AppComponent]

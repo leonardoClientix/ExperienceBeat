@@ -11,6 +11,9 @@ ol {
 body{
   background-color: #f1f1f1 !important;
 }
+h1 {
+  margin-bottom: 43px !important;
+}
 .bg-col {
     background-color: #000000 !important;
     border-color: #000000 !important;
@@ -24,8 +27,31 @@ body{
 .logo img{
   width: 191px;
 }
+.form-control-lg {
+  height: calc(1.5em + 1rem + 2px) !important;
+  padding: .5rem 1rem !important;
+  font-size: 1.25rem !important;
+  line-height: 1.5 !important;
+  border-radius: .3rem !important;
+}
+.color1{
+  background-color: #000000;
+}
+#color1{
+  background-color: #ca980a;
+}
+.rad-color{
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: #5ea2ef;
+  border: none;
+  margin-left: 5px;
+  cursor: pointer;
+}
 .top-50{
   margin-top: 120px;
+  margin-bottom: 120PX;
 }
 .txt-question{
   font-size: 20px;
@@ -51,6 +77,17 @@ label.item-num {
     height: 45px;
     font-size: 19px;
     font-weight: bold;
+}
+textarea, input {
+  border: none;
+  overflow: auto;
+  outline: none;
+
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+
+  resize: none; /*remove the resize handle on the bottom right*/
 }
 .list-check  {
   margin-left: 44px;
@@ -82,7 +119,7 @@ label.item-num {
 .two-box .form-check{
   /*width: 50%;*/
   color: #000000;
-  background-color: #fdc82f;
+  background-color: #94d7f7;
   border: solid 1px #fff;
 }
 /*.tb-mul .form-check {
@@ -176,7 +213,7 @@ label.item-num {
     margin-left: 40px;
 }
 .two-box .box-action:hover{
-  background-color: #ffffff;
+  background-color: #ffffff !important;
 }
 .two-box .box-action:hover label{
     color: #fdc82f;
@@ -258,6 +295,224 @@ label.item-num {
 .lab-text{
   background-color: #f9a8ff !important;
 }
+
+/* Preview encuesta */
+.header-preview {
+  background-color: #ddd;
+  height: 48px;
+  color: #5d5858;
+  padding: 11px;
+}
+.box-preview {
+  background-color: #fff;
+  height: 612px;
+  border-radius: 20px;
+  overflow: hidden;
+  padding: 0 !important;
+  -webkit-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.31);
+  -moz-box-shadow:    1px 1px 10px 0px rgba(50, 50, 50, 0.31);
+  box-shadow:         1px 1px 10px 0px rgba(50, 50, 50, 0.31);
+}
+.box-cont {
+  background-color: #eaedf3;
+  height: 119px;
+  padding: 23px;
+  margin: 22px;
+  border-radius: 11px;
+}
+
+/* QUESTIONS  */
+
+.cont-question{
+  border: none;
+  background-color: initial;
+  resize: vertical;
+  width: 100%;
+  font-size: 20px;
+  font-family: 'Poppins', sans-serif;
+  color: #6d6969;
+}
+
+.cont-itemquestion{
+  background-color: #eaedf3;
+  -webkit-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.31);
+  -moz-box-shadow:    1px 1px 10px 0px rgba(50, 50, 50, 0.31);
+  box-shadow:         1px 1px 10px 0px rgba(50, 50, 50, 0.31);
+  border-radius: 11px;
+  padding: 56px !important;
+}
+
+.min-icon {
+  font-size: 30px;
+  float: left;
+  height: 21px;
+  line-height: 0 !important;
+  display: block;
+  text-align: initial;
+  color: #000000;
+  cursor: pointer;
+  line-height: 0.5 !important;
+  margin-left: 11px;
+}
+.bt-plus{
+  margin-top: 31px;
+  background-color: #ddd;
+  padding: 5px;
+  height: 33px;
+  width: 33px;
+  text-align: center;
+  border-radius: 50%;
+}
+
+.input-opt{
+  background: none;
+  width: 100px;
+  border: solid 1px #bbb;
+  border-radius: 20px;
+  padding-left: 13px;
+}
+
+.min-icon svg{
+  height: 100%;
+}
+
+.plus-question{
+  color: #007bff;
+  font-size: 57px;
+  padding: 10px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.img-quiestion-type{
+  width: 100%;
+}
+.confg-controls {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.confg-controls .rad-color , .confg-controls .conf-icon{
+  width: 30px;
+  height: 30px;
+}
+.conf-icon{
+  border-radius: 50%;
+  background-color: #060c17;
+  color: white;
+  padding: 7px;
+  margin: 5px;
+  cursor: pointer;
+}
+.confg-controls li {
+  min-height: 40px;
+}
+
+.box-button {
+  margin: 19px;
+}
+
+.box-button .bt-cf{
+  margin: 0;
+  padding: 0;
+}
+.ctr-btns{
+  position: fixed;
+  bottom: 35px;
+  right: 35px;
+}
+
+.ctr-btns ul{
+  list-style: none;
+  margin: 0;
+}
+
+.ctr-btns li {
+  float: left;
+}
+
+.boxQuestion{
+  margin-top: 20px;
+}
+.box-cont-qs{
+  padding: 39px;
+  background: #e4bebe;
+}
+
+ngx-sortable ul{
+  overflow: initial !important;
+}
+
+ngx-sortable .sortable-container{
+  border: none !important;
+}
+.sortable-container li{
+  background: none !important;
+}
+
+.bt-right{
+  float: right;
+}
+
+.cont-question-txt {
+  width: 100%;
+  min-height: 117px;
+  padding: 20px;
+}
+
+/*ESTILOS DE PREGUNTAS*/
+
+.style-labels .inp-checkbox{
+  display: none;
+}
+
+.style-labels .input-opt{ 
+  border: none;
+}
+
+.style-table {
+  font-size: 15px;
+  color: #000;
+} 
+
+.style-table .head-table{
+  min-height: 50px;
+  background-color: white;
+}
+
+.style-table .box-fixed{
+  position: fixed;
+  z-index: 1;
+  padding: 0;
+}
+
+.style-table .cont-table{
+  overflow: auto;
+}
+
+.style-table .scroll-table{
+  width: 1100px;
+}
+
+.style-table .tr{
+  border: solid 1px #ddd;
+  padding: 12px;
+  text-align: center;
+  margin: 0 !important;
+}
+.style-table .td{
+  padding: 12px;
+  text-align: center;
+  margin: 0 !important;
+}
+
+.style-table .free-fixed{
+  margin-left: 38%;
+  width: inherit !important;
+}
+
+
 @media (max-width: 576px){
   .two-box{
     padding: 0;
