@@ -109,19 +109,16 @@
                       <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt"  [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone1"/></span></label>
                       <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item.idQuestion,'itemOpt',i)">-</div> 
                     </div>
-                  </div>
-
-                  <div class="form-check form-check-inline">
-                    <div  class="min-icon bt-plus "  title="Agregar Opción" (click)="addOpt(item.idQuestion,'itemOpt')">+</div>
-                  </div>
+                  </div> 
 
               </div>
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
                   <li><div [colorPicker]="colorQuestionAlone1" (colorPickerChange)="colorQuestionAlone1 = $event" class="rad-color" [style.background]="colorQuestionAlone1" [style.background]="colorQuestion" id="color-question" title="Tarjeta Pregunta"></div></li>
                   <li><div [colorPicker]="TxtQuestionAlone1" (colorPickerChange)="TxtQuestionAlone1 = $event" class="rad-color" [style.background]="TxtQuestionAlone1" [style.background]="TxtQuestion"id="color-question" title="Texto Pregunta"></div></li> 
-                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" ></fa-icon></li>
-                  <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
+                  <li> <fa-icon [icon]="faClone" class="conf-icon" title="Clonar pregunta" ></fa-icon></li>
+                  <li> <fa-icon [icon]="faEdit" class="conf-icon" title="Editar pregunta" ></fa-icon></li>    
+                  <li> <fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item.idQuestion,'itemOpt')"></fa-icon></li>    
                 </ul>
               </div>
             </div> 
@@ -139,10 +136,6 @@
                     </div>
                   </div>
 
-                  <div class="form-check form-check-inline">
-                    <div  class="min-icon bt-plus "  title="Agregar Opción" (click)="addOpt(item.idQuestion,'itemCubi')">+</div>
-                  </div>
-
               </div>
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
@@ -150,13 +143,14 @@
                   <li><div [colorPicker]="TxtQuestionAlone2" (colorPickerChange)="TxtQuestionAlone2 = $event" class="rad-color" [style.background]="TxtQuestionAlone2" [style.background]="TxtQuestion"id="color-question" title="Texto Pregunta"></div></li> 
                   <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" ></fa-icon></li>
                   <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
+                  <li> <fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item.idQuestion,'itemCubi')"></fa-icon></li>  
                 </ul>
               </div>
             </div> 
 
 
             <div class="row boxQuestion" *ngIf="item.idQuestion == 4">
-              <div class="col-md-11 mb-11 cont-itemquestion " [style.background]="colorQuestion" [style.background]="colorQuestionAlone3">
+              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="colorQuestion" [style.background]="colorQuestionAlone3">
                 <textarea class="cont-question" [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone3"></textarea>
        
                   <div class="list-check">
@@ -171,10 +165,13 @@
                           <div class="items-options-list col-md-3">
                             <div class="form-check form-check-inline" *ngFor="let idqs of item.itemCheckMult[l].options; let i = index">
                               <input class="form-check-input inp-checkbox" type="radio" name="question_{{i}}" [value]="opt"  id="inlineCheckbox_{{i}}" #dataCkMensaje>
-                              <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt" [style.color]="TxtOption"  [style.color]="TxtQuestionAlone3" /></span></label>
+                              <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt" [style.color]="TxtOption" [style.color]="TxtQuestionAlone3" /></span></label>
                               <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item.idQuestion,'itemCheckMult',i)">-</div> 
                             </div>
-                            <div  class="min-icon bt-plus bt-right"  title="Agregar Opción" (click)="addOptLabel(item.idQuestion,'itemCheckMult',l)">+</div>
+                            <ul class="confg-controls ind-cont">
+                              <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOptLabel(item.idQuestion,'itemCheckMult',l)"></fa-icon></li>
+                            </ul>
+                            
                           </div>
                       </div>
 
@@ -183,9 +180,6 @@
                     </div>
                   </div>
 
-                  <div class="form-check form-check-inline">
-                    <div  class="min-icon bt-plus "  title="Agregar Etiqueta" (click)="addOpt(item.idQuestion,'itemCheckMult')">+</div>
-                  </div>
 
               </div>
               <div class="col-md-1 mb-1">
@@ -194,6 +188,7 @@
                   <li><div [colorPicker]="TxtQuestionAlone3" (colorPickerChange)="TxtQuestionAlone3 = $event" class="rad-color" [style.background]="TxtQuestionAlone3" [style.background]="TxtQuestion" id="color-question" title="Texto Pregunta"></div></li> 
                   <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" ></fa-icon></li>
                   <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
+                  <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item.idQuestion,'itemCheckMult')"></fa-icon></li>        
                 </ul>
               </div>
             </div> 
@@ -212,31 +207,36 @@
                 </ul>
               </div>
             </div> 
-
+          
             <div class="row boxQuestion style-table" *ngIf="item.idQuestion == 6">
               <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="colorQuestion" [style.background]="colorQuestionAlone5">
                 <textarea class="cont-question" [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone5"></textarea>
                 <div class="row cont-table">
                   <div class="col-md-4 mb-4 box-fixed">
                     <div class="col-md-12 mb-12 tr head-table"></div>
-                    <div class="col-md-12 mb-12 tr head-table">Formación y Desarrollo</div>
-                    <div class="col-md-12 mb-12 tr head-table">Calidad de Vida</div>
+                    <div *ngFor="let lab of item.itemTable; let l = index">
+                      <div class="col-md-12 mb-12 tr head-table"><input name="opnum" class="input-opt w-full" [style.color]="TxtOption" [style.color]="TxtQuestionAlone5" /></div>
+                    </div>
                   </div>
+                  
                   <div class="col-md-12 mb-12">
-                    <div class="row free-fixed" >
-                      <div class="col-md-4 mb-4 tr head-table">Orientación y asesoría</div> 
-                      <div class="col-md-4 mb-4 tr head-table">Comunicación asertiva</div>
-                      <div class="col-md-4 mb-4 tr head-table">Calidad y confiabilidad de la información</div>
-                    </div>
-                    <div class="row free-fixed">
-                      <div class="col-md-4 mb-4 td">1</div>
-                      <div class="col-md-4 mb-4 td">1</div>
-                      <div class="col-md-4 mb-4 td">1</div>
-                    </div>
-                    <div class="row free-fixed">
-                      <div class="col-md-4 mb-4 td">1</div>
-                      <div class="col-md-4 mb-4 td">1</div>
-                      <div class="col-md-4 mb-4 td">1</div>
+                    
+                    <div *ngFor="let lab of item.itemTable; let l = index" class="free-fixed row">
+
+                      <div *ngIf="l == 0" class="w-full">
+                        <ul class="confg-controls conf-int">
+                          <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOptLabel(item.idQuestion,'itemTable',l)"></fa-icon></li>
+                        </ul>
+                        <div  *ngFor="let idqs of item.itemTable[l].options; let i = index" class="col-md-4 col-td">
+                          <div class="row" >
+                            <div class="col-md-12 mb-12 tr head-table"><input name="opnum" class="input-opt w-full" [style.color]="TxtOption" [style.color]="TxtQuestionAlone5" /></div> 
+                          </div>
+                          <div class="row" *ngFor="let lab of item.itemTable; let d = index">
+                            <div class="col-md-4 mb-4 td"></div>
+                          </div>
+                        </div>
+                      </div>
+
                     </div>
                   </div>
                 </div>
@@ -247,6 +247,7 @@
                   <li><div [colorPicker]="TxtQuestionAlone5" (colorPickerChange)="TxtQuestionAlone5 = $event" class="rad-color" [style.background]="TxtQuestionAlone5" [style.background]="TxtQuestion"id="color-question" title="Texto Pregunta"></div></li> 
                   <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" ></fa-icon></li>
                   <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
+                  <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item.idQuestion,'itemTable')"></fa-icon></li>
                 </ul>
               </div>
             </div> 

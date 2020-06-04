@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl , Validators , FormArray} from '@angular/forms';
-import { faClone, faEdit, faSave, faArrowAltCircleRight, faArrowAltCircleLeft, faPlusCircle,faSortDown, faSortUp, faAngleLeft,faAngleRight } from '@fortawesome/free-solid-svg-icons';
+import { faClone, faEdit, faSave, faArrowAltCircleRight, faArrowAltCircleLeft, faPlusCircle,faSortDown, faSortUp, faAngleLeft,faAngleRight, faPlus } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-config-questions',
@@ -23,6 +23,7 @@ export class ConfigQuestionsComponent implements OnInit {
   faArrowAltCircleLeft = faArrowAltCircleLeft;
   faAngleLeft = faAngleLeft;
   faAngleRight = faAngleRight;
+  faPlus = faPlus;
 
   question:Object = {
     logo : null,
@@ -59,7 +60,11 @@ export class ConfigQuestionsComponent implements OnInit {
     },{
       idQuestion: 6,
       description : 'Pregunta 6',
-      typeQuestion: 'itemTable'
+      typeQuestion: 'itemTable',
+      itemTable: [{
+        label : 'Formación y Desarrollo',
+        options : [{ name : ''}]
+     }]
     }],
   };
 
@@ -105,11 +110,14 @@ export class ConfigQuestionsComponent implements OnInit {
 
   addOptLabel(idQuestion,type,label){
 
+
+
     console.log("idQuestion",idQuestion);
     console.log("type",type);
     console.log("label",label);
 
     idQuestion = idQuestion -1;
+    console.log("pregunta", this.quiz.question[idQuestion][type]);
 
     this.quiz.question[idQuestion][type][label].options.push({
       name :'' 
@@ -120,7 +128,7 @@ export class ConfigQuestionsComponent implements OnInit {
 
     idQuestion = idQuestion -1;
 
-    if(type == 'itemCheckMult'){
+    if(type == 'itemCheckMult' || type == 'itemTable'){
       this.quiz.question[idQuestion][type].push({
           label : '',
           options : [{ name : ''}]

@@ -393,10 +393,36 @@ textarea, input {
   padding: 0;
 }
 
+.conf-int{
+  margin: 16px;
+  position: fixed;
+  left: 21px;
+  z-index: 1;
+}
+
+.ind-cont{
+  margin: 16px;
+}
+
+.w-full{
+  width: 100%;
+}
+
+.free-fixed .col-td{
+  max-width: 370px;
+  float: left;
+}
+
 .confg-controls .rad-color , .confg-controls .conf-icon{
   width: 30px;
   height: 30px;
 }
+
+.confg-controls .conf-icon svg{
+  width: 16px;
+  height: 16px;
+}
+
 .conf-icon{
   border-radius: 50%;
   background-color: #060c17;
@@ -489,6 +515,7 @@ ngx-sortable .sortable-container{
 
 .style-table .cont-table{
   overflow: auto;
+  padding-bottom: 13px;
 }
 
 .style-table .scroll-table{
@@ -502,14 +529,18 @@ ngx-sortable .sortable-container{
   margin: 0 !important;
 }
 .style-table .td{
-  padding: 12px;
+  padding: 13.8px;
   text-align: center;
   margin: 0 !important;
+  min-width: 100%;
+  background-color: #e2e2e2;
+  border: solid 1px #f3f3f3;
+  min-height: 50px;
 }
 
 .style-table .free-fixed{
   margin-left: 38%;
-  width: inherit !important;
+  width: 300% !important;
 }
 
 
