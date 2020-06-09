@@ -15,7 +15,11 @@ import { LoginComponent } from './components/admin/login/login.component';
 import { ConfigQuestionsComponent } from './components/admin/config-questions/config-questions.component';
 import { ColorPickerModule } from 'ngx-color-picker';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
-import { NgxSortableModule } from 'ngx-sortable'
+import { NgxSortableModule } from 'ngx-sortable';
+import { ListQuizComponent } from './components/admin/list-quiz/list-quiz.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatTableModule } from '@angular/material/table';
+import {MatPaginatorModule} from '@angular/material/paginator';
 
 @NgModule({
   declarations: [
@@ -24,7 +28,8 @@ import { NgxSortableModule } from 'ngx-sortable'
     KeyArrayPipe,
     ReportComponent,
     LoginComponent,
-    ConfigQuestionsComponent
+    ConfigQuestionsComponent,
+    ListQuizComponent
   ],
   imports: [
     BrowserModule,
@@ -37,7 +42,10 @@ import { NgxSortableModule } from 'ngx-sortable'
     ChartsModule,
     ColorPickerModule,
     FontAwesomeModule,
-    NgxSortableModule
+    NgxSortableModule,
+    BrowserAnimationsModule,
+    MatTableModule,
+    MatPaginatorModule
   ],
   providers: [],
   bootstrap: [AppComponent]

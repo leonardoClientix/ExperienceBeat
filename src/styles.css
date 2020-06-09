@@ -3,6 +3,8 @@ html,body {
   /*overflow: hidden;*/
   scroll-behavior: smooth;
   font-family: 'Poppins', sans-serif;
+  height: 100%;
+  line-height: 1.5 !important;
 }
 ol {
   margin: 0 !important;
@@ -13,6 +15,9 @@ body{
 }
 h1 {
   margin-bottom: 43px !important;
+}
+table {
+  width: 100%;
 }
 .bg-col {
     background-color: #000000 !important;
@@ -527,6 +532,8 @@ ngx-sortable .sortable-container{
   padding: 12px;
   text-align: center;
   margin: 0 !important;
+  padding-left: 8px;
+  padding-right: 8px;
 }
 .style-table .td{
   padding: 13.8px;
@@ -558,3 +565,6 @@ ngx-sortable .sortable-container{
     height: 2em;
   }
 }
+
+
+/* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */

@@ -333,3 +333,71 @@
 </form>
 
 </div>
+
+
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+
+  <form [formGroup]="formType" (ngSubmit)="typeQuestion()" class="needs-validation" novalidate>
+  
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalCenterTitle">Nueva Pregunta</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+  
+        <div class="modal-body">
+          <div class="container-fluid">
+            <div class="row">
+              <div class="col-md-6">
+  
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio1" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion">
+                  <label class="custom-control-label" for="customRadio1">Pregunta Abierta</label>
+                </div>
+  
+              </div>
+              <div class="col-md-6">
+                <img src="https://i.pinimg.com/originals/da/c8/d4/dac8d4cb582558f281b6d0e1711c4838.gif" class="img-quiestion-type">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+  
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio2" name="typeQuestion" class="custom-control-input">
+                  <label class="custom-control-label" for="customRadio2">Selección Multiple</label>
+                </div>
+  
+              </div>
+              <div class="col-md-6">
+                <img src="https://i.pinimg.com/originals/b9/83/17/b98317fb6a4557174555cd3330aba443.gif" class="img-quiestion-type">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-6">
+  
+                <div class="custom-control custom-radio">
+                  <input type="radio" id="customRadio3" name="typeQuestion" class="custom-control-input">
+                  <label class="custom-control-label" for="customRadio3">Selección Multiple (tabla)</label>
+                </div>
+  
+              </div>
+              <div class="col-md-6">
+                <img src="https://i.pinimg.com/originals/9e/58/94/9e58940d4cafe94af5521b018e8a601e.gif" class="img-quiestion-type">
+              </div>
+            </div>
+          </div>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+        </div>
+      </div>
+    </div>
+  
+  </form>
+  
+  </div>
