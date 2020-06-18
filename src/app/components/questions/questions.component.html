@@ -106,10 +106,14 @@ Carga de Usuarios
             <div *ngFor="let li of item.questions.option; let o = index" [ngClass]="{'col-sm-10': li.typeDesign == 'value'}" class="ali-box"  >
 
                 <div *ngIf="li.typeDesign == 'value' && conditional(li.conditional) == 0" class="col-sm-12 cn-box " >
-                  <div class="asc form-check form-check-inline col-12 col-sm-3 chl-bok databx{{ item.id }}-{{ da }}-{{ li.id }}" [ngClass]="{'action': indexOfElement( li,'databx'+item.id+'-'+da+'-'+li.id, 'table-multiple' ) == 0 }" *ngFor="let opData of li.options; let da = index" (click)="saveQuiz(li,opData,item.questions.message,da,'table-multiple',item.questions.option,item.id)" >
+
+                  <div class="asc form-check form-check-inline col-12 col-sm-3 chl-bok databx{{ item.id }}-{{ da }}-{{ li.id }}"  *ngFor="let opData of li.options; let da = index"  >
+                  <div (click)="saveQuiz(li,opData,item.questions.message,da,'table-multiple',item.questions.option,item.id)" class="event-cli" [ngClass]="{'action': indexOfElement( li,'databx'+item.id+'-'+da+'-'+li.id, 'table-multiple' ) != -1 }">
                     <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ da }}-{{ li.id }}" value="{{ opData }}"  #dataTableMulti>
                     <label class="form-check-label" for="box{{ item.id }}-{{ da }}-{{ li.id }}"></label>
                   </div>
+                  </div>
+
                 </div>
 
             </div>

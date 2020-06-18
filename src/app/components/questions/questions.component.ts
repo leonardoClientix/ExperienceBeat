@@ -6,6 +6,7 @@ import { UsersService } from 'src/app/services/users.service';
 import { ResponseService } from 'src/app/services/response.service';
 import { ResponseModule } from 'src/app/models/response.module';
 import { NgForm } from '@angular/forms';
+import { analytics } from 'firebase';
 
 @Component({
   selector: 'app-questions',
@@ -109,44 +110,16 @@ export class QuestionsComponent  implements OnInit {
 
   saveQuiz( dataQuestion, options , question , idOp, typeQuestion, label?,idtem? ){
 
+    
+
       let idQuestion = dataQuestion.id;
-
-      console.log(options);
-
-      if( typeQuestion == "table-multiple" ){
-
-        let valAction = dataQuestion.valcheck.indexOf("databx"+idtem+'-'+idOp+'-'+idQuestion);
-        if(valAction  != -1){
-          console.log('encontro');
-          dataQuestion.valcheck.splice(valAction,1);
-        } else {
-            console.log("2");
-            if(dataQuestion.repeat > dataQuestion.valcheck.length){
-              dataQuestion.valcheck.push("databx"+idtem+'-'+idOp+'-'+idQuestion);
-            //  console.log(dataQuestion);
-            }
-            //return true;
-        }
-
-      }
-
-      if( typeQuestion == "table" ){
-
-        let valAction = dataQuestion.questions.valcheck.indexOf("databx"+idtem+'-'+idOp+'-'+idQuestion);
-
-        if(valAction  != -1){
-            dataQuestion.questions.valcheck.splice(valAction,1);
-        } else {
-            if(dataQuestion.questions.repeat > dataQuestion.questions.valcheck.length){
-              dataQuestion.questions.valcheck.push("databx"+idtem+'-'+idOp+'-'+idQuestion);
-              //console.log(dataQuestion);
-            }
-        }
-
-      }
+      let dataStruct:any;
+      let calueOption:any = options.value;
 
       let datLabel:any;
       this.actBox = idtem+"-"+idOp+"-"+idQuestion;
+
+      console.log("id pregunta","databx"+idtem+'-'+idOp+'-'+idQuestion);
 
       if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple"){
 
@@ -157,106 +130,154 @@ export class QuestionsComponent  implements OnInit {
         for (let i = 0; i < label.length; i++) {
 
             if(label[i].id == idLabel){
-              if(typeQuestion == "table-multiple" || typeQuestion == "check-mensaje"){
+              
                 if(label[i].typeDesign == 'label'){
-                //  datLabel = label[i].options[0];
                   datLabel = label[i].options;
                 }
-              } else {
-                datLabel = label[i].options[0];
-              }
+              
             }
         }
 
       }
+      
+      if(typeQuestion == "table" || typeQuestion == "check" || typeQuestion == "check-mensaje" || typeQuestion == "table-multiple"){
 
-
-
-      this._response.getResponse( idQuestion , this.idDocumentFire ).subscribe( ( data:any )=>{
-        let liRes = data.question;
-        for (let i = 0; i < liRes.length; i++) {
-            if(liRes[i].id == idQuestion) {
-              this.trueQuestion = liRes[i].id;
-              this.idTrueQuestion = i;
+            if( typeQuestion == "check-mensaje" || typeQuestion == "table-multiple" ){
+              dataStruct = dataQuestion;
+            } else {
+              dataStruct = dataQuestion.questions;
             }
-        }
-      });
-      console.log(this.trueQuestion);
-      console.log(question);
-      console.log(options);
-      console.log(typeQuestion);
-      console.log(datLabel);
 
-      if(typeQuestion == "table-multiple"){
+            if(typeQuestion == "table-multiple"){
+              calueOption = options;
+            }
 
-        this.listResponse.question = this.pushQuestions(idQuestion,question,options, new Date(),typeQuestion,datLabel);
+           // AGREGAR O QUITAR SELECCION
 
-      } else if(typeQuestion == "table"){
 
-        let dataop;
+           let valAction = dataStruct.valcheck.indexOf("databx"+idtem+'-'+idOp+'-'+idQuestion);
 
-        if(this.trueQuestion != idQuestion) {
-          dataop = [options.value];
-        }
+           if(valAction  != -1){
+              console.log("ya existe");
+               // ELIMINAR LA SELECCION A LA QUE LE HAGO CLICK              
+               dataStruct.valcheck.splice(valAction,1);
+               this.listResponse.question = this.pushQuestions(idQuestion,question,calueOption, new Date(),typeQuestion,datLabel,valAction);
+              
+           } else {
+               // VALIDAR CANTIDAD DE OPCIONES POR PREGUNTA
+               if(dataStruct.repeat > dataStruct.valcheck.length){
+                 console.log("no existe");
+                 // AGREGA LA OPCION
+                 dataStruct.valcheck.push("databx"+idtem+'-'+idOp+'-'+idQuestion);
+                 
+                 this.listResponse.question = this.pushQuestions(idQuestion,question,calueOption, new Date(),typeQuestion,datLabel);
+               } else{
+                 // SI SE PASA DE LA CANTIDAD DE OPCIONES PERMITIDAS , ELIMINA LA ULTIMA OPCION Y AGREGA LA NUEVA
+                 dataStruct.valcheck.splice(dataStruct.valcheck.length-1,1);
+                  console.log("dos no  existe");
+                 dataStruct.valcheck.push("databx"+idtem+'-'+idOp+'-'+idQuestion);
+                 this.listResponse.question = this.pushQuestions(idQuestion,question,calueOption, new Date(),typeQuestion,datLabel,dataStruct.valcheck.length-1);
 
-        this.listResponse.question = this.pushQuestions(idQuestion,question,dataop, new Date(),typeQuestion,datLabel);
+               }
+           }
+
+           ////////////////////////////
+
       }  else {
-        this.listResponse.question = this.pushQuestions(idQuestion,question,options.value, new Date(),typeQuestion,datLabel);
+        this.listResponse.question = this.pushQuestions(idQuestion,question,calueOption, new Date(),typeQuestion,datLabel);
       }
 
       if(typeQuestion == "text"){
         this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
       } else {
-
-        //if(this.trueQuestion == idQuestion) {
-          //this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);
-        //} else {
-          //console.log('add');
-          this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
-      //  }
-
+        this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
      }
+
+     console.log("dataQuestion", this.listResponse);
+     //this.indexOfElement( dataQuestion,"databx"+idtem+'-'+idOp+'-'+idQuestion,typeQuestion );
 
   }
 
-  pushQuestions(idQuestion,message,options,date,typeQuestion,label){
+  pushQuestions(idQuestion,message,options,date,typeQuestion,label,idSplice?){
 
-    for (let i = 0; i < this.svQuestion.length; i++) {
-        if(this.svQuestion[i].id == idQuestion){
-          this.svQuestion.splice(i,1);
+        let pass = true;
+        let saveQuestion:any = {};
+
+      if(typeQuestion == "table-multiple" || typeQuestion == "table" || typeQuestion == "check" || typeQuestion == "check-mensaje" ){
+        console.log("ids",idSplice);
+
+        for (let i = 0; i < this.svQuestion.length; i++) {
+          
+            if(this.svQuestion[i].id == idQuestion){
+              console.log("entro");
+
+              if( typeof idSplice !== 'undefined'){
+                console.log("elimino");
+                if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple" ){
+                  this.svQuestion[i].option.options.splice(idSplice,1);
+                  this.svQuestion[i].option.options.push(options);
+                  console.log(this.svQuestion[i].option.options);
+                } else {
+                  this.svQuestion[i].option.splice(idSplice,1);
+                  this.svQuestion[i].option.push(options);
+                  console.log(this.svQuestion[i].option);
+                }
+                
+              } else {
+
+                if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple" ){
+                  this.svQuestion[i].option.options.push(options);
+                } else {
+                  this.svQuestion[i].option.push(options);
+                }
+                
+              }
+
+              pass = false;
+            }
+          
         }
-    }
+      }
 
-    let saveQuestion:any = {};
+      if(pass == true){  
 
-    if(typeQuestion == "text") {
-      saveQuestion.id = idQuestion;
-      saveQuestion.message = message;
-      saveQuestion.text = options;
-      saveQuestion.date = date;
-    }
+        if(typeQuestion == "text") {
+          
+          saveQuestion.id = idQuestion;
+          saveQuestion.message = message;
+          saveQuestion.text = options;
+          saveQuestion.date = date;
 
-    if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple"){
-      saveQuestion.id = idQuestion;
-      saveQuestion.message = message;
-      saveQuestion.option = { label: label , options: options};
-      saveQuestion.date = date;
-    } else if(typeQuestion == "table") {
-      saveQuestion.option = options;
-      saveQuestion.id = idQuestion;
-      saveQuestion.message = message;
-      saveQuestion.date = date;
-    } else {
-      saveQuestion.id = idQuestion;
-      saveQuestion.message = message;
-      saveQuestion.options = options;
-      saveQuestion.date = date;
-    }
+        }
 
+        if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple"){
 
+          saveQuestion.id = idQuestion;
+          saveQuestion.message = message;
+          saveQuestion.option = { label: label , options: [ options ] };
+          saveQuestion.date = date;
 
-    this.svQuestion.push(saveQuestion);
-    return this.svQuestion;
+        } else if(typeQuestion == "table" || typeQuestion == "check") {
+        
+          saveQuestion.option = [ options ];
+          saveQuestion.id = idQuestion;
+          saveQuestion.message = message;
+          saveQuestion.date = date;
+
+        } else {
+
+          saveQuestion.id = idQuestion;
+          saveQuestion.message = message;
+          saveQuestion.options = options;
+          saveQuestion.date = date;
+
+        }
+
+        this.svQuestion.push(saveQuestion);
+
+      }
+      
+      return this.svQuestion;
 
   }
 
@@ -294,26 +315,45 @@ export class QuestionsComponent  implements OnInit {
 
   indexOfElement( data,element,typeQuestion ){
     data.topB = 0;
-   //console.log(element);
-   //console.log(data);
+
+   
 
     let resp ;
-   if( typeQuestion != "table-multiple" ){
+    if( typeQuestion != "table-multiple" ){
+      
+        // resp = -1;
+        //   if( data.questions.valcheck.indexOf(element) != -1 ){
+        //     resp = 0;
+        //   }
 
-      resp = -1;
-        if( data.questions.valcheck.indexOf(element) != -1 ){
-          resp = 0;
-        }
-    } else {
-      if(data.valcheck !== undefined){
-        resp = -1;
-        if( data.valcheck.indexOf(element) != -1 ){
-          resp = 0;
-        }
+        // if(data.questions.valcheck == element){
+        //   return 0;
+        // }
+
+        // console.log(data.questions.valcheck.indexOf(element));
+
+        return data.questions.valcheck.indexOf(element);
+
+      } else {
+        
+      //   console.log("valcheck",data.valcheck);
+      //   console.log("element",element);
+      // // if(data.valcheck !== undefined){
+      //     resp = -1;
+      //     if( data.valcheck.indexOf(element) != -1 ){
+      //       resp = 0;
+      //     }
+      // // }
+
+      // if(data.valcheck == element){
+      //   return 0;
+      // }
+      return data.valcheck.indexOf(element);
+
       }
 
-    }
-    return resp;
+      // return resp;
+
   }
 
   conditional( data ){

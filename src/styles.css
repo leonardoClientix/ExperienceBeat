@@ -161,6 +161,11 @@ textarea, input {
     width: 156px;
     min-width: 156px;
     font-size: 72%;
+    padding: 0;
+}
+.event-cli{
+  width: -webkit-fill-available;
+  height: -webkit-fill-available;
 }
 .min-tab , .head-left .form-check{
   background: #ffffff !important;
