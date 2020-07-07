@@ -19,7 +19,9 @@ import { NgxSortableModule } from 'ngx-sortable';
 import { ListQuizComponent } from './components/admin/list-quiz/list-quiz.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatTableModule } from '@angular/material/table';
-import {MatPaginatorModule} from '@angular/material/paginator';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
+import { MatSortModule } from '@angular/material/sort';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     ReportComponent,
     LoginComponent,
     ConfigQuestionsComponent,
-    ListQuizComponent
+    ListQuizComponent,
+    DashboardComponent
   ],
   imports: [
     BrowserModule,
@@ -45,7 +48,8 @@ import {MatPaginatorModule} from '@angular/material/paginator';
     NgxSortableModule,
     BrowserAnimationsModule,
     MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule,
+    MatSortModule
   ],
   providers: [],
   bootstrap: [AppComponent]

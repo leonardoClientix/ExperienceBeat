@@ -19,6 +19,9 @@ h1 {
 table {
   width: 100%;
 }
+th.mat-sort-header-sorted {
+  color: black;
+}
 .bg-col {
     background-color: #000000 !important;
     border-color: #000000 !important;
@@ -208,6 +211,9 @@ textarea, input {
   padding: 7px;
   padding-right: 14px !important;
 }
+.cn-box .chl-bok {
+  height: 46px !important;
+}
 .ali-box {
     float: left;
     margin: 0 !important;
@@ -269,6 +275,9 @@ textarea, input {
 .list-cont-questions .form-group.active{
   background-color: aliceblue;
   transition-duration: 1s;
+}
+.list-cont-questions .valAct{
+  border: #ff000061 solid;
 }
 .tb-report thead {
     border-bottom: solid 30px #fff;
@@ -571,5 +580,121 @@ ngx-sortable .sortable-container{
   }
 }
 
+/* DASHBOARD */
 
+.box-data{
+  background-color: white;
+  border-radius: 20px;
+  padding: 27px;
+  margin-bottom: 31px;
+}
+
+.box-data h3{
+  font-weight: bold;
+}
+
+.fade-scale {
+  transform: scale(0);
+  opacity: 0;
+  -webkit-transition: all .25s linear;
+  -o-transition: all .25s linear;
+  transition: all .25s linear;
+}
+
+.modal-dashboard{
+  padding: 0 !important;
+  
+}
+.modal-grap-question  .modal-dialog{
+  margin-left: 0;
+}
+.modal-dashboard .modal-dialog{
+  margin-right: 0;
+}
+.modal-dashboard .modal-dialog, .modal-grap-question  .modal-dialog{
+  margin-top: 0;
+  margin-bottom: 0;
+  height: -webkit-fill-available;
+  max-height: -webkit-fill-available;
+}
+
+.modal-dashboard .modal-dialog .modal-content{
+  height: auto;
+  padding: 33px;
+}
+
+.cont-step{
+  transition-delay: 3s;
+  transition: 1s;
+}
+
+.pop-right {
+  margin-left: -40%;
+  margin-right: 40%;
+}
+
+.pop-left {
+  margin-left: 15%;
+  margin-right: -15%;
+}
+
+.modal-backdrop.show {
+  opacity: 0 !important;
+}
+
+.modal-backdrop{
+  background-color: #3cb1b7 !important;
+}
+
+.modal-content{
+  border: none !important;
+  border-radius: none !important;
+}
+
+.modal-dashboard .modal-content{
+  /* -webkit-box-shadow: inset 20px 0px 26px 0px rgba(50, 50, 50, 0.1);
+  -moz-box-shadow:    inset 20px 0px 26px 0px rgba(50, 50, 50, 0.1);
+  box-shadow:         inset 20px 0px 26px 0px rgba(50, 50, 50, 0.1); */
+  background-color: #f1f1f1;
+}
+
+.alerts-question ul{
+  padding: 0;
+  list-style: none;
+}
 /* body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; } */
+.alerts-question fa-icon.ng-fa-icon.conf-icon {
+  background-color: red;
+}
+
+.background-head {
+  background-color: #046bc3;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  width: -webkit-fill-available;
+  min-height: 273px;
+}
+
+/* LISTADO DE ENCUESTAS  */
+
+.box-profile {
+  margin-top: 4%;
+}
+.box-profile .card {
+  background-color: initial;
+  border: none;
+}
+.box-profile  .img-profile {
+  width: 87px;
+  border-radius: 50%;
+  display: block;
+  margin: auto !important;
+  margin-bottom: 26px !important;
+}
+
+.box-profile h3{
+  text-align: center;
+  color: white;
+}

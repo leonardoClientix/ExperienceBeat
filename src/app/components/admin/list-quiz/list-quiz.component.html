@@ -1,37 +1,95 @@
 <div class="cont-step animated fadeIn">
+
+  <div class="background-head">
+
+    <div class="col-md-2 mb-2 box-profile">
+      <div class="card">
+        <div class="card-body">
+          <img src="https://kottke.org/plus/misc/images/ai-faces-01.jpg" class="mr-3 img-profile" alt="...">
+          <h3 class="card-title">Leonardo Hernandez</h3>
+          <a href="#" class="card-link">Perfil</a>
+        </div>
+      </div>
+    </div>
+    
+  </div>
+
     <h1>Encuestas</h1>
+    <div class="row">
+
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Encuesta de satisfacción</h3>
+            <h5 class="card-subtitle mb-2 text-muted"><b>Creado: </b>2020-06-02</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="card-link">Ver encuesta</a>
+            <a href="#" class="card-link">Estadísticas</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Encuesta de satisfacción</h3>
+            <h5 class="card-subtitle mb-2 text-muted"><b>Creado: </b>2020-06-02</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="card-link">Ver encuesta</a>
+            <a href="#" class="card-link">Estadísticas</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Encuesta de satisfacción</h3>
+            <h5 class="card-subtitle mb-2 text-muted"><b>Creado: </b>2020-06-02</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="card-link">Ver encuesta</a>
+            <a href="#" class="card-link">Estadísticas</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Encuesta de satisfacción</h3>
+            <h5 class="card-subtitle mb-2 text-muted"><b>Creado: </b>2020-06-02</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="card-link">Ver encuesta</a>
+            <a href="#" class="card-link">Estadísticas</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Encuesta de satisfacción</h3>
+            <h5 class="card-subtitle mb-2 text-muted"><b>Creado: </b>2020-06-02</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="card-link">Ver encuesta</a>
+            <a href="#" class="card-link">Estadísticas</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <h3 class="card-title">Encuesta de satisfacción</h3>
+            <h5 class="card-subtitle mb-2 text-muted"><b>Creado: </b>2020-06-02</h5>
+            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+            <a href="#" class="card-link">Ver encuesta</a>
+            <a href="#" class="card-link">Estadísticas</a>
+          </div>
+        </div>
+      </div>
+
+
+    </div>
 </div>
 
-<div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource">
-  
-      <!-- Position Column -->
-      <ng-container matColumnDef="position">
-        <th mat-header-cell *matHeaderCellDef> No. </th>
-        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
-      </ng-container>
-  
-      <!-- Name Column -->
-      <ng-container matColumnDef="name">
-        <th mat-header-cell *matHeaderCellDef> Name </th>
-        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
-      </ng-container>
-  
-      <!-- Weight Column -->
-      <ng-container matColumnDef="weight">
-        <th mat-header-cell *matHeaderCellDef> Weight </th>
-        <td mat-cell *matCellDef="let element"> {{element.weight}} </td>
-      </ng-container>
-  
-      <!-- Symbol Column -->
-      <ng-container matColumnDef="symbol">
-        <th mat-header-cell *matHeaderCellDef> Symbol </th>
-        <td mat-cell *matCellDef="let element"> {{element.symbol}} </td>
-      </ng-container>
-  
-      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-    </table>
-  
-    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
-  </div>

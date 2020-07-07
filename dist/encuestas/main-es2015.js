@@ -318,7 +318,46 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ^\\.\\/.*$";
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("<nav class=\"navbar navbar-light bg-light nav-float\">\n  <a class=\"navbar-brand logo\"><img src=\"assets/img/logo.png\"></a>\n  <a class=\" my-2 my-lg-0 navbar-brand logo\"><img src=\"assets/img/LogoClientix.png\"></a>\n</nav>\n<div class=\"container top-50\">\n  <router-outlet></router-outlet>\n</div>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("<nav class=\"navbar navbar-expand-lg navbar-light bg-light\">\n  <button class=\"navbar-toggler\" type=\"button\" data-toggle=\"collapse\" data-target=\"#navbarTogglerDemo03\" aria-controls=\"navbarTogglerDemo03\" aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n    <span class=\"navbar-toggler-icon\"></span>\n  </button>\n  <a class=\"navbar-brand\" href=\"#\">\n    <img src=\"https://getbootstrap.com/docs/4.4/assets/brand/bootstrap-solid.svg\" width=\"30\" height=\"30\" class=\"d-inline-block align-top\" alt=\"\">\n    Experience<b>Beat</b>\n  </a>\n\n  <div class=\"collapse navbar-collapse\" id=\"navbarTogglerDemo03\">\n    <ul class=\"navbar-nav mr-auto mt-2 mt-lg-0\">\n      <li class=\"nav-item\" routerLinkActive=\"active\" >\n        <a class=\"nav-link\" [routerLink]=\"['config-questions']\">Nueva Encuesta</a>\n      </li>\n      <li class=\"nav-item dropdown\">\n        <a class=\"nav-link dropdown-toggle\" href=\"#\" id=\"navbarDropdown\" role=\"button\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\">\n         Encuestas\n        </a>\n        <div class=\"dropdown-menu\" aria-labelledby=\"navbarDropdown\">\n          <a class=\"dropdown-item\" href=\"#\">Listado de encuestas</a>\n          <a class=\"dropdown-item\" href=\"#\">Reportes</a>\n        </div>\n      </li>\n    </ul>\n    <form class=\"form-inline my-2 my-lg-0\">\n      <button class=\"btn btn-outline-info my-2 my-sm-0\" type=\"submit\">Salir</button>\n    </form>\n  </div>\n</nav>\n<div class=\"container top-50\">\n  <router-outlet></router-outlet>\n</div>");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/admin/config-questions/config-questions.component.html":
+/*!*************************************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/admin/config-questions/config-questions.component.html ***!
+  \*************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"cont-step animated bounceInRight\" *ngIf=\"step == 'configuration-questions'\">\n<h1>Parametros Básicos</h1>\n\n  <div class=\"row\">\n\n    <div class=\"col-md-6 mb-6\">\n\n        <form [formGroup]=\"form\" (ngSubmit)=\"save()\" class=\"needs-validation\" novalidate>\n\n            <div class=\"form-row\">\n              <div class=\"col-md-12 mb-3\">\n                <label for=\"validationServer01\">Nombre de la encuesta</label>\n                <input [(colorPicker)]=\"colorTitle\" class=\"rad-color\" [style.background]=\"colorTitle\"/>\n                <input type=\"text\" class=\"form-control form-control-lg \" id=\"validationServer01\" formControlName=\"nameQuestion\" required>\n              </div>\n              <div class=\"col-md-12 mb-3\">\n                <label for=\"validatedCustomFile\">Logo</label>\n                <div class=\"custom-file\">   \n                    <input type=\"file\" class=\"custom-file-input\" id=\"validatedCustomFile\" name=\"logo\"  required>\n                    <label class=\"custom-file-label form-control-lg \" for=\"validatedCustomFile\">Seleccionar archivo...</label>\n                </div>\n              </div>\n              <div class=\"col-md-12 mb-12\">\n                <h3>Colores de la encuesta</h3>\n              </div>\n              \n              <div class=\"col-md-4 mb-3\"> \n                <label for=\"validatedCustomFile\">Cabecera</label>\n                <input [(colorPicker)]=\"colorHeader\" class=\"rad-color\" [style.background]=\"colorHeader\"/>\n              </div>\n              <div class=\"col-md-4 mb-3\">\n                <label for=\"validatedCustomFile\">Fondo</label>\n                <input [(colorPicker)]=\"colorBackground\" class=\"rad-color\" [style.background]=\"colorBackground\" id=\"color-background\"/>\n              </div>\n              <div class=\"col-md-4 mb-3\">\n                <label for=\"validatedCustomFile\">Tarjeta Pregunta</label>\n                <input [(colorPicker)]=\"colorQuestion\" class=\"rad-color\" [style.background]=\"colorQuestion\" id=\"color-question\"/>\n              </div>\n              <div class=\"col-md-4 mb-3\">\n                <label for=\"validatedCustomFile\">Texto Pregunta</label>\n                <input [(colorPicker)]=\"TxtQuestion\" class=\"rad-color\" [style.background]=\"TxtQuestion\" id=\"color-question\"/>\n              </div>\n              <div class=\"col-md-4 mb-3\">\n                <label for=\"validatedCustomFile\">Opciones</label>\n                <input [(colorPicker)]=\"colorOption\" class=\"rad-color\" [style.background]=\"colorOption\" id=\"color-question\"/>\n              </div>\n              <div class=\"col-md-4 mb-3\">\n                <label for=\"validatedCustomFile\">Texto Opciones</label>\n                <input [(colorPicker)]=\"TxtOption\" class=\"rad-color\" [style.background]=\"TxtOption\" id=\"color-question\"/>\n              </div>\n            </div>\n        \n            \n        </form>\n\n    </div>\n\n    <div class=\"col-md-6 mb-6\">\n        <div class=\"box-preview col-md-12\" [style.background]=\"colorBackground\" >\n            <div class=\"header-preview col-md-12\" [style.background]=\"colorHeader\" [style.color]=\"colorTitle\">\n              {{form.controls['nameQuestion'].value}}\n            </div>\n            <div class=\"col-md-11 mb-11 box-cont\" [style.background]=\"colorQuestion\" [style.color]=\"TxtQuestion\"></div>\n            <div class=\"col-md-11 mb-11 box-cont\" [style.background]=\"colorQuestion\" [style.color]=\"TxtQuestion\"></div>\n            <div class=\"col-md-11 mb-11 box-cont\" [style.background]=\"colorQuestion\" [style.color]=\"TxtQuestion\"></div>\n            <div class=\"col-md-11 mb-11 box-cont\" [style.background]=\"colorQuestion\" [style.color]=\"TxtQuestion\"></div>\n        </div>\n    </div>\n\n  </div>\n\n</div>\n\n<div class=\"ctr-btns\">\n  <ul>\n    <li><fa-icon [icon]=\"faArrowAltCircleRight\" class=\"plus-question\"  title=\"Seguiente\" *ngIf=\"step == 'configuration-questions'\" (click)=\"steps('basic-parameters')\" ></fa-icon></li>\n  </ul>\n</div>\n\n<div class=\"cont-step animated bounceInRight\" *ngIf=\"step == 'basic-parameters'\">\n  <h1>Configuración de Preguntas</h1>\n\n  <ngx-sortable [items]=\"quiz.question\" [listStyle]=\"listStyle\" [showHeader]=\"false\" (listSorted)=\"listOrderChanged($event)\">\n    <ng-template let-item>\n\n        <div class=\"sortable-list-item\">\n      \n            <div class=\"row boxQuestion\" *ngIf=\"item.idQuestion == 1\">\n              <div class=\"col-md-11 mb-11 cont-itemquestion\" [style.background]=\"colorQuestion\" [style.background]=\"colorQuestionAlone0\">\n                <textarea class=\"cont-question\" [style.color]=\"TxtQuestion\" [style.color]=\"TxtQuestionAlone0\"></textarea>\n              </div>\n              <div class=\"col-md-1 mb-1\">\n                <ul class=\"confg-controls\">\n                  <li><div [colorPicker]=\"colorQuestionAlone0\" (colorPickerChange)=\"colorQuestionAlone0 = $event\" class=\"rad-color\" [style.background]=\"colorQuestion\" [style.background]=\"colorQuestionAlone0\" id=\"color-question\" title=\"Tarjeta Pregunta\"></div></li>\n                  <li><div [colorPicker]=\"TxtQuestionAlone0\" (colorPickerChange)=\"TxtQuestionAlone0 = $event\" class=\"rad-color\" [style.background]=\"TxtQuestionAlone0\" [style.background]=\"TxtQuestion\"id=\"color-question\" title=\"Texto Pregunta\"></div></li> \n                  <li> <fa-icon [icon]=\"faClone\" class=\"conf-icon\"  title=\"Clonar pregunta\" ></fa-icon></li>\n                  <li> <fa-icon [icon]=\"faEdit\" class=\"conf-icon\"  title=\"Editar pregunta\" ></fa-icon></li>    \n                </ul>\n              </div>\n            </div> \n\n            <div class=\"row boxQuestion\" *ngIf=\"item.idQuestion == 2\">\n              <div class=\"col-md-11 mb-11 cont-itemquestion\" [style.background]=\"colorQuestion\" [style.background]=\"colorQuestionAlone1\">\n                <textarea class=\"cont-question\" [style.color]=\"TxtQuestion\" [style.color]=\"TxtQuestionAlone1\"></textarea>\n        \n                  <div class=\"list-check\">\n                    <div class=\"form-check form-check-inline\" *ngFor=\"let idqs of item.itemOpt; let i = index\">\n                      <input class=\"form-check-input\" type=\"radio\" name=\"question_{{i}}\"  [value]=\"opt\"  id=\"inlineCheckbox_{{i}}\" #data>\n                      <label class=\"form-check-label\" for=\"inlineCheckbox_{{i}}\" ><span translate=\"no\"><input name=\"opnum\" class=\"input-opt\"  [style.color]=\"TxtQuestion\" [style.color]=\"TxtQuestionAlone1\"/></span></label>\n                      <div  class=\"min-icon\"  title=\"Eliminar Opción\" (click)=\"removeOpt(item.idQuestion,'itemOpt',i)\">-</div> \n                    </div>\n                  </div> \n\n              </div>\n              <div class=\"col-md-1 mb-1\">\n                <ul class=\"confg-controls\">\n                  <li><div [colorPicker]=\"colorQuestionAlone1\" (colorPickerChange)=\"colorQuestionAlone1 = $event\" class=\"rad-color\" [style.background]=\"colorQuestionAlone1\" [style.background]=\"colorQuestion\" id=\"color-question\" title=\"Tarjeta Pregunta\"></div></li>\n                  <li><div [colorPicker]=\"TxtQuestionAlone1\" (colorPickerChange)=\"TxtQuestionAlone1 = $event\" class=\"rad-color\" [style.background]=\"TxtQuestionAlone1\" [style.background]=\"TxtQuestion\"id=\"color-question\" title=\"Texto Pregunta\"></div></li> \n                  <li> <fa-icon [icon]=\"faClone\" class=\"conf-icon\" title=\"Clonar pregunta\" ></fa-icon></li>\n                  <li> <fa-icon [icon]=\"faEdit\" class=\"conf-icon\" title=\"Editar pregunta\" ></fa-icon></li>    \n                  <li> <fa-icon [icon]=\"faPlus\" class=\"conf-icon\" title=\"Agregar Opción\" (click)=\"addOpt(item.idQuestion,'itemOpt')\"></fa-icon></li>    \n                </ul>\n              </div>\n            </div> \n\n\n            <div class=\"row boxQuestion\" *ngIf=\"item.idQuestion == 3\">\n              <div class=\"col-md-11 mb-11 cont-itemquestion style-labels\" [style.background]=\"colorQuestion\" [style.background]=\"colorQuestionAlone2\">\n                <textarea class=\"cont-question\" [style.color]=\"TxtQuestion\" [style.color]=\"TxtQuestionAlone2\"></textarea>\n        \n                  <div class=\"list-check two-box\">\n                    <div class=\"form-check form-check-inline box-action \" [style.background]=\"colorOption\" *ngFor=\"let idqs of item.itemCubi; let i = index\">\n                      <input class=\"form-check-input inp-checkbox\" type=\"checkbox\" name=\"question_{{i}}\" [value]=\"opt\"  id=\"inlineCheckbox_{{i}}\" #data>\n                      <label class=\"form-check-label\" for=\"inlineCheckbox_{{i}}\" ><span translate=\"no\"><input name=\"opnum\" [style.color]=\"TxtOption\" class=\"input-opt\"  [style.color]=\"TxtQuestionAlone2\" style=\"\"/></span></label>\n                      <div  class=\"min-icon\"  title=\"Eliminar Opción\" (click)=\"removeOpt(item.idQuestion,'itemCubi',i)\">-</div> \n                    </div>\n                  </div>\n\n              </div>\n              <div class=\"col-md-1 mb-1\">\n                <ul class=\"confg-controls\">\n                  <li><div [colorPicker]=\"colorQuestionAlone2\" (colorPickerChange)=\"colorQuestionAlone2 = $event\" class=\"rad-color\" [style.background]=\"colorQuestionAlone2\" [style.background]=\"colorQuestion\" id=\"color-question\" title=\"Tarjeta Pregunta\"></div></li>\n                  <li><div [colorPicker]=\"TxtQuestionAlone2\" (colorPickerChange)=\"TxtQuestionAlone2 = $event\" class=\"rad-color\" [style.background]=\"TxtQuestionAlone2\" [style.background]=\"TxtQuestion\"id=\"color-question\" title=\"Texto Pregunta\"></div></li> \n                  <li> <fa-icon [icon]=\"faClone\" class=\"conf-icon\"  title=\"Clonar pregunta\" ></fa-icon></li>\n                  <li> <fa-icon [icon]=\"faEdit\" class=\"conf-icon\"  title=\"Editar pregunta\" ></fa-icon></li>    \n                  <li> <fa-icon [icon]=\"faPlus\" class=\"conf-icon\" title=\"Agregar Opción\" (click)=\"addOpt(item.idQuestion,'itemCubi')\"></fa-icon></li>  \n                </ul>\n              </div>\n            </div> \n\n\n            <div class=\"row boxQuestion\" *ngIf=\"item.idQuestion == 4\">\n              <div class=\"col-md-11 mb-11 cont-itemquestion\" [style.background]=\"colorQuestion\" [style.background]=\"colorQuestionAlone3\">\n                <textarea class=\"cont-question\" [style.color]=\"TxtQuestion\" [style.color]=\"TxtQuestionAlone3\"></textarea>\n       \n                  <div class=\"list-check\">\n                    <div class=\"row\">\n\n                    <div class=\"col-md-6\" *ngFor=\"let lab of item.itemCheckMult; let l = index\">\n\n                      <div class=\"row\">\n                          <div class=\"label-option col-md-3\">\n                            <input name=\"inp-item\" class=\"input-opt\" [style.color]=\"TxtOption\"  [style.color]=\"TxtQuestionAlone3\" />\n                          </div>\n                          <div class=\"items-options-list col-md-3\">\n                            <div class=\"form-check form-check-inline\" *ngFor=\"let idqs of item.itemCheckMult[l].options; let i = index\">\n                              <input class=\"form-check-input inp-checkbox\" type=\"radio\" name=\"question_{{i}}\" [value]=\"opt\"  id=\"inlineCheckbox_{{i}}\" #dataCkMensaje>\n                              <label class=\"form-check-label\" for=\"inlineCheckbox_{{i}}\" ><span translate=\"no\"><input name=\"opnum\" class=\"input-opt\" [style.color]=\"TxtOption\" [style.color]=\"TxtQuestionAlone3\" /></span></label>\n                              <div  class=\"min-icon\"  title=\"Eliminar Opción\" (click)=\"removeOpt(item.idQuestion,'itemCheckMult',i)\">-</div> \n                            </div>\n                            <ul class=\"confg-controls ind-cont\">\n                              <li><fa-icon [icon]=\"faPlus\" class=\"conf-icon\" title=\"Agregar Opción\" (click)=\"addOptLabel(item.idQuestion,'itemCheckMult',l)\"></fa-icon></li>\n                            </ul>\n                            \n                          </div>\n                      </div>\n\n                    </div>\n\n                    </div>\n                  </div>\n\n\n              </div>\n              <div class=\"col-md-1 mb-1\">\n                <ul class=\"confg-controls\">\n                  <li><div [colorPicker]=\"colorQuestionAlone3\" (colorPickerChange)=\"colorQuestionAlone3 = $event\" class=\"rad-color\" [style.background]=\"colorQuestionAlone3\" [style.background]=\"colorQuestion\" id=\"color-question\" title=\"Tarjeta Pregunta\"></div></li>\n                  <li><div [colorPicker]=\"TxtQuestionAlone3\" (colorPickerChange)=\"TxtQuestionAlone3 = $event\" class=\"rad-color\" [style.background]=\"TxtQuestionAlone3\" [style.background]=\"TxtQuestion\" id=\"color-question\" title=\"Texto Pregunta\"></div></li> \n                  <li> <fa-icon [icon]=\"faClone\" class=\"conf-icon\"  title=\"Clonar pregunta\" ></fa-icon></li>\n                  <li> <fa-icon [icon]=\"faEdit\" class=\"conf-icon\"  title=\"Editar pregunta\" ></fa-icon></li>    \n                  <li><fa-icon [icon]=\"faPlus\" class=\"conf-icon\" title=\"Agregar Opción\" (click)=\"addOpt(item.idQuestion,'itemCheckMult')\"></fa-icon></li>        \n                </ul>\n              </div>\n            </div> \n\n            <div class=\"row boxQuestion\" *ngIf=\"item.idQuestion == 5\">\n              <div class=\"col-md-11 mb-11 cont-itemquestion\" [style.background]=\"colorQuestion\" [style.background]=\"colorQuestionAlone4\">\n                <textarea class=\"cont-question\" [style.color]=\"TxtQuestion\" [style.color]=\"TxtQuestionAlone4\"></textarea>\n                <textarea class=\"cont-question-txt\"></textarea>\n              </div>\n              <div class=\"col-md-1 mb-1\">\n                <ul class=\"confg-controls\">\n                  <li><div [colorPicker]=\"colorQuestionAlone4\" (colorPickerChange)=\"colorQuestionAlone4 = $event\" class=\"rad-color\" [style.background]=\"colorQuestion\" [style.background]=\"colorQuestionAlone4\" id=\"color-question\" title=\"Tarjeta Pregunta\"></div></li>\n                  <li><div [colorPicker]=\"TxtQuestionAlone4\" (colorPickerChange)=\"TxtQuestionAlone4 = $event\" class=\"rad-color\" [style.background]=\"TxtQuestionAlone4\" [style.background]=\"TxtQuestion\"id=\"color-question\" title=\"Texto Pregunta\"></div></li> \n                  <li> <fa-icon [icon]=\"faClone\" class=\"conf-icon\"  title=\"Clonar pregunta\" ></fa-icon></li>\n                  <li> <fa-icon [icon]=\"faEdit\" class=\"conf-icon\"  title=\"Editar pregunta\" ></fa-icon></li>    \n                </ul>\n              </div>\n            </div> \n          \n            <div class=\"row boxQuestion style-table\" *ngIf=\"item.idQuestion == 6\">\n              <div class=\"col-md-11 mb-11 cont-itemquestion\" [style.background]=\"colorQuestion\" [style.background]=\"colorQuestionAlone5\">\n                <textarea class=\"cont-question\" [style.color]=\"TxtQuestion\" [style.color]=\"TxtQuestionAlone5\"></textarea>\n                <div class=\"row cont-table\">\n                  <div class=\"col-md-4 mb-4 box-fixed\">\n                    <div class=\"col-md-12 mb-12 tr head-table\"></div>\n                    <div *ngFor=\"let lab of item.itemTable; let l = index\">\n                      <div class=\"col-md-12 mb-12 tr head-table\"><input name=\"opnum\" class=\"input-opt w-full\" [style.color]=\"TxtOption\" [style.color]=\"TxtQuestionAlone5\" /></div>\n                    </div>\n                  </div>\n                  \n                  <div class=\"col-md-12 mb-12\">\n                    \n                    <div *ngFor=\"let lab of item.itemTable; let l = index\" class=\"free-fixed row\">\n\n                      <div *ngIf=\"l == 0\" class=\"w-full\">\n                        <ul class=\"confg-controls conf-int\">\n                          <li><fa-icon [icon]=\"faPlus\" class=\"conf-icon\" title=\"Agregar Opción\" (click)=\"addOptLabel(item.idQuestion,'itemTable',l)\"></fa-icon></li>\n                        </ul>\n                        <div  *ngFor=\"let idqs of item.itemTable[l].options; let i = index\" class=\"col-md-4 col-td\">\n                          <div class=\"row\" >\n                            <div class=\"col-md-12 mb-12 tr head-table\"><input name=\"opnum\" class=\"input-opt w-full\" [style.color]=\"TxtOption\" [style.color]=\"TxtQuestionAlone5\" /></div> \n                          </div>\n                          <div class=\"row\" *ngFor=\"let lab of item.itemTable; let d = index\">\n                            <div class=\"col-md-4 mb-4 td\"></div>\n                          </div>\n                        </div>\n                      </div>\n\n                    </div>\n                  </div>\n                </div>\n              </div>\n              <div class=\"col-md-1 mb-1\">\n                <ul class=\"confg-controls\">\n                  <li><div [colorPicker]=\"colorQuestionAlone5\" (colorPickerChange)=\"colorQuestionAlone5 = $event\" class=\"rad-color\" [style.background]=\"colorQuestion\" [style.background]=\"colorQuestionAlone5\" id=\"color-question\" title=\"Tarjeta Pregunta\"></div></li>\n                  <li><div [colorPicker]=\"TxtQuestionAlone5\" (colorPickerChange)=\"TxtQuestionAlone5 = $event\" class=\"rad-color\" [style.background]=\"TxtQuestionAlone5\" [style.background]=\"TxtQuestion\"id=\"color-question\" title=\"Texto Pregunta\"></div></li> \n                  <li> <fa-icon [icon]=\"faClone\" class=\"conf-icon\"  title=\"Clonar pregunta\" ></fa-icon></li>\n                  <li> <fa-icon [icon]=\"faEdit\" class=\"conf-icon\"  title=\"Editar pregunta\" ></fa-icon></li>    \n                  <li><fa-icon [icon]=\"faPlus\" class=\"conf-icon\" title=\"Agregar Opción\" (click)=\"addOpt(item.idQuestion,'itemTable')\"></fa-icon></li>\n                </ul>\n              </div>\n            </div> \n\n        </div>\n\n    </ng-template>\n</ngx-sortable>\n\n</div>\n\n<div class=\"ctr-btns\">\n  <ul>\n    <li><fa-icon [icon]=\"faArrowAltCircleLeft\" class=\"plus-question\"  title=\"Atrás\" *ngIf=\"step == 'basic-parameters'\" (click)=\"steps('configuration-questions')\" ></fa-icon></li>\n    <li><fa-icon [icon]=\"faArrowAltCircleRight\" class=\"plus-question\"  title=\"Seguiente\" *ngIf=\"step == 'basic-parameters'\" (click)=\"steps('basic-parameters')\" ></fa-icon></li>\n    <li><fa-icon [icon]=\"faPlusCircle\" class=\"plus-question\"  title=\"Agregar Pregunta\" *ngIf=\"step == 'basic-parameters'\" (click)=\"steps('basic-parameters')\" data-toggle=\"modal\" data-target=\"#exampleModalCenter\"></fa-icon></li>\n  </ul>\n</div>\n\n<div class=\"modal fade\" id=\"exampleModalCenter\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\" aria-hidden=\"true\">\n\n<form [formGroup]=\"formType\" (ngSubmit)=\"typeQuestion()\" class=\"needs-validation\" novalidate>\n\n  <div class=\"modal-dialog modal-lg modal-dialog-centered\" role=\"document\">\n    <div class=\"modal-content\">\n      <div class=\"modal-header\">\n        <h5 class=\"modal-title\" id=\"exampleModalCenterTitle\">Nueva Pregunta</h5>\n        <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n          <span aria-hidden=\"true\">&times;</span>\n        </button>\n      </div>\n\n      <div class=\"modal-body\">\n        <div class=\"container-fluid\">\n          <div class=\"row\">\n            <div class=\"col-md-6\">\n\n              <div class=\"custom-control custom-radio\">\n                <input type=\"radio\" id=\"customRadio1\" name=\"typeQuestion\" class=\"custom-control-input\" formControlName=\"typeQuestion\">\n                <label class=\"custom-control-label\" for=\"customRadio1\">Pregunta Abierta</label>\n              </div>\n\n            </div>\n            <div class=\"col-md-6\">\n              <img src=\"https://i.pinimg.com/originals/da/c8/d4/dac8d4cb582558f281b6d0e1711c4838.gif\" class=\"img-quiestion-type\">\n            </div>\n          </div>\n          <div class=\"row\">\n            <div class=\"col-md-6\">\n\n              <div class=\"custom-control custom-radio\">\n                <input type=\"radio\" id=\"customRadio2\" name=\"typeQuestion\" class=\"custom-control-input\">\n                <label class=\"custom-control-label\" for=\"customRadio2\">Selección Multiple</label>\n              </div>\n\n            </div>\n            <div class=\"col-md-6\">\n              <img src=\"https://i.pinimg.com/originals/b9/83/17/b98317fb6a4557174555cd3330aba443.gif\" class=\"img-quiestion-type\">\n            </div>\n          </div>\n          <div class=\"row\">\n            <div class=\"col-md-6\">\n\n              <div class=\"custom-control custom-radio\">\n                <input type=\"radio\" id=\"customRadio3\" name=\"typeQuestion\" class=\"custom-control-input\">\n                <label class=\"custom-control-label\" for=\"customRadio3\">Selección Multiple (tabla)</label>\n              </div>\n\n            </div>\n            <div class=\"col-md-6\">\n              <img src=\"https://i.pinimg.com/originals/9e/58/94/9e58940d4cafe94af5521b018e8a601e.gif\" class=\"img-quiestion-type\">\n            </div>\n          </div>\n        </div>\n      </div>\n\n      <div class=\"modal-footer\">\n        <button type=\"submit\" class=\"btn btn-primary\" data-dismiss=\"modal\">Guardar</button>\n      </div>\n    </div>\n  </div>\n\n</form>\n\n</div>\n\n\n<div class=\"modal fade\" id=\"exampleModalCenter\" tabindex=\"-1\" role=\"dialog\" aria-labelledby=\"exampleModalCenterTitle\" aria-hidden=\"true\">\n\n  <form [formGroup]=\"formType\" (ngSubmit)=\"typeQuestion()\" class=\"needs-validation\" novalidate>\n  \n    <div class=\"modal-dialog modal-lg modal-dialog-centered\" role=\"document\">\n      <div class=\"modal-content\">\n        <div class=\"modal-header\">\n          <h5 class=\"modal-title\" id=\"exampleModalCenterTitle\">Nueva Pregunta</h5>\n          <button type=\"button\" class=\"close\" data-dismiss=\"modal\" aria-label=\"Close\">\n            <span aria-hidden=\"true\">&times;</span>\n          </button>\n        </div>\n  \n        <div class=\"modal-body\">\n          <div class=\"container-fluid\">\n            <div class=\"row\">\n              <div class=\"col-md-6\">\n  \n                <div class=\"custom-control custom-radio\">\n                  <input type=\"radio\" id=\"customRadio1\" name=\"typeQuestion\" class=\"custom-control-input\" formControlName=\"typeQuestion\">\n                  <label class=\"custom-control-label\" for=\"customRadio1\">Pregunta Abierta</label>\n                </div>\n  \n              </div>\n              <div class=\"col-md-6\">\n                <img src=\"https://i.pinimg.com/originals/da/c8/d4/dac8d4cb582558f281b6d0e1711c4838.gif\" class=\"img-quiestion-type\">\n              </div>\n            </div>\n            <div class=\"row\">\n              <div class=\"col-md-6\">\n  \n                <div class=\"custom-control custom-radio\">\n                  <input type=\"radio\" id=\"customRadio2\" name=\"typeQuestion\" class=\"custom-control-input\">\n                  <label class=\"custom-control-label\" for=\"customRadio2\">Selección Multiple</label>\n                </div>\n  \n              </div>\n              <div class=\"col-md-6\">\n                <img src=\"https://i.pinimg.com/originals/b9/83/17/b98317fb6a4557174555cd3330aba443.gif\" class=\"img-quiestion-type\">\n              </div>\n            </div>\n            <div class=\"row\">\n              <div class=\"col-md-6\">\n  \n                <div class=\"custom-control custom-radio\">\n                  <input type=\"radio\" id=\"customRadio3\" name=\"typeQuestion\" class=\"custom-control-input\">\n                  <label class=\"custom-control-label\" for=\"customRadio3\">Selección Multiple (tabla)</label>\n                </div>\n  \n              </div>\n              <div class=\"col-md-6\">\n                <img src=\"https://i.pinimg.com/originals/9e/58/94/9e58940d4cafe94af5521b018e8a601e.gif\" class=\"img-quiestion-type\">\n              </div>\n            </div>\n          </div>\n        </div>\n  \n        <div class=\"modal-footer\">\n          <button type=\"submit\" class=\"btn btn-primary\" data-dismiss=\"modal\">Guardar</button>\n        </div>\n      </div>\n    </div>\n  \n  </form>\n  \n  </div>");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/admin/list-quiz/list-quiz.component.html":
+/*!***********************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/admin/list-quiz/list-quiz.component.html ***!
+  \***********************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"cont-step animated fadeIn\">\n    <h1>Encuestas</h1>\n</div>\n\n<div class=\"mat-elevation-z8\">\n    <table mat-table [dataSource]=\"dataSource\">\n  \n      <!-- Position Column -->\n      <ng-container matColumnDef=\"position\">\n        <th mat-header-cell *matHeaderCellDef> No. </th>\n        <td mat-cell *matCellDef=\"let element\"> {{element.position}} </td>\n      </ng-container>\n  \n      <!-- Name Column -->\n      <ng-container matColumnDef=\"name\">\n        <th mat-header-cell *matHeaderCellDef> Name </th>\n        <td mat-cell *matCellDef=\"let element\"> {{element.name}} </td>\n      </ng-container>\n  \n      <!-- Weight Column -->\n      <ng-container matColumnDef=\"weight\">\n        <th mat-header-cell *matHeaderCellDef> Weight </th>\n        <td mat-cell *matCellDef=\"let element\"> {{element.weight}} </td>\n      </ng-container>\n  \n      <!-- Symbol Column -->\n      <ng-container matColumnDef=\"symbol\">\n        <th mat-header-cell *matHeaderCellDef> Symbol </th>\n        <td mat-cell *matCellDef=\"let element\"> {{element.symbol}} </td>\n      </ng-container>\n  \n      <tr mat-header-row *matHeaderRowDef=\"displayedColumns\"></tr>\n      <tr mat-row *matRowDef=\"let row; columns: displayedColumns;\"></tr>\n    </table>\n  \n    <mat-paginator [pageSizeOptions]=\"[5, 10, 20]\" showFirstLastButtons></mat-paginator>\n  </div>");
+
+/***/ }),
+
+/***/ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/admin/login/login.component.html":
+/*!***************************************************************************************************!*\
+  !*** ./node_modules/raw-loader/dist/cjs.js!./src/app/components/admin/login/login.component.html ***!
+  \***************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("<div class=\"card animated fadeInDown mens-data col-md-4\">\n    <div class=\"card-body\">\n        <form (ngSubmit)=\"getIn()\" #forma=\"ngForm\">\n            <div class=\"form-group \">\n              <label for=\"exampleInputEmail1\">Correo</label>\n              <input type=\"email\" class=\"form-control\" id=\"exampleInputEmail1\" [(ngModel)]=\"user.email\" name=\"email\" required>\n            </div>\n            <div class=\"form-group\">\n              <label for=\"exampleInputPassword1\">Contraseña</label>\n              <input type=\"password\" class=\"form-control\" id=\"exampleInputPassword1\" [(ngModel)]=\"user.password\" name=\"password\" required>\n            </div>\n            <button type=\"submit\" class=\"btn btn-primary\" >Entrar</button>\n          </form>\n\n    </div>\n    <div class=\"alert alert-danger\" role=\"alert\" *ngIf=\"msg\">\n        {{msg}}\n      </div>\n  </div>\n");
 
 /***/ }),
 
@@ -331,7 +370,7 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony default export */ __webpack_exports__["default"] = ("\n<!-- Carga de preguntas\n<input type=\"file\" #csvReaderQuestions name=\"Upload CSV\" id=\"txtFileUpload\" (change)=\"uploadListener($event,'questions')\" accept=\".csv\" />\nCarga de Usuarios\n<input type=\"file\" #csvReaderUsers name=\"Upload CSV\" id=\"txtFileUpload\" (change)=\"uploadListener($event,'users')\" accept=\".csv\" /> -->\n\n<div class=\"card animated fadeInDown mens-data\" *ngIf=\"showMessage\">\n  <div class=\"card-body cnt-message\">\n    <p class=\"card-text\" [innerHTML]=\"message\" translate=\"no\"></p>\n    <button type=\"button\" class=\"btn btn-primary bg-col\" (click)=\"openInputs()\">Continuar</button>\n  </div>\n</div>\n\n<div class=\"card animated fadeIn mens-data\" *ngIf=\"showInput\">\n  <div class=\"cnt-message\">\n    <div class=\"form-group\" *ngFor=\"let item of inputs\">\n      <input [type]=\"item.type\" class=\"form-control\" [id]=\"item.name\" aria-describedby=\"emailHelp\" [placeholder]=\"item.placeholder\" #camp>\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary bg-col\" (click)=\"openQuiz()\">Enviar</button>\n  </div>\n  <div class=\"alert alert-danger\" role=\"alert\" *ngIf=\"showValUser\">\n    Este usuario no existe\n  </div>\n</div>\n\n<div class=\"alert alert-success\" role=\"alert\" *ngIf=\"sentTrue\">\n  <h4 class=\"alert-heading text-center\"> Encuesta enviada correctamente </h4>\n</div>\n\n<form class=\"list-cont-questions\" *ngIf=\"showQuestions\" (ngSubmit)=\"send(forma)\" #forma novalidate>\n<ol>\n<div *ngFor=\"let item of questions; let pre = index\">\n\n  <div class=\"form-group animated bounceInUp fast\" [ngClass]=\"{'active': stateBox == 1}\"  *ngIf=\"item.id != '0.2' && validateQuestion(item.typeDesign,item.questions.option) == 0\" >\n\n    <!--<label class=\"item-num\">{{ preNumber }}</label>-->\n     <li class=\"txt-question\" for=\"formGroupExampleInput\" [innerHTML]=\"item.questions.message\" translate=\"no\"></li>\n\n    <div class=\"list-check\" *ngIf=\"item.typeDesign == 'check'\">\n      <div class=\"form-check form-check-inline\" *ngFor=\"let opt of item.questions.option[0].options; let op = index\" >\n        <input class=\"form-check-input\" type=\"radio\" name=\"question{{ item.id }}\"  [value]=\"opt\"  id=\"inlineCheckbox{{ item.id }}-{{ op }}\" (change)=\"saveQuiz(item,data,item.questions.message,op,'check')\"  #data>\n        <label class=\"form-check-label\" for=\"inlineCheckbox{{ item.id }}-{{ op }}\"><span  translate=\"no\">{{ opt }}</span></label>\n      </div>\n    </div>\n\n    <div class=\"list-check\" *ngIf=\"item.typeDesign == 'check-mensaje'\">\n      <div class=\"row\">\n        <div *ngFor=\"let m of item.questions.option; let i = index\" >\n          <div *ngIf=\"conditional(m.conditional) == 0\" >\n              <div *ngIf=\"m.typeDesign == 'label'\" class=\"label-option\">\n                    {{ m.options }}\n              </div>\n              <div *ngIf=\"m.typeDesign == 'value'\"  class=\"items-options-list\">\n                <div class=\"form-check form-check-inline\" *ngFor=\"let opData of m.options; let idOpList = index\" >\n                 <input class=\"form-check-input\" type=\"radio\" name=\"question{{ m.id }}\"  id=\"inlineCheckbox{{ m.id }}-{{ idOpList }}\" value=\"{{ opData }}\" (change)=\"saveQuiz(m,dataCkMensaje,item.questions.message,idOpList,'check-mensaje',item.questions.option)\" #dataCkMensaje>\n                 <label class=\"form-check-label\" for=\"inlineCheckbox{{ m.id }}-{{ idOpList }}\" translate=\"no\">{{ opData }}</label>\n                </div>\n              </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"list-check-box two-box\"  *ngIf=\"item.typeDesign == 'tabla'\">\n      <div class=\"row\">\n      <div class=\"form-check box-action col-12 col-sm-3 databx0-{{ op }}-{{ item.id }}\" *ngFor=\"let opt of item.questions.option[0].options; let op = index\" [ngClass]=\"{'action': indexOfElement(  item, 'databx0-'+op+'-'+item.id, 'table' ) == 0 }\" >\n        <input class=\"form-check-input\" type=\"checkbox\" id=\"box{{ item.id }}-{{ op }}\" value=\"{{ opt }}\" (click)=\"saveQuiz(item,dataTable,item.questions.message,op,'table',0,0)\" #dataTable>\n        <label class=\"form-check-label\" for=\"box{{ item.id }}-{{ op }}\" translate=\"no\">{{ opt }}</label>\n      </div>\n      </div>\n    </div>\n\n    <div class=\"list-check-box two-box tb-mul\" *ngIf=\"item.typeDesign == 'tabla-multiple'\">\n\n      <div class=\"scroll-table\">\n        <div class=\"row\">\n          <div class=\"col-12 col-sm-2\">\n          </div>\n\n          <div class=\"col-12 col-sm-8 head-box\">\n\n            <div *ngFor=\"let m of item.questions.option; let i = index\" >\n              <div *ngIf=\"m.id == '8.2' || m.id == '9.2' \">\n                <div class=\"form-check form-check-inline col-12 col-sm-1 min-tab\"  *ngFor=\"let opData of m.options; let idOpList = index\">\n                  <label class=\"form-check-label\" for=\"box1\" translate=\"no\">{{ opData }}</label>\n                </div>\n              </div>\n            </div>\n\n          </div>\n          <div class=\"col-12 col-sm-4 data-box cont-left \">\n\n            <div *ngFor=\"let li of item.questions.option; let o = index\" [ngClass]=\"{'col-sm-12 head-left': li.typeDesign == 'label'}\" class=\"ali-box\"  >\n\n              <div *ngIf=\"li.typeDesign == 'label' && conditional(li.conditional) == 0\">\n                <div class=\"form-check form-check-inline col-12 col-sm-12\" >\n                  <label class=\"form-check-label\" [innerHTML]=\"li.options\" translate=\"no\"></label>\n                </div>\n              </div>\n\n            </div>\n\n          </div>\n          <div class=\"col-12 col-sm-10 opt-right\">\n\n            <div *ngFor=\"let li of item.questions.option; let o = index\" [ngClass]=\"{'col-sm-10': li.typeDesign == 'value'}\" class=\"ali-box\"  >\n\n                <div *ngIf=\"li.typeDesign == 'value' && conditional(li.conditional) == 0\" class=\"col-sm-12 cn-box \" >\n                  <div class=\"asc form-check form-check-inline col-12 col-sm-3 chl-bok databx{{ item.id }}-{{ da }}-{{ li.id }}\" [ngClass]=\"{'action': indexOfElement( li,'databx'+item.id+'-'+da+'-'+li.id, 'table-multiple' ) == 0 }\" *ngFor=\"let opData of li.options; let da = index\" (click)=\"saveQuiz(li,opData,item.questions.message,da,'table-multiple',item.questions.option,item.id)\" >\n                    <input class=\"form-check-input\" type=\"checkbox\" id=\"box{{ item.id }}-{{ da }}-{{ li.id }}\" value=\"{{ opData }}\"  #dataTableMulti>\n                    <label class=\"form-check-label\" for=\"box{{ item.id }}-{{ da }}-{{ li.id }}\"></label>\n                  </div>\n                </div>\n\n            </div>\n\n          </div>\n\n        </div>\n      </div>\n\n\n    </div>\n\n    <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" *ngIf=\"item.typeDesign == 'textbox'\" rows=\"3\" (keypress)=\"saveQuiz(item,dataText,item.questions.message,'','text')\" #dataText></textarea>\n\n  </div>\n\n  </div>\n\n</ol>\n\n<div class=\"alert alert-danger\" role=\"alert\" *ngIf=\"errorValid\">\n  <h4 class=\"alert-heading text-center\"> Todas las preguntas son obligatorias </h4>\n</div>\n\n\n  <button type=\"submit\" class=\"btn btn-primary btn-lg bg-col float-right\" >Enviar</button>\n\n</form>\n");
+/* harmony default export */ __webpack_exports__["default"] = ("\n<!-- Carga de preguntas\n<input type=\"file\" #csvReaderQuestions name=\"Upload CSV\" id=\"txtFileUpload\" (change)=\"uploadListener($event,'questions')\" accept=\".csv\" />\nCarga de Usuarios\n<input type=\"file\" #csvReaderUsers name=\"Upload CSV\" id=\"txtFileUpload\" (change)=\"uploadListener($event,'users')\" accept=\".csv\" /> -->\n\n<div class=\"card animated fadeInDown mens-data\" *ngIf=\"showMessage\">\n  <div class=\"card-body cnt-message\">\n    <p class=\"card-text\" [innerHTML]=\"message\" translate=\"no\"></p>\n    <button type=\"button\" class=\"btn btn-primary bg-col\" (click)=\"openInputs()\">Continuar</button>\n  </div>\n</div>\n\n<div class=\"card animated fadeIn mens-data\" *ngIf=\"showInput\">\n  <div class=\"cnt-message\">\n    <div class=\"form-group\" *ngFor=\"let item of inputs\">\n      <input [type]=\"item.type\" class=\"form-control\" [id]=\"item.name\" aria-describedby=\"emailHelp\" [placeholder]=\"item.placeholder\" #camp>\n    </div>\n    <button type=\"submit\" class=\"btn btn-primary bg-col\" (click)=\"openQuiz()\">Enviar</button>\n  </div>\n  <div class=\"alert alert-danger\" role=\"alert\" *ngIf=\"showValUser\">\n    Este usuario no existe\n  </div>\n</div>\n\n\n<form class=\"list-cont-questions\" *ngIf=\"showQuestions\" (ngSubmit)=\"send(forma)\" #forma novalidate>\n<ol>\n<div *ngFor=\"let item of questions; let pre = index\">\n\n  <div class=\"form-group animated bounceInUp fast\" [ngClass]=\"{'active': stateBox == 1,'valAct' : validRequired(item)}\"  *ngIf=\"item.id != '0.2' && validateQuestion(item.typeDesign,item.questions.option) == 0 \" >\n\n    <!--<label class=\"item-num\">{{ preNumber }}</label>-->\n     <li class=\"txt-question\" for=\"formGroupExampleInput\" [innerHTML]=\"item.questions.message\" translate=\"no\"></li>\n\n    <div class=\"list-check\" *ngIf=\"item.typeDesign == 'check'\">\n      <div class=\"form-check form-check-inline\" *ngFor=\"let opt of item.questions.option[0].options; let op = index\">\n        <input class=\"form-check-input\" type=\"radio\" name=\"question{{ item.id }}\"  [value]=\"opt\"  id=\"inlineCheckbox{{ item.id }}-{{ op }}\" (change)=\"saveQuiz(item,data,item.questions.message,op,'check')\"   #data>\n        <label class=\"form-check-label\" for=\"inlineCheckbox{{ item.id }}-{{ op }}\"><span  translate=\"no\">{{ opt }}</span></label>\n      </div>\n    </div>\n\n    <div class=\"list-check\" *ngIf=\"item.typeDesign == 'check-mensaje'\">\n      <div class=\"row\">\n        <div *ngFor=\"let m of item.questions.option; let i = index\" >\n          <div *ngIf=\"conditional(m.conditional) == 0\" >\n              <div *ngIf=\"m.typeDesign == 'label'\" class=\"label-option\">\n                    {{ m.options }}\n              </div>\n              <div *ngIf=\"m.typeDesign == 'value'\"  class=\"items-options-list\">\n                <div class=\"form-check form-check-inline\" *ngFor=\"let opData of m.options; let idOpList = index\" >\n                 <input class=\"form-check-input\" type=\"radio\" name=\"question{{ m.id }}\"  id=\"inlineCheckbox{{ m.id }}-{{ idOpList }}\" value=\"{{ opData }}\" (change)=\"saveQuiz(m,dataCkMensaje,item.questions.message,idOpList,'check-mensaje',item.questions.option)\" #dataCkMensaje>\n                 <label class=\"form-check-label\" for=\"inlineCheckbox{{ m.id }}-{{ idOpList }}\" translate=\"no\">{{ opData }}</label>\n                </div>\n              </div>\n          </div>\n        </div>\n      </div>\n    </div>\n\n    <div class=\"list-check-box two-box\"  *ngIf=\"item.typeDesign == 'tabla'\">\n      <div class=\"row\">\n      <div class=\"form-check box-action col-12 col-sm-3 databx0-{{ op }}-{{ item.id }}\" *ngFor=\"let opt of item.questions.option[0].options; let op = index\" [ngClass]=\"{'action': indexOfElement(  item, 'databx0-'+op+'-'+item.id, 'table' ) != -1 }\" >\n        <input class=\"form-check-input\" type=\"checkbox\" id=\"box{{ item.id }}-{{ op }}\" value=\"{{ opt }}\" (click)=\"saveQuiz(item,dataTable,item.questions.message,op,'table',0,0)\" #dataTable>\n        <label class=\"form-check-label\" for=\"box{{ item.id }}-{{ op }}\" translate=\"no\">{{ opt }}</label>\n      </div>\n      </div>\n    </div>\n\n    <div class=\"list-check-box two-box tb-mul\" *ngIf=\"item.typeDesign == 'tabla-multiple'\">\n\n      <div class=\"scroll-table\">\n        <div class=\"row\">\n          <div class=\"col-12 col-sm-2\">\n          </div>\n\n          <div class=\"col-12 col-sm-8 head-box\">\n\n            <div *ngFor=\"let m of item.questions.option; let i = index\" >\n              <div *ngIf=\"m.id == '8.2' || m.id == '9.2' \">\n                <div class=\"form-check form-check-inline col-12 col-sm-1 min-tab\"  *ngFor=\"let opData of m.options; let idOpList = index\">\n                  <label class=\"form-check-label\" for=\"box1\" translate=\"no\">{{ opData }}</label>\n                </div>\n              </div>\n            </div>\n\n          </div>\n          <div class=\"col-12 col-sm-4 data-box cont-left \">\n\n            <div *ngFor=\"let li of item.questions.option; let o = index\" [ngClass]=\"{'col-sm-12 head-left': li.typeDesign == 'label'}\" class=\"ali-box\"  >\n\n              <div *ngIf=\"li.typeDesign == 'label' && conditional(li.conditional) == 0\">\n                <div class=\"form-check form-check-inline col-12 col-sm-12\" >\n                  <label class=\"form-check-label\" [innerHTML]=\"li.options\" translate=\"no\"></label>\n                </div>\n              </div>\n\n            </div>\n\n          </div>\n          <div class=\"col-12 col-sm-10 opt-right\">\n\n            <div *ngFor=\"let li of item.questions.option; let o = index\" [ngClass]=\"{'col-sm-10': li.typeDesign == 'value'}\" class=\"ali-box\"  >\n\n                <div *ngIf=\"li.typeDesign == 'value' && conditional(li.conditional) == 0\" class=\"col-sm-12 cn-box \" >\n\n                  <div class=\"asc form-check form-check-inline col-12 col-sm-3 chl-bok databx{{ item.id }}-{{ da }}-{{ li.id }}\"  *ngFor=\"let opData of li.options; let da = index\"  >\n                  <div (click)=\"saveQuiz(li,opData,item.questions.message,da,'table-multiple',item.questions.option,item.id)\" class=\"event-cli\" [ngClass]=\"{'action': indexOfElement( li,'databx'+item.id+'-'+da+'-'+li.id, 'table-multiple' ) != -1 }\">\n                    <input class=\"form-check-input\" type=\"checkbox\" id=\"box{{ item.id }}-{{ da }}-{{ li.id }}\" value=\"{{ opData }}\"  #dataTableMulti>\n                    <label class=\"form-check-label\" for=\"box{{ item.id }}-{{ da }}-{{ li.id }}\"></label>\n                  </div>\n                  </div>\n\n                </div>\n\n            </div>\n\n          </div>\n\n        </div>\n      </div>\n\n\n    </div>\n\n    <textarea class=\"form-control\" id=\"exampleFormControlTextarea1\" *ngIf=\"item.typeDesign == 'textbox'\" rows=\"3\" (keyup)=\"saveQuiz(item,dataText,item.questions.message,'','text')\" #dataText></textarea>\n\n  </div>\n\n  </div>\n\n</ol>\n\n<div class=\"alert alert-danger\" role=\"alert\" *ngIf=\"errorValid\">\n  <h4 class=\"alert-heading text-center\"> Las preguntas resaltadas en rojo son oblgatorias  </h4>\n</div>\n<div class=\"alert alert-success\" role=\"alert\" *ngIf=\"sentTrue\">\n  <h4 class=\"alert-heading text-center\"> Encuesta enviada correctamente </h4>\n</div>\n\n  <button type=\"submit\" class=\"btn btn-primary btn-lg bg-col float-right\" >Enviar</button>\n\n</form>\n");
 
 /***/ }),
 
@@ -610,12 +649,25 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
 /* harmony import */ var _components_questions_questions_component__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./components/questions/questions.component */ "./src/app/components/questions/questions.component.ts");
 /* harmony import */ var _components_report_report_component__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/report/report.component */ "./src/app/components/report/report.component.ts");
+/* harmony import */ var _components_admin_login_login_component__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/admin/login/login.component */ "./src/app/components/admin/login/login.component.ts");
+/* harmony import */ var _services_auth_service__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./services/auth.service */ "./src/app/services/auth.service.ts");
+/* harmony import */ var _services_sigout_service__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./services/sigout.service */ "./src/app/services/sigout.service.ts");
+/* harmony import */ var _components_admin_config_questions_config_questions_component__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/admin/config-questions/config-questions.component */ "./src/app/components/admin/config-questions/config-questions.component.ts");
+/* harmony import */ var _components_admin_list_quiz_list_quiz_component__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/admin/list-quiz/list-quiz.component */ "./src/app/components/admin/list-quiz/list-quiz.component.ts");
+
+
+
+
+
 
 
 
 
 const ROUTES = [
     { path: 'report', component: _components_report_report_component__WEBPACK_IMPORTED_MODULE_3__["ReportComponent"] },
+    { path: 'login', component: _components_admin_login_login_component__WEBPACK_IMPORTED_MODULE_4__["LoginComponent"], canActivate: [_services_sigout_service__WEBPACK_IMPORTED_MODULE_6__["SigoutService"]] },
+    { path: 'list-quiz', component: _components_admin_list_quiz_list_quiz_component__WEBPACK_IMPORTED_MODULE_8__["ListQuizComponent"], canActivate: [_services_auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthService"]] },
+    { path: 'config-questions', component: _components_admin_config_questions_config_questions_component__WEBPACK_IMPORTED_MODULE_7__["ConfigQuestionsComponent"], canActivate: [_services_auth_service__WEBPACK_IMPORTED_MODULE_5__["AuthService"]] },
     { path: '**', pathMatch: 'full', component: _components_questions_questions_component__WEBPACK_IMPORTED_MODULE_2__["QuestionsComponent"] }
     // { path: '**', pathMatch: 'full' , redirectTo: 'preguntas'},
 ];
@@ -692,6 +744,24 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
 /* harmony import */ var _components_report_report_component__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/report/report.component */ "./src/app/components/report/report.component.ts");
 /* harmony import */ var ng2_charts__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ng2-charts */ "./node_modules/ng2-charts/__ivy_ngcc__/fesm2015/ng2-charts.js");
+/* harmony import */ var _components_admin_login_login_component__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/admin/login/login.component */ "./src/app/components/admin/login/login.component.ts");
+/* harmony import */ var _components_admin_config_questions_config_questions_component__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./components/admin/config-questions/config-questions.component */ "./src/app/components/admin/config-questions/config-questions.component.ts");
+/* harmony import */ var ngx_color_picker__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ngx-color-picker */ "./node_modules/ngx-color-picker/__ivy_ngcc__/fesm2015/ngx-color-picker.js");
+/* harmony import */ var _fortawesome_angular_fontawesome__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! @fortawesome/angular-fontawesome */ "./node_modules/@fortawesome/angular-fontawesome/__ivy_ngcc__/fesm2015/angular-fontawesome.js");
+/* harmony import */ var ngx_sortable__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ngx-sortable */ "./node_modules/ngx-sortable/__ivy_ngcc__/dist/index.js");
+/* harmony import */ var _components_admin_list_quiz_list_quiz_component__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./components/admin/list-quiz/list-quiz.component */ "./src/app/components/admin/list-quiz/list-quiz.component.ts");
+/* harmony import */ var _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! @angular/platform-browser/animations */ "./node_modules/@angular/platform-browser/__ivy_ngcc__/fesm2015/animations.js");
+/* harmony import */ var _angular_material_table__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! @angular/material/table */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/table.js");
+/* harmony import */ var _angular_material_paginator__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! @angular/material/paginator */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/paginator.js");
+
+
+
+
+
+
+
+
+
 
 
 
@@ -714,7 +784,10 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             _app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"],
             _components_questions_questions_component__WEBPACK_IMPORTED_MODULE_4__["QuestionsComponent"],
             _pipes_key_array_pipe__WEBPACK_IMPORTED_MODULE_9__["KeyArrayPipe"],
-            _components_report_report_component__WEBPACK_IMPORTED_MODULE_12__["ReportComponent"]
+            _components_report_report_component__WEBPACK_IMPORTED_MODULE_12__["ReportComponent"],
+            _components_admin_login_login_component__WEBPACK_IMPORTED_MODULE_14__["LoginComponent"],
+            _components_admin_config_questions_config_questions_component__WEBPACK_IMPORTED_MODULE_15__["ConfigQuestionsComponent"],
+            _components_admin_list_quiz_list_quiz_component__WEBPACK_IMPORTED_MODULE_19__["ListQuizComponent"]
         ],
         imports: [
             _angular_platform_browser__WEBPACK_IMPORTED_MODULE_1__["BrowserModule"],
@@ -724,12 +797,321 @@ AppModule = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
             nl2br_pipe__WEBPACK_IMPORTED_MODULE_10__["Nl2BrPipeModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_11__["FormsModule"],
             _angular_forms__WEBPACK_IMPORTED_MODULE_11__["ReactiveFormsModule"],
-            ng2_charts__WEBPACK_IMPORTED_MODULE_13__["ChartsModule"]
+            ng2_charts__WEBPACK_IMPORTED_MODULE_13__["ChartsModule"],
+            ngx_color_picker__WEBPACK_IMPORTED_MODULE_16__["ColorPickerModule"],
+            _fortawesome_angular_fontawesome__WEBPACK_IMPORTED_MODULE_17__["FontAwesomeModule"],
+            ngx_sortable__WEBPACK_IMPORTED_MODULE_18__["NgxSortableModule"],
+            _angular_platform_browser_animations__WEBPACK_IMPORTED_MODULE_20__["BrowserAnimationsModule"],
+            _angular_material_table__WEBPACK_IMPORTED_MODULE_21__["MatTableModule"],
+            _angular_material_paginator__WEBPACK_IMPORTED_MODULE_22__["MatPaginatorModule"]
         ],
         providers: [],
         bootstrap: [_app_component__WEBPACK_IMPORTED_MODULE_3__["AppComponent"]]
     })
 ], AppModule);
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/admin/config-questions/config-questions.component.css":
+/*!**********************************************************************************!*\
+  !*** ./src/app/components/admin/config-questions/config-questions.component.css ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvYWRtaW4vY29uZmlnLXF1ZXN0aW9ucy9jb25maWctcXVlc3Rpb25zLmNvbXBvbmVudC5jc3MifQ== */");
+
+/***/ }),
+
+/***/ "./src/app/components/admin/config-questions/config-questions.component.ts":
+/*!*********************************************************************************!*\
+  !*** ./src/app/components/admin/config-questions/config-questions.component.ts ***!
+  \*********************************************************************************/
+/*! exports provided: ConfigQuestionsComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ConfigQuestionsComponent", function() { return ConfigQuestionsComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_forms__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/forms */ "./node_modules/@angular/forms/__ivy_ngcc__/fesm2015/forms.js");
+/* harmony import */ var _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @fortawesome/free-solid-svg-icons */ "./node_modules/@fortawesome/free-solid-svg-icons/index.es.js");
+
+
+
+
+let ConfigQuestionsComponent = class ConfigQuestionsComponent {
+    constructor() {
+        this.step = "configuration-questions";
+        this.faClone = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faClone"];
+        this.faEdit = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faEdit"];
+        this.faSave = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSave"];
+        this.faArrowAltCircleRight = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faArrowAltCircleRight"];
+        this.faPlusCircle = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faPlusCircle"];
+        this.faSortDown = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSortDown"];
+        this.faSortUp = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faSortUp"];
+        this.faArrowAltCircleLeft = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faArrowAltCircleLeft"];
+        this.faAngleLeft = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faAngleLeft"];
+        this.faAngleRight = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faAngleRight"];
+        this.faPlus = _fortawesome_free_solid_svg_icons__WEBPACK_IMPORTED_MODULE_3__["faPlus"];
+        this.question = {
+            logo: null,
+        };
+        this.quiz = {
+            id: 1,
+            question: [{
+                    idQuestion: 1,
+                    description: 'Pregunta 1',
+                    typeQuestion: 'itemTxt'
+                }, {
+                    idQuestion: 2,
+                    description: 'Pregunta 2',
+                    typeQuestion: 'itemOpt',
+                    itemOpt: [{ name: '' }]
+                }, {
+                    idQuestion: 3,
+                    description: 'Pregunta 3',
+                    typeQuestion: 'itemCubi',
+                    itemCubi: [{ name: '' }]
+                }, {
+                    idQuestion: 4,
+                    description: 'Pregunta 4',
+                    typeQuestion: 'itemCheckMult',
+                    itemCheckMult: [{
+                            label: '',
+                            options: [{ name: '' }]
+                        }]
+                }, {
+                    idQuestion: 5,
+                    description: 'Pregunta 5',
+                    typeQuestion: 'itemTxtFree'
+                }, {
+                    idQuestion: 6,
+                    description: 'Pregunta 6',
+                    typeQuestion: 'itemTable',
+                    itemTable: [{
+                            label: 'Formación y Desarrollo',
+                            options: [{ name: '' }]
+                        }]
+                }],
+        };
+        this.listStyle = {
+            width: '100%'
+        };
+        this.form = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
+            'nameQuestion': new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required)
+        });
+        this.formType = new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormGroup"]({
+            'typeQuestion': new _angular_forms__WEBPACK_IMPORTED_MODULE_2__["FormControl"]('', _angular_forms__WEBPACK_IMPORTED_MODULE_2__["Validators"].required)
+        });
+    }
+    ngOnInit() {
+    }
+    steps(after) {
+        // basic-parameters
+        this.step = after;
+        console.log(this.step);
+    }
+    typeQuestion() {
+        console.log("dsd");
+    }
+    listOrderChanged(data) {
+        console.log('dat', data);
+    }
+    colorPicker(txt, id) {
+        console.log(txt, id);
+        return txt + id;
+    }
+    addOptLabel(idQuestion, type, label) {
+        console.log("idQuestion", idQuestion);
+        console.log("type", type);
+        console.log("label", label);
+        idQuestion = idQuestion - 1;
+        console.log("pregunta", this.quiz.question[idQuestion][type]);
+        this.quiz.question[idQuestion][type][label].options.push({
+            name: ''
+        });
+    }
+    addOpt(idQuestion, type) {
+        idQuestion = idQuestion - 1;
+        if (type == 'itemCheckMult' || type == 'itemTable') {
+            this.quiz.question[idQuestion][type].push({
+                label: '',
+                options: [{ name: '' }]
+            });
+        }
+        else {
+            this.quiz.question[idQuestion][type].push({
+                name: ''
+            });
+        }
+    }
+    removeOpt(idQuestion, type, i) {
+        idQuestion = idQuestion - 1;
+        this.quiz.question[idQuestion][type].splice(i, 1);
+    }
+};
+ConfigQuestionsComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-config-questions',
+        template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./config-questions.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/admin/config-questions/config-questions.component.html")).default,
+        styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./config-questions.component.css */ "./src/app/components/admin/config-questions/config-questions.component.css")).default]
+    })
+], ConfigQuestionsComponent);
+
+
+
+/***/ }),
+
+/***/ "./src/app/components/admin/list-quiz/list-quiz.component.css":
+/*!********************************************************************!*\
+  !*** ./src/app/components/admin/list-quiz/list-quiz.component.css ***!
+  \********************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvYWRtaW4vbGlzdC1xdWl6L2xpc3QtcXVpei5jb21wb25lbnQuY3NzIn0= */");
+
+/***/ }),
+
+/***/ "./src/app/components/admin/list-quiz/list-quiz.component.ts":
+/*!*******************************************************************!*\
+  !*** ./src/app/components/admin/list-quiz/list-quiz.component.ts ***!
+  \*******************************************************************/
+/*! exports provided: ListQuizComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "ListQuizComponent", function() { return ListQuizComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_material_paginator__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/material/paginator */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/paginator.js");
+/* harmony import */ var _angular_material_table__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/material/table */ "./node_modules/@angular/material/__ivy_ngcc__/fesm2015/table.js");
+
+
+
+
+let ListQuizComponent = class ListQuizComponent {
+    constructor() {
+        this.displayedColumns = ['position', 'name', 'weight', 'symbol'];
+        this.dataSource = new _angular_material_table__WEBPACK_IMPORTED_MODULE_3__["MatTableDataSource"](ELEMENT_DATA);
+    }
+    ngOnInit() {
+        this.dataSource.paginator = this.paginator;
+    }
+};
+Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["ViewChild"])(_angular_material_paginator__WEBPACK_IMPORTED_MODULE_2__["MatPaginator"], { static: true })
+], ListQuizComponent.prototype, "paginator", void 0);
+ListQuizComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-list-quiz',
+        template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./list-quiz.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/admin/list-quiz/list-quiz.component.html")).default,
+        styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./list-quiz.component.css */ "./src/app/components/admin/list-quiz/list-quiz.component.css")).default]
+    })
+], ListQuizComponent);
+
+const ELEMENT_DATA = [
+    { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
+    { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
+    { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
+    { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
+    { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
+    { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
+    { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
+    { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
+    { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
+    { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
+    { position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na' },
+    { position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg' },
+    { position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al' },
+    { position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si' },
+    { position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P' },
+    { position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S' },
+    { position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl' },
+    { position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar' },
+    { position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K' },
+    { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' },
+];
+
+
+/***/ }),
+
+/***/ "./src/app/components/admin/login/login.component.css":
+/*!************************************************************!*\
+  !*** ./src/app/components/admin/login/login.component.css ***!
+  \************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony default export */ __webpack_exports__["default"] = ("\n/*# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJzb3VyY2VzIjpbXSwibmFtZXMiOltdLCJtYXBwaW5ncyI6IiIsImZpbGUiOiJzcmMvYXBwL2NvbXBvbmVudHMvYWRtaW4vbG9naW4vbG9naW4uY29tcG9uZW50LmNzcyJ9 */");
+
+/***/ }),
+
+/***/ "./src/app/components/admin/login/login.component.ts":
+/*!***********************************************************!*\
+  !*** ./src/app/components/admin/login/login.component.ts ***!
+  \***********************************************************/
+/*! exports provided: LoginComponent */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginComponent", function() { return LoginComponent; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _services_login_service__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../services/login.service */ "./src/app/services/login.service.ts");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+
+
+
+
+let LoginComponent = class LoginComponent {
+    constructor(_lgn, router) {
+        this._lgn = _lgn;
+        this.router = router;
+        this.msg = "";
+        this.user = {
+            email: "",
+            password: ""
+        };
+    }
+    getIn() {
+        this._lgn.login(this.user).then((res) => {
+            localStorage.setItem("user", res.user.email);
+            this.router.navigate(['config-questions']);
+        }).catch(err => {
+            console.log(err);
+            if (err.code == "auth/user-not-found") {
+                this.msg = "Usuario incorrecto";
+            }
+            else if (err.code == "auth/wrong-password") {
+                this.msg = "Contraseña incorrecta";
+            }
+        });
+    }
+};
+LoginComponent.ctorParameters = () => [
+    { type: _services_login_service__WEBPACK_IMPORTED_MODULE_2__["LoginService"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }
+];
+LoginComponent = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Component"])({
+        selector: 'app-login',
+        template: Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! raw-loader!./login.component.html */ "./node_modules/raw-loader/dist/cjs.js!./src/app/components/admin/login/login.component.html")).default,
+        styles: [Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__importDefault"])(__webpack_require__(/*! ./login.component.css */ "./src/app/components/admin/login/login.component.css")).default]
+    })
+], LoginComponent);
 
 
 
@@ -795,76 +1177,78 @@ let QuestionsComponent = class QuestionsComponent {
         this.headTop = 1;
         this.arrayAcum = [];
         this.ad = [];
+        this.listIdQues = [];
         this.records = [];
         this._questions.getMessage().subscribe((res) => {
             this.message = res[0].message;
             this.inputs = res[0].data;
         });
         this._questions.getQuestions().subscribe((data) => {
-            //console.log(data);
             this.questions = data;
         });
     }
     ngOnInit() {
     }
     send(forma) {
-        if (this.listResponse.question) {
-            let cont = this.listResponse.question;
-            for (let i = 0; i < cont.length; i++) {
-                let itemSpli = cont[i].id;
-                try {
-                    itemSpli = itemSpli.split(".");
-                    this.arrayAcum.push(Number(itemSpli[0]));
+        this.listIdQues = [];
+        let respOpti = this.listResponse.question;
+        for (let i = 0; i < this.questions.length; i++) {
+            if (this.questions[i].typeDesign == "textbox") {
+                if (this.questions[i].mandatory == "true") {
+                    this.listIdQues.push(this.questions[i].id);
                 }
-                catch (_a) {
-                    this.arrayAcum.push(cont[i].id);
-                }
-            }
-            this.arrayAcum = this.arrayAcum.filter((valor, indiceActual, arreglo) => arreglo.indexOf(valor) === indiceActual);
-            console.log(this.arrayAcum);
-            if (this.arrayAcum.length == 10) {
-                this.sentTrue = true;
-                this.showQuestions = false;
-                this.errorValid = false;
             }
             else {
-                this.errorValid = true;
+                let listOp = this.questions[i].questions.option;
+                for (let d = 0; d < listOp.length; d++) {
+                    if (listOp[d].mandatory == "true") {
+                        let daup = listOp[d].id.split(".");
+                        if (daup[0]) {
+                            this.listIdQues.push(Number(daup[0]));
+                        }
+                        else {
+                            this.listIdQues.push(listOp[d].id);
+                        }
+                    }
+                }
+            }
+        }
+        // Cargar respuestas
+        let dat;
+        if (typeof respOpti !== 'undefined') {
+            for (let r = 0; r < respOpti.length; r++) {
+                try {
+                    let respSplit = respOpti[r].id.split(".");
+                    dat = this.listIdQues.indexOf(Number(respSplit[0]));
+                }
+                catch (error) {
+                    dat = this.listIdQues.indexOf(respOpti[r].id);
+                }
+                if (dat != -1) {
+                    this.listIdQues.splice(dat, 1);
+                }
             }
         }
         else {
             this.errorValid = true;
         }
+        if (this.listIdQues.length != 0) {
+            this.errorValid = true;
+        }
+        else {
+            this.errorValid = false;
+            this.sentTrue = true;
+        }
+    }
+    validRequired(item) {
+        if (this.listIdQues.indexOf(item.id) != -1) {
+            return true;
+        }
     }
     saveQuiz(dataQuestion, options, question, idOp, typeQuestion, label, idtem) {
         let idQuestion = dataQuestion.id;
-        console.log(options);
-        if (typeQuestion == "table-multiple") {
-            let valAction = dataQuestion.valcheck.indexOf("databx" + idtem + '-' + idOp + '-' + idQuestion);
-            if (valAction != -1) {
-                console.log('encontro');
-                dataQuestion.valcheck.splice(valAction, 1);
-            }
-            else {
-                console.log("2");
-                if (dataQuestion.repeat > dataQuestion.valcheck.length) {
-                    dataQuestion.valcheck.push("databx" + idtem + '-' + idOp + '-' + idQuestion);
-                    //  console.log(dataQuestion);
-                }
-                //return true;
-            }
-        }
-        if (typeQuestion == "table") {
-            let valAction = dataQuestion.questions.valcheck.indexOf("databx" + idtem + '-' + idOp + '-' + idQuestion);
-            if (valAction != -1) {
-                dataQuestion.questions.valcheck.splice(valAction, 1);
-            }
-            else {
-                if (dataQuestion.questions.repeat > dataQuestion.questions.valcheck.length) {
-                    dataQuestion.questions.valcheck.push("databx" + idtem + '-' + idOp + '-' + idQuestion);
-                    //console.log(dataQuestion);
-                }
-            }
-        }
+        let dataStruct;
+        let calueOption = options.value;
         let datLabel;
         this.actBox = idtem + "-" + idOp + "-" + idQuestion;
         if (typeQuestion == "check-mensaje" || typeQuestion == "table-multiple") {
@@ -873,89 +1257,114 @@ let QuestionsComponent = class QuestionsComponent {
             idLabel = (idQr[0]) + '.' + idLabel;
             for (let i = 0; i < label.length; i++) {
                 if (label[i].id == idLabel) {
-                    if (typeQuestion == "table-multiple" || typeQuestion == "check-mensaje") {
-                        if (label[i].typeDesign == 'label') {
-                            //  datLabel = label[i].options[0];
-                            datLabel = label[i].options;
+                    if (label[i].typeDesign == 'label') {
+                        datLabel = label[i].options;
+                    }
+                }
+            }
+        }
+        if (typeQuestion == "table" || typeQuestion == "check" || typeQuestion == "check-mensaje" || typeQuestion == "table-multiple") {
+            if (typeQuestion == "check-mensaje" || typeQuestion == "table-multiple") {
+                dataStruct = dataQuestion;
+            }
+            else {
+                dataStruct = dataQuestion.questions;
+            }
+            if (typeQuestion == "table-multiple") {
+                calueOption = options;
+            }
+            // AGREGAR O QUITAR SELECCION
+            let valAction = dataStruct.valcheck.indexOf("databx" + idtem + '-' + idOp + '-' + idQuestion);
+            if (valAction != -1) {
+                // ELIMINAR LA SELECCION A LA QUE LE HAGO CLICK              
+                dataStruct.valcheck.splice(valAction, 1);
+                this.listResponse.question = this.pushQuestions(idQuestion, question, calueOption, new Date(), typeQuestion, datLabel, valAction);
+            }
+            else {
+                // VALIDAR CANTIDAD DE OPCIONES POR PREGUNTA
+                if (dataStruct.repeat > dataStruct.valcheck.length) {
+                    // AGREGA LA OPCION
+                    dataStruct.valcheck.push("databx" + idtem + '-' + idOp + '-' + idQuestion);
+                    this.listResponse.question = this.pushQuestions(idQuestion, question, calueOption, new Date(), typeQuestion, datLabel);
+                }
+                else {
+                    // SI SE PASA DE LA CANTIDAD DE OPCIONES PERMITIDAS , ELIMINA LA ULTIMA OPCION Y AGREGA LA NUEVA
+                    dataStruct.valcheck.splice(dataStruct.valcheck.length - 1, 1);
+                    dataStruct.valcheck.push("databx" + idtem + '-' + idOp + '-' + idQuestion);
+                    this.listResponse.question = this.pushQuestions(idQuestion, question, calueOption, new Date(), typeQuestion, datLabel, dataStruct.valcheck.length - 1);
+                }
+            }
+            ////////////////////////////
+        }
+        else {
+            this.listResponse.question = this.pushQuestions(idQuestion, question, calueOption, new Date(), typeQuestion, datLabel);
+        }
+        if (typeQuestion == "text") {
+            this._response.updateResponsew(this.idDocumentFire, this.listResponse, 'add', '');
+        }
+        else {
+            this._response.updateResponsew(this.idDocumentFire, this.listResponse, 'add', '');
+        }
+        //this.indexOfElement( dataQuestion,"databx"+idtem+'-'+idOp+'-'+idQuestion,typeQuestion );
+    }
+    pushQuestions(idQuestion, message, options, date, typeQuestion, label, idSplice) {
+        let pass = true;
+        let saveQuestion = {};
+        if (typeQuestion == "table-multiple" || typeQuestion == "table" || typeQuestion == "check" || typeQuestion == "check-mensaje" || typeQuestion == "text") {
+            for (let i = 0; i < this.svQuestion.length; i++) {
+                if (this.svQuestion[i].id == idQuestion) {
+                    if (typeof idSplice !== 'undefined') {
+                        if (typeQuestion == "check-mensaje" || typeQuestion == "table-multiple") {
+                            this.svQuestion[i].option.options.splice(idSplice, 1);
+                            this.svQuestion[i].option.options.push(options);
+                        }
+                        else {
+                            this.svQuestion[i].option.splice(idSplice, 1);
+                            this.svQuestion[i].option.push(options);
                         }
                     }
                     else {
-                        datLabel = label[i].options[0];
+                        if (typeQuestion == "check-mensaje" || typeQuestion == "table-multiple") {
+                            this.svQuestion[i].option.options.push(options);
+                        }
+                        else if (typeQuestion == "text") {
+                            this.svQuestion[i].text = options;
+                        }
+                        else {
+                            this.svQuestion[i].option.push(options);
+                        }
                     }
+                    pass = false;
                 }
             }
         }
-        this._response.getResponse(idQuestion, this.idDocumentFire).subscribe((data) => {
-            let liRes = data.question;
-            for (let i = 0; i < liRes.length; i++) {
-                if (liRes[i].id == idQuestion) {
-                    this.trueQuestion = liRes[i].id;
-                    this.idTrueQuestion = i;
-                }
+        if (pass == true) {
+            if (typeQuestion == "check-mensaje" || typeQuestion == "table-multiple") {
+                saveQuestion.id = idQuestion;
+                saveQuestion.message = message;
+                saveQuestion.option = { label: label, options: [options] };
+                saveQuestion.date = date;
             }
-        });
-        console.log(this.trueQuestion);
-        console.log(question);
-        console.log(options);
-        console.log(typeQuestion);
-        console.log(datLabel);
-        if (typeQuestion == "table-multiple") {
-            this.listResponse.question = this.pushQuestions(idQuestion, question, options, new Date(), typeQuestion, datLabel);
-        }
-        else if (typeQuestion == "table") {
-            let dataop;
-            if (this.trueQuestion != idQuestion) {
-                dataop = [options.value];
+            else if (typeQuestion == "table" || typeQuestion == "check") {
+                saveQuestion.option = [options];
+                saveQuestion.id = idQuestion;
+                saveQuestion.message = message;
+                saveQuestion.date = date;
             }
-            this.listResponse.question = this.pushQuestions(idQuestion, question, dataop, new Date(), typeQuestion, datLabel);
-        }
-        else {
-            this.listResponse.question = this.pushQuestions(idQuestion, question, options.value, new Date(), typeQuestion, datLabel);
-        }
-        if (typeQuestion == "text") {
-            this._response.updateResponsew(this.idDocumentFire, this.listResponse, 'add', '');
-        }
-        else {
-            //if(this.trueQuestion == idQuestion) {
-            //this._response.updateResponsew(this.idDocumentFire,this.listResponse,'update',this.idTrueQuestion);
-            //} else {
-            //console.log('add');
-            this._response.updateResponsew(this.idDocumentFire, this.listResponse, 'add', '');
-            //  }
-        }
-    }
-    pushQuestions(idQuestion, message, options, date, typeQuestion, label) {
-        for (let i = 0; i < this.svQuestion.length; i++) {
-            if (this.svQuestion[i].id == idQuestion) {
-                this.svQuestion.splice(i, 1);
+            else if (typeQuestion == "text") {
+                saveQuestion.id = idQuestion;
+                saveQuestion.message = message;
+                saveQuestion.text = options;
+                saveQuestion.date = date;
             }
+            else {
+                saveQuestion.id = idQuestion;
+                saveQuestion.message = message;
+                saveQuestion.options = options;
+                saveQuestion.date = date;
+            }
+            this.svQuestion.push(saveQuestion);
         }
-        let saveQuestion = {};
-        if (typeQuestion == "text") {
-            saveQuestion.id = idQuestion;
-            saveQuestion.message = message;
-            saveQuestion.text = options;
-            saveQuestion.date = date;
-        }
-        if (typeQuestion == "check-mensaje" || typeQuestion == "table-multiple") {
-            saveQuestion.id = idQuestion;
-            saveQuestion.message = message;
-            saveQuestion.option = { label: label, options: options };
-            saveQuestion.date = date;
-        }
-        else if (typeQuestion == "table") {
-            saveQuestion.option = options;
-            saveQuestion.id = idQuestion;
-            saveQuestion.message = message;
-            saveQuestion.date = date;
-        }
-        else {
-            saveQuestion.id = idQuestion;
-            saveQuestion.message = message;
-            saveQuestion.options = options;
-            saveQuestion.date = date;
-        }
-        this.svQuestion.push(saveQuestion);
         return this.svQuestion;
     }
     openQuiz() {
@@ -987,31 +1396,18 @@ let QuestionsComponent = class QuestionsComponent {
     }
     indexOfElement(data, element, typeQuestion) {
         data.topB = 0;
-        //console.log(element);
-        //console.log(data);
-        let resp;
         if (typeQuestion != "table-multiple") {
-            resp = -1;
-            if (data.questions.valcheck.indexOf(element) != -1) {
-                resp = 0;
-            }
+            return data.questions.valcheck.indexOf(element);
         }
         else {
-            if (data.valcheck !== undefined) {
-                resp = -1;
-                if (data.valcheck.indexOf(element) != -1) {
-                    resp = 0;
-                }
-            }
+            return data.valcheck.indexOf(element);
         }
-        return resp;
     }
     conditional(data) {
         if (data != "") {
             let typeCondition = data.split('|');
             let optionsCondition = typeCondition[1].split('|');
             optionsCondition = optionsCondition[0].split(',');
-            //  console.log(optionsCondition);
             let validCondition;
             switch (typeCondition[0]) {
                 case 'rol': {
@@ -1022,7 +1418,6 @@ let QuestionsComponent = class QuestionsComponent {
             if (validCondition != -1) {
                 validCondition = 0;
             }
-            //  console.log(validCondition);
             return validCondition;
         }
         else {
@@ -1080,11 +1475,8 @@ let QuestionsComponent = class QuestionsComponent {
     }
     getDataQuestions(csvRecordsArray, headerLength) {
         let csvArr = [];
-        let cvInit = [];
-        let dataOption = [];
         let csvMessage = {};
         let itemInput = [];
-        let listItems = [];
         let inputs = [];
         let list = [];
         let dataMessage = csvRecordsArray[1].split(';');
@@ -1103,7 +1495,6 @@ let QuestionsComponent = class QuestionsComponent {
         this._questions.addMessage(csvMessage);
         for (let i = 1; i < csvRecordsArray.length; i++) {
             let curruntRecord = csvRecordsArray[i].split(';');
-            //console.log(curruntRecord[0]);
             if (curruntRecord.length == headerLength) {
                 let csvRecord = new src_app_models_questions_module__WEBPACK_IMPORTED_MODULE_2__["QuestionsModule"]();
                 csvRecord.id = parseFloat(curruntRecord[0]);
@@ -1112,7 +1503,6 @@ let QuestionsComponent = class QuestionsComponent {
                 if (listOption.length == 1) {
                     // lista de opciones de cada pregunta
                     let valueOption = this.getOptions(curruntRecord[0], csvRecordsArray, headerLength);
-                    //console.log(valueOption);
                     csvRecord.questions = { message: curruntRecord[1], option: valueOption, repeat: curruntRecord[4], valcheck: [] };
                     csvRecord.mandatory = curruntRecord[2];
                     csvRecord.typeDesign = curruntRecord[3];
@@ -1142,7 +1532,6 @@ let QuestionsComponent = class QuestionsComponent {
                 let csvRecord = new src_app_models_questions_module__WEBPACK_IMPORTED_MODULE_2__["QuestionsModule"]();
                 let listOption = curruntRecord[0].split('.');
                 if (listOption.length == 2 && idQuestion == listOption[0]) {
-                    //csvRecord.id = Number(curruntRecord[0]);
                     csvRecord.id = curruntRecord[0];
                     if (curruntRecord[3] == "value") {
                         csvRecord.options = curruntRecord[1].split(',');
@@ -1193,8 +1582,6 @@ let QuestionsComponent = class QuestionsComponent {
             for (let i = 0; i < data.length; i++) {
                 if (this.conditional(data[i].conditional) == 0) {
                     return 0;
-                }
-                else {
                 }
             }
         }
@@ -1516,6 +1903,115 @@ KeyArrayPipe = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
 
 /***/ }),
 
+/***/ "./src/app/services/auth.service.ts":
+/*!******************************************!*\
+  !*** ./src/app/services/auth.service.ts ***!
+  \******************************************/
+/*! exports provided: AuthService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "AuthService", function() { return AuthService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_fire_auth__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/auth */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm2015/angular-fire-auth.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+
+
+
+
+let AuthService = class AuthService {
+    constructor(afAuth, router) {
+        this.afAuth = afAuth;
+        this.router = router;
+    }
+    canActivate(next, state) {
+        if (localStorage.getItem('user')) {
+            // this.router.navigate(['config-questions']);
+            return true;
+        }
+        else {
+            this.router.navigate(['login']);
+            return false;
+        }
+    }
+};
+AuthService.ctorParameters = () => [
+    { type: _angular_fire_auth__WEBPACK_IMPORTED_MODULE_2__["AngularFireAuth"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_3__["Router"] }
+];
+AuthService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], AuthService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/login.service.ts":
+/*!*******************************************!*\
+  !*** ./src/app/services/login.service.ts ***!
+  \*******************************************/
+/*! exports provided: LoginService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "LoginService", function() { return LoginService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm2015/angular-fire-firestore.js");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! firebase/app */ "./node_modules/firebase/app/dist/index.cjs.js");
+/* harmony import */ var firebase_app__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(firebase_app__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _angular_fire_auth__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/fire/auth */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm2015/angular-fire-auth.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+
+
+
+
+
+
+let LoginService = class LoginService {
+    constructor(afs, afAuth, router) {
+        this.afs = afs;
+        this.afAuth = afAuth;
+        this.router = router;
+        this.dataUser = {};
+        this.afAuth.authState.subscribe(user => {
+            if (!user) {
+                return;
+            }
+            else {
+                this.dataUser.name = user.displayName;
+                this.dataUser.uId = user.uid;
+            }
+        });
+    }
+    login(data) {
+        return new Promise((resolve, reject) => {
+            firebase_app__WEBPACK_IMPORTED_MODULE_3__["auth"]().signInWithEmailAndPassword(data.email, data.password)
+                .then(userData => resolve(userData), error => reject(error));
+        });
+    }
+};
+LoginService.ctorParameters = () => [
+    { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"] },
+    { type: _angular_fire_auth__WEBPACK_IMPORTED_MODULE_4__["AngularFireAuth"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_5__["Router"] }
+];
+LoginService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], LoginService);
+
+
+
+/***/ }),
+
 /***/ "./src/app/services/questions.service.ts":
 /*!***********************************************!*\
   !*** ./src/app/services/questions.service.ts ***!
@@ -1630,14 +2126,13 @@ __webpack_require__.r(__webpack_exports__);
 let ResponseService = class ResponseService {
     constructor(afs) {
         this.afs = afs;
-        this.collection = "response_pruebas";
+        this.collection = "response_daniel";
         this.dataUpdate = [];
     }
     getResponse(idQuestion, idDocumentFire) {
         return this.afs.collection(this.collection).doc(idDocumentFire).valueChanges();
     }
     addResponse(data) {
-        console.log(data);
         return this.afs.collection(this.collection).add(JSON.parse(JSON.stringify(data)));
     }
     updateResponsew(idDocumentFire, data, type, idQuestion) {
@@ -1647,7 +2142,6 @@ let ResponseService = class ResponseService {
         }
         else {
             this.dataUpdate[idQuestion] = data.question[idQuestion];
-            //console.log(this.dataUpdate);
             return this.afs.collection(this.collection).doc(idDocumentFire).update({
                 question: this.dataUpdate[idQuestion]
             });
@@ -1663,6 +2157,57 @@ ResponseService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
         providedIn: 'root'
     })
 ], ResponseService);
+
+
+
+/***/ }),
+
+/***/ "./src/app/services/sigout.service.ts":
+/*!********************************************!*\
+  !*** ./src/app/services/sigout.service.ts ***!
+  \********************************************/
+/*! exports provided: SigoutService */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "SigoutService", function() { return SigoutService; });
+/* harmony import */ var tslib__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! tslib */ "./node_modules/tslib/tslib.es6.js");
+/* harmony import */ var _angular_core__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @angular/core */ "./node_modules/@angular/core/__ivy_ngcc__/fesm2015/core.js");
+/* harmony import */ var _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! @angular/fire/firestore */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm2015/angular-fire-firestore.js");
+/* harmony import */ var _angular_fire_auth__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! @angular/fire/auth */ "./node_modules/@angular/fire/__ivy_ngcc__/fesm2015/angular-fire-auth.js");
+/* harmony import */ var _angular_router__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! @angular/router */ "./node_modules/@angular/router/__ivy_ngcc__/fesm2015/router.js");
+
+
+
+
+
+let SigoutService = class SigoutService {
+    constructor(afs, afAuth, router) {
+        this.afs = afs;
+        this.afAuth = afAuth;
+        this.router = router;
+    }
+    canActivate(next, state) {
+        if (localStorage.getItem('user')) {
+            this.router.navigate(['config-questions']);
+            return false;
+        }
+        else {
+            return true;
+        }
+    }
+};
+SigoutService.ctorParameters = () => [
+    { type: _angular_fire_firestore__WEBPACK_IMPORTED_MODULE_2__["AngularFirestore"] },
+    { type: _angular_fire_auth__WEBPACK_IMPORTED_MODULE_3__["AngularFireAuth"] },
+    { type: _angular_router__WEBPACK_IMPORTED_MODULE_4__["Router"] }
+];
+SigoutService = Object(tslib__WEBPACK_IMPORTED_MODULE_0__["__decorate"])([
+    Object(_angular_core__WEBPACK_IMPORTED_MODULE_1__["Injectable"])({
+        providedIn: 'root'
+    })
+], SigoutService);
 
 
 
@@ -1795,7 +2340,7 @@ Object(_angular_platform_browser_dynamic__WEBPACK_IMPORTED_MODULE_2__["platformB
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-module.exports = __webpack_require__(/*! /Users/leonardohernandez/Desktop/encuestas/src/main.ts */"./src/main.ts");
+module.exports = __webpack_require__(/*! /Users/leonardohernandez/Documents/Clientix/Desarrollos /encuestas/src/main.ts */"./src/main.ts");
 
 
 /***/ })

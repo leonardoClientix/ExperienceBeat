@@ -1,14 +1,12 @@
 import { Injectable } from '@angular/core';
 import { AngularFirestore , AngularFirestoreCollection} from '@angular/fire/firestore';
-import { ResponseModule } from '../models/response.module';
-import * as firebase from 'firebase';
 
 @Injectable({
   providedIn: 'root'
 })
 export class ResponseService {
 
-  collection:any = "response_leonardo";
+  collection:any = "response_daniel";
   dataUpdate = [];
 
   private itemsCollection: AngularFirestoreCollection<any>;
@@ -21,7 +19,6 @@ export class ResponseService {
     return this.afs.collection(this.collection).doc(idDocumentFire).valueChanges();
   }
   addResponse(data){
-    console.log(data);
     return this.afs.collection(this.collection).add( JSON.parse(JSON.stringify(data)) );
   }
 
@@ -35,7 +32,7 @@ export class ResponseService {
     } else {
 
       this.dataUpdate[idQuestion] = data.question[idQuestion];
-      //console.log(this.dataUpdate);
+      
       return this.afs.collection(this.collection).doc(idDocumentFire).update({
         question: this.dataUpdate[idQuestion]
       });

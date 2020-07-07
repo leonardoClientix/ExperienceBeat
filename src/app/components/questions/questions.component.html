@@ -23,22 +23,19 @@ Carga de Usuarios
   </div>
 </div>
 
-<div class="alert alert-success" role="alert" *ngIf="sentTrue">
-  <h4 class="alert-heading text-center"> Encuesta enviada correctamente </h4>
-</div>
 
 <form class="list-cont-questions" *ngIf="showQuestions" (ngSubmit)="send(forma)" #forma novalidate>
 <ol>
 <div *ngFor="let item of questions; let pre = index">
 
-  <div class="form-group animated bounceInUp fast" [ngClass]="{'active': stateBox == 1}"  *ngIf="item.id != '0.2' && validateQuestion(item.typeDesign,item.questions.option) == 0" >
+  <div class="form-group animated bounceInUp fast" [ngClass]="{'active': stateBox == 1,'valAct' : validRequired(item)}"  *ngIf="item.id != '0.2' && validateQuestion(item.typeDesign,item.questions.option) == 0 " >
 
     <!--<label class="item-num">{{ preNumber }}</label>-->
      <li class="txt-question" for="formGroupExampleInput" [innerHTML]="item.questions.message" translate="no"></li>
 
     <div class="list-check" *ngIf="item.typeDesign == 'check'">
-      <div class="form-check form-check-inline" *ngFor="let opt of item.questions.option[0].options; let op = index" >
-        <input class="form-check-input" type="radio" name="question{{ item.id }}"  [value]="opt"  id="inlineCheckbox{{ item.id }}-{{ op }}" (change)="saveQuiz(item,data,item.questions.message,op,'check')"  #data>
+      <div class="form-check form-check-inline" *ngFor="let opt of item.questions.option[0].options; let op = index">
+        <input class="form-check-input" type="radio" name="question{{ item.id }}"  [value]="opt"  id="inlineCheckbox{{ item.id }}-{{ op }}" (change)="saveQuiz(item,data,item.questions.message,op,'check')"   #data>
         <label class="form-check-label" for="inlineCheckbox{{ item.id }}-{{ op }}"><span  translate="no">{{ opt }}</span></label>
       </div>
     </div>
@@ -63,7 +60,7 @@ Carga de Usuarios
 
     <div class="list-check-box two-box"  *ngIf="item.typeDesign == 'tabla'">
       <div class="row">
-      <div class="form-check box-action col-12 col-sm-3 databx0-{{ op }}-{{ item.id }}" *ngFor="let opt of item.questions.option[0].options; let op = index" [ngClass]="{'action': indexOfElement(  item, 'databx0-'+op+'-'+item.id, 'table' ) == 0 }" >
+      <div class="form-check box-action col-12 col-sm-3 databx0-{{ op }}-{{ item.id }}" *ngFor="let opt of item.questions.option[0].options; let op = index" [ngClass]="{'action': indexOfElement(  item, 'databx0-'+op+'-'+item.id, 'table' ) != -1 }" >
         <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ op }}" value="{{ opt }}" (click)="saveQuiz(item,dataTable,item.questions.message,op,'table',0,0)" #dataTable>
         <label class="form-check-label" for="box{{ item.id }}-{{ op }}" translate="no">{{ opt }}</label>
       </div>
@@ -126,7 +123,7 @@ Carga de Usuarios
 
     </div>
 
-    <textarea class="form-control" id="exampleFormControlTextarea1" *ngIf="item.typeDesign == 'textbox'" rows="3" (keypress)="saveQuiz(item,dataText,item.questions.message,'','text')" #dataText></textarea>
+    <textarea class="form-control" id="exampleFormControlTextarea1" *ngIf="item.typeDesign == 'textbox'" rows="3" (keyup)="saveQuiz(item,dataText,item.questions.message,'','text')" #dataText></textarea>
 
   </div>
 
@@ -135,9 +132,11 @@ Carga de Usuarios
 </ol>
 
 <div class="alert alert-danger" role="alert" *ngIf="errorValid">
-  <h4 class="alert-heading text-center"> Todas las preguntas son obligatorias </h4>
+  <h4 class="alert-heading text-center"> Las preguntas resaltadas en rojo son oblgatorias  </h4>
 </div>
-
+<div class="alert alert-success" role="alert" *ngIf="sentTrue">
+  <h4 class="alert-heading text-center"> Encuesta enviada correctamente </h4>
+</div>
 
   <button type="submit" class="btn btn-primary btn-lg bg-col float-right" >Enviar</button>
 

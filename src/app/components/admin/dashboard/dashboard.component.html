@@ -1,0 +1,321 @@
+<div class="cont-step animated "  [ngClass]="{'pop-right': showPop == 'pop-item-user','pop-left': showPop == 'pop-item-grap'  , 'fadeInDown': showPop == 'none'}">
+      <div class="row">
+        <div class="col-md-12 mb-12">
+
+          <div class="col-md-12 mb-12">
+            <h2>Encuestas</h2>
+            <div class="box-data">
+                <canvas id="stackedLine"></canvas>
+            </div>
+          </div>
+
+          <div class="col-md-12 mb-12">
+            <h2>Indicadores</h2>
+            <div class="row">
+                <div class="col-md-6 mb-6">
+                    <div class="box-data" (click)="openQuiz(null,'pop-item-grap')" data-toggle="modal" data-target=".modal-grap">
+                        <h3>Índice de recomendación</h3>
+                        <p>¿Qué tan satisfecho te encuentras con el SERVICIO prestado por los diferentes procesos de Efecty? Donde 5 es Muy satisfecho y 1 es Nada satisfecho.</p> 
+                        <canvas id="myPieChart"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-6">
+                    <div class="box-data">
+                        <h3>Índice de esfuerzo</h3>
+                        <p>¿Cuál es tu percepción de la vivencia de los valores corporativos Efecty (Responsabilidad, confianza, respeto, servicio) frente al nivel de Experiencia y Servicio en los procesos de la Compañía?</p>
+                        <canvas id="myPieChart2"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-6">
+                    <div class="box-data">
+                        <h3>Índice de defensa</h3>
+                        <p>¿Cuál es tu percepción de la vivencia de los valores corporativos Efecty (Responsabilidad, confianza, respeto, servicio) frente al nivel de Experiencia y Servicio en los procesos de la Compañía?</p>
+                        <canvas id="myPieChart3"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-6 mb-6">
+                    <div class="box-data">
+                        <h3>Índice de Satisfacción</h3>
+                        <p>¿Cuál es tu percepción de la vivencia de los valores corporativos Efecty (Responsabilidad, confianza, respeto, servicio) frente al nivel de Experiencia y Servicio en los procesos de la Compañía?</p>
+                        <canvas id="myPieChart4"></canvas>
+                    </div>
+                </div>
+            </div>  
+        </div>
+
+        <div class="col-md-12 mb-12">
+                <div>
+
+                    <button type="button" class="btn btn-primary btn-sm">Exportar</button>
+                    <table mat-table [dataSource]="dataSource" matSort >
+                        
+                    <!-- Position Column -->
+                    <ng-container matColumnDef="position">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+                        <td mat-cell *matCellDef="let element"> {{element.position}} </td>
+                    </ng-container> 
+                
+                    <!-- Name Column -->
+                    <ng-container matColumnDef="name">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nombre del encuestado </th>
+                        <td mat-cell *matCellDef="let element"> {{element.name}} </td>
+                    </ng-container>
+
+                     <!-- Weight Column -->
+                    <ng-container matColumnDef="num_question">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Nº de preguntas respondidas </th>
+                        <td mat-cell *matCellDef="let element"> {{element.num_question}} </td>
+                    </ng-container>
+
+                     <!-- Weight Column -->
+                     <ng-container matColumnDef="profile">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Cargo </th>
+                        <td mat-cell *matCellDef="let element"> {{element.profile}} </td>
+                    </ng-container>
+
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="category">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Macroporceso </th>
+                        <td mat-cell *matCellDef="let element"> {{element.category}} </td>
+                    </ng-container>
+                
+                    <!-- Weight Column -->
+                    <ng-container matColumnDef="start_date">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha inicio </th>
+                        <td mat-cell *matCellDef="let element"> {{element.start_date}} </td>
+                    </ng-container>
+                
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="end_date">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de cierre </th>
+                        <td mat-cell *matCellDef="let element"> {{element.end_date}} </td>
+                    </ng-container>
+
+                    <!-- Symbol Column -->
+                    <ng-container matColumnDef="quiz">
+                        <th mat-header-cell *matHeaderCellDef mat-sort-header> Encuesta </th>
+                        <td mat-cell *matCellDef="let element"> <button type="button" class="btn btn-primary btn-sm" (click)="openQuiz(element.quiz,'pop-item-user')" data-toggle="modal" data-target=".bd-example-modal-lg">Ver</button> </td>
+                    </ng-container>
+                
+                    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                
+                    <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+                </div>
+          </div>
+  
+        </div>
+     
+      </div>
+
+</div>
+
+<div class="modal fade modal-grap animated fadeInLeft modal-dashboard modal-grap-question" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" (click)="togglePop($event,'initial')">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
+      <div class="modal-content">
+        <div class="modal-body">
+            <div class="row">
+
+                <div class="col-md-12 mb-12">
+                    <div class="box-data">
+                       <h3>Activador de Marca</h3>
+                        <canvas id="myPieChart5"></canvas>
+                    </div>
+                </div>
+                <div class="col-md-12 mb-12">
+                    <div class="box-data">
+                        <h3>Analista Jr Contabilidad</h3>
+                        <canvas id="myPieChart6"></canvas> 
+                    </div>
+                </div>
+
+            </div>
+        </div>
+      </div> 
+    </div>
+</div>
+
+<div class="modal fade bd-example-modal-lg animated fadeInRight modal-dashboard modal-user-question" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" (click)="togglePop($event,'initial')">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable" role="document">
+    <div class="modal-content">
+        <div class="modal-body">
+        <div class="row">
+
+            <div class="col-md-12 mb-12">
+                
+                <div class="box-data">
+                <div class="row">
+                    <div class="col-md-9 mb-9">
+                        <p>
+                            ¿Qué tan satisfecho te encuentras con el SERVICIO prestado por los diferentes procesos de Efecty? Donde 5 es Muy satisfecho y 1 es Nada satisfecho.
+                        </p>
+                        <ul>
+                            <li>4</li>
+                        </ul>
+                    </div>
+                    <div class="col-md-3 mb-3">
+                        <canvas id="myPieChart7" class="mt-3"></canvas> 
+                    </div>
+                </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 mb-12">
+                <div class="box-data">
+                        <p>
+                            ¿Qué tan satisfecho te encuentras con los canales de comunicación de la Compañía (Llamadas, Chat, Correo electrónico), para el desempeño de tu gestión? Donde 5 es Muy satisfecho y 1 es Nada satisfecho.
+                        </p>
+                        <ul>
+                            <li>1</li>
+                        </ul>
+                </div>
+            </div>
+
+            <div class="col-md-12 mb-12">
+                <div class="box-data">
+                        <p>
+                            ¿Cuál es tu percepción de la vivencia de los valores corporativos Efecty (Responsabilidad, confianza, respeto, servicio) frente al nivel de Experiencia y Servicio en los procesos de la Compañía?
+                        </p>
+                        <ul>
+                            <li>Bueno</li>
+                        </ul>
+                </div>
+            </div>
+
+            <div class="col-md-12 mb-12">
+                <div class="box-data">
+                        <p>
+                            Selecciona cuál es el valor que más se debería promover en la Compañía para fomentar una Cultura de Experiencia centrada en el Cliente
+                        </p>
+                        <ul>
+                            <li>Responsabilidad</li>
+                        </ul>
+                </div>
+            </div>
+
+            <div class="col-md-12 mb-12">
+                <div class="box-data">
+                        <p>
+                            Selecciona DOS acciones que sean las MÁS RELEVANTES y que consideres se deben implementar en tu Proceso/Regional, para mejorar el nivel de Experiencia y Servicio con tus Clientes Internos.
+                        </p>
+                        <ul>
+                            <li>Tiempos de respuesta</li>
+                            <li>Actualización de procesos</li>
+                        </ul>
+                </div>
+            </div>
+
+            <div class="col-md-12 mb-12">
+                <div class="box-data">
+                    <div class="row">
+                        <div class="col-md-8 mb-8">
+                        <p>
+                            ¿Qué tan satisfecho te encuentras con el servicio que brindan los siguientes procesos? Donde 1 es nada satisfecho y 5 es muy satisfecho.
+                        </p>
+                        <ul>
+                            <li><b>Formación y Desarrollo</b> 3</li>
+                            <li><b>Seguridad y salud laboral</b> 3</li>
+                            <li><b>Regional Caribe</b> 3</li>
+                            <li><b>Regional Occidente</b> 3</li>
+                            <li><b>Regional Sur</b> 3</li>
+                            <li><b>Calidad de Vida</b> 3</li>
+                            <li><b>Regional Norte</b> 3</li>
+                            <li><b>Regional Oriente</b> 3</li>
+                            <li><b>Regional Antioquia</b> 3</li>
+                            <li><b>Regional Centro</b> 3</li>
+                            <li><b>Regional Eje</b> 3</li>
+                        </ul>
+                        </div>
+                        <div class="col-md-3 mb-3">
+                            <canvas id="myPieChart8" class="mt-3"></canvas> 
+                        </div>
+                        <div class="col-md-1 mb-1 alerts-question">
+                            <ul>
+                            <li> <fa-icon [icon]="faSms" class="conf-icon"  title="Envio de SMS" ></fa-icon></li> 
+                            </ul>
+                        </div>
+                           
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-12 mb-12">
+                <div class="box-data">
+                        <p>
+                            ¿Cuánto esfuerzo personal dedicas para realizar alguna solicitud a los siguientes Procesos y/o Regionales? Donde 1 es muy poco esfuerzo y 5 es mucho esfuerzo.
+                        </p>
+                        <ul>
+                            <li><b>Formación y Desarrollo</b> 3</li>
+                            <li><b>Seguridad y salud laboral</b> 3</li>
+                            <li><b>Regional Caribe</b> 3</li>
+                            <li><b>Regional Occidente</b> 3</li>
+                            <li><b>Regional Sur</b> 3</li>
+                            <li><b>Calidad de Vida</b> 3</li>
+                            <li><b>Regional Norte</b> 3</li>
+                            <li><b>Regional Oriente</b> 3</li>
+                            <li><b>Regional Antioquia</b> 3</li>
+                            <li><b>Regional Centro</b> 3</li>
+                            <li><b>Regional Eje</b> 3</li>
+                        </ul>
+                </div>
+            </div>
+
+            <div class="col-md-12 mb-12">
+                <div class="box-data">
+                        <p>
+                            Selecciona máximo tres aspectos que DESTACAS de los ocho mencionados para los siguientes Procesos y/o Regionales frente a la prestación de sus servicios. (Desliza a la derecha para ver todos los aspectos)
+                        </p>
+                        <ul>
+                            <li>
+                               <b> Formación y Desarrollo </b>
+                                <ul>
+                                    <li>
+                                        Orientación y asesoría
+                                    </li>
+                                    <li>
+                                        Comunicación asertiva
+                                    </li>
+                                    <li>
+                                        Calidad y confiabilidad de la información
+                                    </li>
+                                </ul>
+                            </li>
+                            <li>
+                                <b> Calidad de Vida </b>
+                                 <ul>
+                                     <li>
+                                        Proactividad en la optimización y mejora de sus procesos
+                                     </li>
+                                     <li>
+                                        Cumplimiento de los acuerdos y compromisos
+                                     </li>
+                                     <li>
+                                        Comunicación asertiva
+                                     </li>
+                                 </ul>
+                             </li>
+                             <li>
+                                 <b> Regional Norte </b>
+                                  <ul>
+                                      <li>
+                                        Uso apropiado de los canales de comunicación (Correo electrónico-Chat-Llamada)
+                                      </li>
+                                      <li>
+                                         Cumplimiento de los acuerdos y compromisos
+                                      </li>
+                                      <li>
+                                         Comunicación asertiva
+                                      </li>
+                                  </ul>
+                              </li>
+                        </ul>
+                </div>
+            </div>
+
+        </div>
+        </div>
+
+    </div>
+  </div>
+</div>

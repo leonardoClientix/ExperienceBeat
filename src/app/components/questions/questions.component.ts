@@ -5,8 +5,7 @@ import { UserModule } from 'src/app/models/user.module';
 import { UsersService } from 'src/app/services/users.service';
 import { ResponseService } from 'src/app/services/response.service';
 import { ResponseModule } from 'src/app/models/response.module';
-import { NgForm } from '@angular/forms';
-import { analytics } from 'firebase';
+
 
 @Component({
   selector: 'app-questions',
@@ -40,6 +39,7 @@ export class QuestionsComponent  implements OnInit {
   headTop:any = 1;
   arrayAcum:any = [];
   ad:any = [];
+  listIdQues = [];
 
 
   public records: any[] = [];
@@ -62,7 +62,6 @@ export class QuestionsComponent  implements OnInit {
     });
 
     this._questions.getQuestions().subscribe( ( data:any )=>{
-      //console.log(data);
       this.questions = data;
     });
 
@@ -73,44 +72,80 @@ export class QuestionsComponent  implements OnInit {
   }
 
   send(forma){
+ 
+    this.listIdQues = [];
+    
+    let respOpti = this.listResponse.question;
 
-    if(this.listResponse.question){
+    for (let i = 0; i < this.questions.length; i++) {
 
-    let cont =  this.listResponse.question;
+      if(this.questions[i].typeDesign == "textbox"){
 
-      for (let i = 0; i < cont.length; i++) {
-        let itemSpli = cont[i].id;
+        if(this.questions[i].mandatory == "true"){
+          this.listIdQues.push(this.questions[i].id);
+        }
 
-            try {
-              itemSpli = itemSpli.split(".");
-              this.arrayAcum.push(Number(itemSpli[0]));
-            } catch {
-              this.arrayAcum.push(cont[i].id);
-            }
-
-      }
-
-      this.arrayAcum = this.arrayAcum.filter((valor, indiceActual, arreglo) => arreglo.indexOf(valor) === indiceActual);
-
-      console.log(this.arrayAcum);
-
-      if(this.arrayAcum.length == 10){
-        this.sentTrue = true;
-        this.showQuestions = false;
-        this.errorValid = false;
       } else {
-        this.errorValid = true;
+
+        let listOp = this.questions[i].questions.option;
+        for (let d = 0; d < listOp.length; d++) {
+          if(listOp[d].mandatory == "true"){
+            let daup = listOp[d].id.split(".");
+
+            if(daup[0]){
+              this.listIdQues.push(Number(daup[0]));
+            } else {
+              this.listIdQues.push(listOp[d].id);
+            }
+                 
+          }
+        }
+
       }
 
+    }
+
+    // Cargar respuestas
+
+    let dat;
+
+    if( typeof respOpti !== 'undefined'){
+      for (let r = 0; r < respOpti.length; r++) {
+      
+        try {
+          let respSplit = respOpti[r].id.split(".");
+          
+          dat = this.listIdQues.indexOf(Number(respSplit[0]));
+         
+        } catch (error) {
+          dat = this.listIdQues.indexOf(respOpti[r].id);
+        }
+        
+        if(dat != -1){
+          this.listIdQues.splice(dat,1);
+        }
+      }
     } else {
       this.errorValid = true;
     }
+    
+    if(this.listIdQues.length != 0){
+      this.errorValid = true;
+    } else {
+      this.errorValid = false;
+      this.sentTrue = true;
+    }
+
+  }
+
+  validRequired(item){
+     if(this.listIdQues.indexOf(item.id) != -1){
+      return true;
+     }
   }
 
 
   saveQuiz( dataQuestion, options , question , idOp, typeQuestion, label?,idtem? ){
-
-    
 
       let idQuestion = dataQuestion.id;
       let dataStruct:any;
@@ -118,8 +153,6 @@ export class QuestionsComponent  implements OnInit {
 
       let datLabel:any;
       this.actBox = idtem+"-"+idOp+"-"+idQuestion;
-
-      console.log("id pregunta","databx"+idtem+'-'+idOp+'-'+idQuestion);
 
       if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple"){
 
@@ -158,7 +191,7 @@ export class QuestionsComponent  implements OnInit {
            let valAction = dataStruct.valcheck.indexOf("databx"+idtem+'-'+idOp+'-'+idQuestion);
 
            if(valAction  != -1){
-              console.log("ya existe");
+              
                // ELIMINAR LA SELECCION A LA QUE LE HAGO CLICK              
                dataStruct.valcheck.splice(valAction,1);
                this.listResponse.question = this.pushQuestions(idQuestion,question,calueOption, new Date(),typeQuestion,datLabel,valAction);
@@ -166,7 +199,7 @@ export class QuestionsComponent  implements OnInit {
            } else {
                // VALIDAR CANTIDAD DE OPCIONES POR PREGUNTA
                if(dataStruct.repeat > dataStruct.valcheck.length){
-                 console.log("no existe");
+                 
                  // AGREGA LA OPCION
                  dataStruct.valcheck.push("databx"+idtem+'-'+idOp+'-'+idQuestion);
                  
@@ -174,7 +207,7 @@ export class QuestionsComponent  implements OnInit {
                } else{
                  // SI SE PASA DE LA CANTIDAD DE OPCIONES PERMITIDAS , ELIMINA LA ULTIMA OPCION Y AGREGA LA NUEVA
                  dataStruct.valcheck.splice(dataStruct.valcheck.length-1,1);
-                  console.log("dos no  existe");
+                  
                  dataStruct.valcheck.push("databx"+idtem+'-'+idOp+'-'+idQuestion);
                  this.listResponse.question = this.pushQuestions(idQuestion,question,calueOption, new Date(),typeQuestion,datLabel,dataStruct.valcheck.length-1);
 
@@ -193,41 +226,41 @@ export class QuestionsComponent  implements OnInit {
         this._response.updateResponsew(this.idDocumentFire,this.listResponse,'add','');
      }
 
-     console.log("dataQuestion", this.listResponse);
      //this.indexOfElement( dataQuestion,"databx"+idtem+'-'+idOp+'-'+idQuestion,typeQuestion );
 
   }
 
   pushQuestions(idQuestion,message,options,date,typeQuestion,label,idSplice?){
 
-        let pass = true;
-        let saveQuestion:any = {};
+      let pass = true;
+      let saveQuestion:any = {};
 
-      if(typeQuestion == "table-multiple" || typeQuestion == "table" || typeQuestion == "check" || typeQuestion == "check-mensaje" ){
-        console.log("ids",idSplice);
-
+      if(typeQuestion == "table-multiple" || typeQuestion == "table" || typeQuestion == "check" || typeQuestion == "check-mensaje" || typeQuestion == "text" ){
+       
         for (let i = 0; i < this.svQuestion.length; i++) {
           
             if(this.svQuestion[i].id == idQuestion){
-              console.log("entro");
+              
 
               if( typeof idSplice !== 'undefined'){
-                console.log("elimino");
+                
                 if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple" ){
+                  
                   this.svQuestion[i].option.options.splice(idSplice,1);
                   this.svQuestion[i].option.options.push(options);
-                  console.log(this.svQuestion[i].option.options);
+                  
                 } else {
                   this.svQuestion[i].option.splice(idSplice,1);
                   this.svQuestion[i].option.push(options);
-                  console.log(this.svQuestion[i].option);
                 }
                 
               } else {
 
                 if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple" ){
                   this.svQuestion[i].option.options.push(options);
-                } else {
+                } else if(typeQuestion == "text"){
+                  this.svQuestion[i].text = options;
+                }else {
                   this.svQuestion[i].option.push(options);
                 }
                 
@@ -237,18 +270,10 @@ export class QuestionsComponent  implements OnInit {
             }
           
         }
+
       }
 
       if(pass == true){  
-
-        if(typeQuestion == "text") {
-          
-          saveQuestion.id = idQuestion;
-          saveQuestion.message = message;
-          saveQuestion.text = options;
-          saveQuestion.date = date;
-
-        }
 
         if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple"){
 
@@ -262,6 +287,13 @@ export class QuestionsComponent  implements OnInit {
           saveQuestion.option = [ options ];
           saveQuestion.id = idQuestion;
           saveQuestion.message = message;
+          saveQuestion.date = date;
+
+        } else if(typeQuestion == "text") {
+          
+          saveQuestion.id = idQuestion;
+          saveQuestion.message = message;
+          saveQuestion.text = options;
           saveQuestion.date = date;
 
         } else {
@@ -316,43 +348,15 @@ export class QuestionsComponent  implements OnInit {
   indexOfElement( data,element,typeQuestion ){
     data.topB = 0;
 
-   
-
-    let resp ;
     if( typeQuestion != "table-multiple" ){
       
-        // resp = -1;
-        //   if( data.questions.valcheck.indexOf(element) != -1 ){
-        //     resp = 0;
-        //   }
-
-        // if(data.questions.valcheck == element){
-        //   return 0;
-        // }
-
-        // console.log(data.questions.valcheck.indexOf(element));
-
         return data.questions.valcheck.indexOf(element);
 
       } else {
-        
-      //   console.log("valcheck",data.valcheck);
-      //   console.log("element",element);
-      // // if(data.valcheck !== undefined){
-      //     resp = -1;
-      //     if( data.valcheck.indexOf(element) != -1 ){
-      //       resp = 0;
-      //     }
-      // // }
 
-      // if(data.valcheck == element){
-      //   return 0;
-      // }
-      return data.valcheck.indexOf(element);
+        return data.valcheck.indexOf(element);
 
-      }
-
-      // return resp;
+    }
 
   }
 
@@ -362,7 +366,7 @@ export class QuestionsComponent  implements OnInit {
       let typeCondition = data.split('|');
       let optionsCondition = typeCondition[1].split('|');
           optionsCondition = optionsCondition[0].split(',');
-        //  console.log(optionsCondition);
+        
       let validCondition;
       switch(typeCondition[0]) {
          case 'rol': {
@@ -375,11 +379,10 @@ export class QuestionsComponent  implements OnInit {
         validCondition = 0;
 
       }
-    //  console.log(validCondition);
+ 
       return validCondition;
 
     } else {
-
       return -1;
     }
 
@@ -452,11 +455,8 @@ export class QuestionsComponent  implements OnInit {
   getDataQuestions(csvRecordsArray: any, headerLength: any) {
 
     let csvArr = [];
-    let cvInit = [];
-    let dataOption = [];
     let csvMessage:any = {};
     let itemInput:any = [];
-    let listItems: any = [];
     let inputs = [];
     let list:any = [];
 
@@ -480,7 +480,6 @@ export class QuestionsComponent  implements OnInit {
 
     for (let i = 1; i < csvRecordsArray.length; i++) {
       let curruntRecord = (<string>csvRecordsArray[i]).split(';');
-      //console.log(curruntRecord[0]);
 
       if (curruntRecord.length == headerLength) {
         let csvRecord: QuestionsModule = new QuestionsModule();
@@ -491,7 +490,7 @@ export class QuestionsComponent  implements OnInit {
         if(listOption.length == 1){
           // lista de opciones de cada pregunta
           let valueOption = this.getOptions(curruntRecord[0], csvRecordsArray, headerLength );
-          //console.log(valueOption);
+         
           csvRecord.questions = { message: curruntRecord[1], option: valueOption, repeat: curruntRecord[4], valcheck: [] };
           csvRecord.mandatory = curruntRecord[2];
           csvRecord.typeDesign = curruntRecord[3];
@@ -532,7 +531,6 @@ export class QuestionsComponent  implements OnInit {
 
         if(listOption.length == 2 && idQuestion == listOption[0]){
 
-          //csvRecord.id = Number(curruntRecord[0]);
           csvRecord.id = curruntRecord[0];
           if(curruntRecord[3] == "value"){
             csvRecord.options = curruntRecord[1].split(',');
@@ -588,16 +586,15 @@ export class QuestionsComponent  implements OnInit {
 
   validateQuestion(item,data){
 
-   if(item == 'check-mensaje' || item == 'tabla-multiple' ){
-      for (let i = 0; i < data.length; i++) {
-      if( this.conditional(data[i].conditional) == 0){
+    if(item == 'check-mensaje' || item == 'tabla-multiple' ){
+        for (let i = 0; i < data.length; i++) {
+          if( this.conditional(data[i].conditional) == 0){
+            return 0;
+          } 
+        }
+    } else {
         return 0;
-      } else {
-      }
-      }
-   } else {
-      return 0;
-   }
+    }
 
   }
 
