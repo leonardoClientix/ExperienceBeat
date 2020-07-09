@@ -167,8 +167,9 @@ textarea, input {
     padding: 0;
 }
 .event-cli{
-  width: -webkit-fill-available;
-  height: -webkit-fill-available;
+  width: 100%;
+  height: 100%;
+  position: absolute;
 }
 .min-tab , .head-left .form-check{
   background: #ffffff !important;
@@ -199,6 +200,7 @@ textarea, input {
 .cn-box{
   margin: 0 !important;
   padding: 0 !important;
+  height: 49px !important;
 }
 .chl-bok{
   min-height: 36px;
@@ -212,7 +214,7 @@ textarea, input {
   padding-right: 14px !important;
 }
 .cn-box .chl-bok {
-  height: 46px !important;
+  height: -webkit-fill-available !important;
 }
 .ali-box {
     float: left;

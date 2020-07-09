@@ -6,7 +6,7 @@ import { AngularFirestore , AngularFirestoreCollection} from '@angular/fire/fire
 })
 export class ResponseService {
 
-  collection:any = "response_daniel";
+  collection:any = "response_leonardo";
   dataUpdate = [];
 
   private itemsCollection: AngularFirestoreCollection<any>;

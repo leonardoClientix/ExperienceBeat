@@ -60,8 +60,8 @@ Carga de Usuarios
 
     <div class="list-check-box two-box"  *ngIf="item.typeDesign == 'tabla'">
       <div class="row">
-      <div class="form-check box-action col-12 col-sm-3 databx0-{{ op }}-{{ item.id }}" *ngFor="let opt of item.questions.option[0].options; let op = index" [ngClass]="{'action': indexOfElement(  item, 'databx0-'+op+'-'+item.id, 'table' ) != -1 }" >
-        <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ op }}" value="{{ opt }}" (click)="saveQuiz(item,dataTable,item.questions.message,op,'table',0,0)" #dataTable>
+      <div class="form-check box-action col-12 col-sm-3 databx0-{{ op }}-{{ item.id }}" *ngFor="let opt of item.questions.option[0].options; let op = index" [ngClass]="{'action': indexOfElement(  item, 'databx0-'+op+'-'+item.id, 'table' ) != -1 }" (click)="saveQuiz(item,dataTable,item.questions.message,op,'table',0,0)">
+        <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ op }}" value="{{ opt }}"  (click)="saveQuiz(item,dataTable,item.questions.message,op,'table',0,0)" #dataTable>
         <label class="form-check-label" for="box{{ item.id }}-{{ op }}" translate="no">{{ opt }}</label>
       </div>
       </div>
@@ -107,7 +107,7 @@ Carga de Usuarios
                   <div class="asc form-check form-check-inline col-12 col-sm-3 chl-bok databx{{ item.id }}-{{ da }}-{{ li.id }}"  *ngFor="let opData of li.options; let da = index"  >
                   <div (click)="saveQuiz(li,opData,item.questions.message,da,'table-multiple',item.questions.option,item.id)" class="event-cli" [ngClass]="{'action': indexOfElement( li,'databx'+item.id+'-'+da+'-'+li.id, 'table-multiple' ) != -1 }">
                     <input class="form-check-input" type="checkbox" id="box{{ item.id }}-{{ da }}-{{ li.id }}" value="{{ opData }}"  #dataTableMulti>
-                    <label class="form-check-label" for="box{{ item.id }}-{{ da }}-{{ li.id }}"></label>
+                    <!-- <label class="form-check-label" for="box{{ item.id }}-{{ da }}-{{ li.id }}"></label> -->
                   </div>
                   </div>
 

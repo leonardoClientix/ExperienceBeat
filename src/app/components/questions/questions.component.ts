@@ -187,9 +187,8 @@ export class QuestionsComponent  implements OnInit {
 
            // AGREGAR O QUITAR SELECCION
 
-
            let valAction = dataStruct.valcheck.indexOf("databx"+idtem+'-'+idOp+'-'+idQuestion);
-
+            
            if(valAction  != -1){
               
                // ELIMINAR LA SELECCION A LA QUE LE HAGO CLICK              
@@ -241,17 +240,28 @@ export class QuestionsComponent  implements OnInit {
           
             if(this.svQuestion[i].id == idQuestion){
               
-
               if( typeof idSplice !== 'undefined'){
                 
                 if(typeQuestion == "check-mensaje" || typeQuestion == "table-multiple" ){
-                  
-                  this.svQuestion[i].option.options.splice(idSplice,1);
-                  this.svQuestion[i].option.options.push(options);
+
+                  if(this.svQuestion[i].option.options.indexOf(options) != -1){
+                    this.svQuestion[i].option.options.splice(idSplice,1);
+                  } else {
+                    this.svQuestion[i].option.options.splice(idSplice,1);
+                    this.svQuestion[i].option.options.push(options);
+                  }   
                   
                 } else {
-                  this.svQuestion[i].option.splice(idSplice,1);
-                  this.svQuestion[i].option.push(options);
+
+                  if(this.svQuestion[i].option.indexOf(options) != -1){
+                    this.svQuestion[i].option.splice(idSplice,1);
+                  } else {
+                    this.svQuestion[i].option.splice(idSplice,1);
+                    this.svQuestion[i].option.push(options);
+                  }   
+
+                  // this.svQuestion[i].option.splice(idSplice,1);
+                  // this.svQuestion[i].option.push(options);
                 }
                 
               } else {
@@ -267,6 +277,7 @@ export class QuestionsComponent  implements OnInit {
               }
 
               pass = false;
+
             }
           
         }
@@ -308,7 +319,7 @@ export class QuestionsComponent  implements OnInit {
         this.svQuestion.push(saveQuestion);
 
       }
-      
+      console.log(this.svQuestion);
       return this.svQuestion;
 
   }
