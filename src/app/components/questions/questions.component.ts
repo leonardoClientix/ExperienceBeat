@@ -5,6 +5,7 @@ import { UserModule } from 'src/app/models/user.module';
 import { UsersService } from 'src/app/services/users.service';
 import { ResponseService } from 'src/app/services/response.service';
 import { ResponseModule } from 'src/app/models/response.module';
+import { QuizService } from '../../services/quiz.service';
 
 
 @Component({
@@ -51,6 +52,7 @@ export class QuestionsComponent  implements OnInit {
 
   constructor(
     public _questions:QuestionsService,
+    public _quiz:QuizService,
     public _users:UsersService,
     public _response:ResponseService,
     private renderer: Renderer2
@@ -406,7 +408,6 @@ export class QuestionsComponent  implements OnInit {
 
   uploadListener($event: any, type): void {
 
-    let text = [];
     let files = $event.srcElement.files;
     if (this.isValidCSVFile(files[0])) {
 
@@ -422,6 +423,7 @@ export class QuestionsComponent  implements OnInit {
         if( type == "questions") {
           this.records = this.getDataQuestions(csvRecordsArray, headersRow.length);
           this._questions.addQuestion(this.records);
+          
         }
 
         if( type == "users") {
@@ -439,6 +441,7 @@ export class QuestionsComponent  implements OnInit {
       alert("El archivo no es CSV");
       this.fileReset();
     }
+    
   }
 
   getDataUsers(csvRecordsArray: any, headerLength: any){
@@ -493,7 +496,7 @@ export class QuestionsComponent  implements OnInit {
       let curruntRecord = (<string>csvRecordsArray[i]).split(';');
 
       if (curruntRecord.length == headerLength) {
-        let csvRecord: QuestionsModule = new QuestionsModule();
+        let csvRecord:QuestionsModule = new QuestionsModule();
         csvRecord.id = parseFloat(curruntRecord[0]);
 
         let listOption =  curruntRecord[0].split('.');
@@ -502,7 +505,7 @@ export class QuestionsComponent  implements OnInit {
           // lista de opciones de cada pregunta
           let valueOption = this.getOptions(curruntRecord[0], csvRecordsArray, headerLength );
          
-          csvRecord.questions = { message: curruntRecord[1], option: valueOption, repeat: curruntRecord[4], valcheck: [] };
+          csvRecord.parameters = { message: curruntRecord[1], option: valueOption, repeat: curruntRecord[4], valcheck: [] };
           csvRecord.mandatory = curruntRecord[2];
           csvRecord.typeDesign = curruntRecord[3];
           csvRecord.assets = curruntRecord[5];

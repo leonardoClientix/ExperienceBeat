@@ -18,5 +18,6 @@ export class ResponseModule {
    public option:any;
    public date:any;
    public state:any;
+   public colors;
 
 }

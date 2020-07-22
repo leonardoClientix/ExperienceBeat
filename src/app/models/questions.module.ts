@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
 })
 export class QuestionsModule {
    public id: any;
-   public questions: any;
+   public parameters: any; // public questions: any;
    public options?: any;
    public mandatory: any;
    public typeDesign: any;

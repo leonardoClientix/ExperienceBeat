@@ -326,9 +326,9 @@ textarea, input {
 }
 .box-preview {
   background-color: #fff;
-  height: 612px;
   border-radius: 20px;
   overflow: hidden;
+  margin: 11px;
   padding: 0 !important;
   -webkit-box-shadow: 1px 1px 10px 0px rgba(50, 50, 50, 0.31);
   -moz-box-shadow:    1px 1px 10px 0px rgba(50, 50, 50, 0.31);
@@ -336,10 +336,12 @@ textarea, input {
 }
 .box-cont {
   background-color: #eaedf3;
-  height: 119px;
   padding: 23px;
   margin: 22px;
   border-radius: 11px;
+}
+.box-cont.txt-center{
+ text-align: center;
 }
 
 /* QUESTIONS  */
@@ -506,6 +508,7 @@ ngx-sortable .sortable-container{
   width: 100%;
   min-height: 117px;
   padding: 20px;
+  margin-top: 12px;
 }
 
 /*ESTILOS DE PREGUNTAS*/
@@ -640,12 +643,12 @@ ngx-sortable .sortable-container{
   margin-right: -15%;
 }
 
-.modal-backdrop.show {
+.modal-backdrop.fade.show {
   opacity: 0 !important;
 }
 
-.modal-backdrop{
-  background-color: #3cb1b7 !important;
+.modal-backdrop.fade{
+  background-color: #a4d3d6 !important;
 }
 
 .modal-content{
@@ -677,6 +680,14 @@ ngx-sortable .sortable-container{
   z-index: -1;
   width: -webkit-fill-available;
   min-height: 273px;
+}
+.logo-preview{
+  width: 25px;
+  margin-right: 11px;
+}
+.inp-file{
+  overflow: hidden;
+  line-height: 36px !important;
 }
 
 /* LISTADO DE ENCUESTAS  */

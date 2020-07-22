@@ -1,4 +1,5 @@
-<div class="cont-step animated bounceInRight" *ngIf="step == 'configuration-questions'">
+<div *ngIf="loading == false">
+<div class="cont-step animated bounceInRight" *ngIf="step == 'basic-parameters'">
 <h1>Parametros Básicos</h1>
 
   <div class="row">
@@ -10,43 +11,56 @@
             <div class="form-row">
               <div class="col-md-12 mb-3">
                 <label for="validationServer01">Nombre de la encuesta</label>
-                <input [(colorPicker)]="colorTitle" class="rad-color" [style.background]="colorTitle"/>
-                <input type="text" class="form-control form-control-lg " id="validationServer01" formControlName="nameQuestion" required>
+                <input [(colorPicker)]="colorTitle" class="rad-color" [style.background]="colorTitle" name="colorTitle" formControlName="colorTitle" (colorPickerChange)="changeColor('colorTitle',$event)" [style.background]="quiz.colors.name" [style.color]="quiz.colors.name"  />
+                <input type="text" class="form-control form-control-lg " id="validationServer01" formControlName="nameQuiz" required (keyup)="updateQuiz()" >
               </div>
               <div class="col-md-12 mb-3">
                 <label for="validatedCustomFile">Logo</label>
                 <div class="custom-file">   
-                    <input type="file" class="custom-file-input" id="validatedCustomFile" name="logo"  required>
-                    <label class="custom-file-label form-control-lg " for="validatedCustomFile">Seleccionar archivo...</label>
+                    <input type="file" class="custom-file-input" id="validatedCustomFile" name="logo"  formControlName="logo"  (change)="uploadImage($event)" required>
+                    <label class="custom-file-label form-control-lg " for="validatedCustomFile" *ngIf="!quiz.logo">Seleccionar archivo...</label>
+                    <label class="custom-file-label form-control-lg inp-file" for="validatedCustomFile" *ngIf="quiz.logo">{{ quiz.logo }}</label>
                 </div>
               </div>
+              <div class="col-md-12 mb-12"> 
+                <label for="validationTextarea">Descripción</label>
+                <ckeditor id="validationTextarea" [editor]="Editor" required (keyup)="updateQuiz()" (change)="updateQuiz()" formControlName="description" ></ckeditor>
+              </div>
+              <div class="col-md-12 mb-12"> 
+                <label for="initial_textTextarea">Texto Inicial</label>
+                <ckeditor id="initial_textTextarea" [editor]="Editor" required (keyup)="updateQuiz()" (change)="updateQuiz()" formControlName="initial_text" ></ckeditor>
+              </div>
+              <div class="col-md-12 mb-12"> 
+                <label for="final_textTextarea">Texto Final</label>
+                <ckeditor id="final_textTextarea" [editor]="Editor" required (keyup)="updateQuiz()" (change)="updateQuiz()" formControlName="final_text" ></ckeditor>
+              </div>
+
               <div class="col-md-12 mb-12">
                 <h3>Colores de la encuesta</h3>
               </div>
-              
               <div class="col-md-4 mb-3"> 
                 <label for="validatedCustomFile">Cabecera</label>
-                <input [(colorPicker)]="colorHeader" class="rad-color" [style.background]="colorHeader"/>
+                <input [(colorPicker)]="colorHeader" class="rad-color" [style.background]="colorHeader" formControlName="colorHeader" id="color-header"  (colorPickerChange)="changeColor('colorHeader',$event)" [style.background]="quiz.colors.header" [style.color]="quiz.colors.header"/>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="validatedCustomFile">Fondo</label>
-                <input [(colorPicker)]="colorBackground" class="rad-color" [style.background]="colorBackground" id="color-background"/>
+                <input [(colorPicker)]="colorBackground" class="rad-color" [style.background]="colorBackground" formControlName="colorBackground" id="color-background" (colorPickerChange)="changeColor('colorBackground',$event)" [style.background]="quiz.colors.background" [style.color]="quiz.colors.background"/>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="validatedCustomFile">Tarjeta Pregunta</label>
-                <input [(colorPicker)]="colorQuestion" class="rad-color" [style.background]="colorQuestion" id="color-question"/>
+                <input [(colorPicker)]="colorQuestion" class="rad-color" [style.background]="colorQuestion" formControlName="colorQuestion" id="color-question" (colorPickerChange)="changeColor('colorQuestion',$event)" [style.background]="quiz.colors.question" [style.color]="quiz.colors.question"/>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="validatedCustomFile">Texto Pregunta</label>
-                <input [(colorPicker)]="TxtQuestion" class="rad-color" [style.background]="TxtQuestion" id="color-question"/>
+                <input [(colorPicker)]="TxtQuestion" class="rad-color" [style.background]="TxtQuestion" formControlName="TxtQuestion" id="color-question" (colorPickerChange)="changeColor('TxtQuestion',$event)" [style.background]="quiz.colors.txtquestion" [style.color]="quiz.colors.txtquestion"/>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="validatedCustomFile">Opciones</label>
-                <input [(colorPicker)]="colorOption" class="rad-color" [style.background]="colorOption" id="color-question"/>
+                <input [(colorPicker)]="colorOption" class="rad-color" [style.background]="colorOption" formControlName="colorOption" id="color-question" (colorPickerChange)="changeColor('colorOption',$event)" [style.background]="quiz.colors.option" [style.color]="quiz.colors.option"/>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="validatedCustomFile">Texto Opciones</label>
-                <input [(colorPicker)]="TxtOption" class="rad-color" [style.background]="TxtOption" id="color-question"/>
+                <input [(colorPicker)]="TxtOption" class="rad-color" [style.background]="TxtOption" id="color-question" formControlName="TxtOption" (colorPickerChange)="changeColor('TxtOption',$event)" [style.background]="quiz.colors.txtoption" [style.color]="quiz.colors.txtoption"/>
               </div>
             </div>
         
@@ -56,15 +70,36 @@
     </div>
 
     <div class="col-md-6 mb-6">
-        <div class="box-preview col-md-12" [style.background]="colorBackground" >
-            <div class="header-preview col-md-12" [style.background]="colorHeader" [style.color]="colorTitle">
-              {{form.controls['nameQuestion'].value}}
-            </div>
-            <div class="col-md-11 mb-11 box-cont" [style.background]="colorQuestion" [style.color]="TxtQuestion"></div>
-            <div class="col-md-11 mb-11 box-cont" [style.background]="colorQuestion" [style.color]="TxtQuestion"></div>
-            <div class="col-md-11 mb-11 box-cont" [style.background]="colorQuestion" [style.color]="TxtQuestion"></div>
-            <div class="col-md-11 mb-11 box-cont" [style.background]="colorQuestion" [style.color]="TxtQuestion"></div>
+
+        <div class="box-preview col-md-12" [style.background]="colorBackground" [style.background]="quiz.colors.background" *ngIf="form.controls['initial_text'].value">
+          <div class="header-preview col-md-12" [style.background]="colorHeader" [style.color]="colorTitle" [style.background]="quiz.colors.header" [style.color]="quiz.colors.name">
+            <img class="logo-preview" [src]="quiz.logo"> {{ form.controls['nameQuiz'].value }}
+          </div>
+          <div class="col-md-11 mb-11 box-cont txt-center" [style.background]="colorQuestion" [style.color]="TxtQuestion" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion" [innerHTML]="form.controls['initial_text'].value"></div>
         </div>
+        
+        <div class="box-preview col-md-12" [style.background]="colorBackground" [style.background]="quiz.colors.background" >
+            <div class="header-preview col-md-12" [style.background]="colorHeader" [style.color]="colorTitle" [style.background]="quiz.colors.header" [style.color]="quiz.colors.name" *ngIf="!form.controls['initial_text'].value">
+              <img class="logo-preview" [src]="quiz.logo"> {{ form.controls['nameQuiz'].value }}
+            </div>
+            <div class="col-md-11 mb-11 box-cont" [style.background]="colorQuestion" [style.color]="TxtQuestion" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            </div>
+            <div class="col-md-11 mb-11 box-cont" [style.background]="colorQuestion" [style.color]="TxtQuestion" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            </div>
+            <div class="col-md-11 mb-11 box-cont" [style.background]="colorQuestion" [style.color]="TxtQuestion" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            </div>
+            <div class="col-md-11 mb-11 box-cont" [style.background]="colorQuestion" [style.color]="TxtQuestion" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+            </div>
+        </div>
+
+        <div class="box-preview col-md-12" [style.background]="colorBackground" [style.background]="quiz.colors.background" *ngIf="form.controls['final_text'].value">
+          <div class="col-md-11 mb-11 box-cont txt-center" [style.background]="colorQuestion" [style.color]="TxtQuestion" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion" [innerHTML]="form.controls['final_text'].value"></div>
+        </div>
+
     </div>
 
   </div>
@@ -73,21 +108,23 @@
 
 <div class="ctr-btns">
   <ul>
-    <li><fa-icon [icon]="faArrowAltCircleRight" class="plus-question"  title="Seguiente" *ngIf="step == 'configuration-questions'" (click)="steps('basic-parameters')" ></fa-icon></li>
+    <li><fa-icon [icon]="faArrowAltCircleRight" class="plus-question"  title="Seguiente" *ngIf="step == 'basic-parameters'" (click)="steps('configuration-questions')" ></fa-icon></li>
   </ul>
 </div>
 
-<div class="cont-step animated bounceInRight" *ngIf="step == 'basic-parameters'">
+
+
+<div class="cont-step animated bounceInRight" *ngIf="step == 'configuration-questions'">
   <h1>Configuración de Preguntas</h1>
 
-  <ngx-sortable [items]="quiz.question" [listStyle]="listStyle" [showHeader]="false" (listSorted)="listOrderChanged($event)">
+  <ngx-sortable [items]="quiz.questions" [listStyle]="listStyle" [showHeader]="false" (listSorted)="listOrderChanged($event)" >
     <ng-template let-item>
 
         <div class="sortable-list-item">
       
-            <div class="row boxQuestion" *ngIf="item.idQuestion == 1">
+            <div class="row boxQuestion" *ngIf="item.typeDesign == 'message'">
               <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="colorQuestion" [style.background]="colorQuestionAlone0">
-                <textarea class="cont-question" [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone0"></textarea>
+                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone0" ></ckeditor>
               </div>
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
@@ -193,9 +230,9 @@
               </div>
             </div> 
 
-            <div class="row boxQuestion" *ngIf="item.idQuestion == 5">
+            <div class="row boxQuestion" *ngIf="item.typeDesign == 'open_question'">
               <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="colorQuestion" [style.background]="colorQuestionAlone4">
-                <textarea class="cont-question" [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone4"></textarea>
+                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone4" ></ckeditor>
                 <textarea class="cont-question-txt"></textarea>
               </div>
               <div class="col-md-1 mb-1">
@@ -261,20 +298,20 @@
 
 <div class="ctr-btns">
   <ul>
-    <li><fa-icon [icon]="faArrowAltCircleLeft" class="plus-question"  title="Atrás" *ngIf="step == 'basic-parameters'" (click)="steps('configuration-questions')" ></fa-icon></li>
-    <li><fa-icon [icon]="faArrowAltCircleRight" class="plus-question"  title="Seguiente" *ngIf="step == 'basic-parameters'" (click)="steps('basic-parameters')" ></fa-icon></li>
-    <li><fa-icon [icon]="faPlusCircle" class="plus-question"  title="Agregar Pregunta" *ngIf="step == 'basic-parameters'" (click)="steps('basic-parameters')" data-toggle="modal" data-target="#exampleModalCenter"></fa-icon></li>
+    <li><fa-icon [icon]="faArrowAltCircleLeft" class="plus-question"  title="Atrás" *ngIf="step == 'configuration-questions'" (click)="steps('basic-parameters')" ></fa-icon></li>
+    <li><fa-icon [icon]="faArrowAltCircleRight" class="plus-question"  title="Seguiente" *ngIf="step == 'configuration-questions'" (click)="steps('basic-parameters')" ></fa-icon></li>
+    <li><fa-icon [icon]="faPlusCircle" class="plus-question"  title="Agregar Pregunta" *ngIf="step == 'configuration-questions'"  data-toggle="modal" data-target="#exampleModalCenter" (click)="modalTypeQuestion = true"></fa-icon></li>
   </ul>
 </div>
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+<div [ngClass]="{'show': modalTypeQuestion == true}" [ngStyle]="{'display': modalTypeQuestion == true ? 'block' : 'none' }" class="modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
 
-<form [formGroup]="formType" (ngSubmit)="typeQuestion()" class="needs-validation" novalidate>
+<form [formGroup]="formTypeQuestion" (ngSubmit)="typeQuestion()" class="needs-validation" novalidate>
 
-  <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+  <div class="modal-dialog modal-lg modal-dialog-centered" role="document"> 
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Nueva Pregunta</h5>
+        <h5 class="modal-title" id="exampleModalCenterTitle">Nuevo Componente</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -286,8 +323,8 @@
             <div class="col-md-6">
 
               <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio1" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion">
-                <label class="custom-control-label" for="customRadio1">Pregunta Abierta</label>
+                <input type="radio" id="message" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion" value="message">
+                <label class="custom-control-label" for="message">Mensaje</label>
               </div>
 
             </div>
@@ -296,11 +333,26 @@
             </div>
           </div>
           <div class="row">
+
             <div class="col-md-6">
 
               <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio2" name="typeQuestion" class="custom-control-input">
-                <label class="custom-control-label" for="customRadio2">Selección Multiple</label>
+                <input type="radio" id="open_question" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion" value="open_question">
+                <label class="custom-control-label" for="open_question">Pregunta Abierta</label>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <img src="https://i.pinimg.com/originals/da/c8/d4/dac8d4cb582558f281b6d0e1711c4838.gif" class="img-quiestion-type">
+            </div>
+
+          </div>
+          <div class="row">
+            <div class="col-md-6">
+
+              <div class="custom-control custom-radio">
+                <input type="radio" id="multiple_choice" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion"  value="multiple_choice">
+                <label class="custom-control-label" for="multiple_choice">Selección Multiple</label>
               </div>
 
             </div>
@@ -312,8 +364,8 @@
             <div class="col-md-6">
 
               <div class="custom-control custom-radio">
-                <input type="radio" id="customRadio3" name="typeQuestion" class="custom-control-input">
-                <label class="custom-control-label" for="customRadio3">Selección Multiple (tabla)</label>
+                <input type="radio" id="multiple_choice_table" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion"  value="multiple_choice_table">
+                <label class="custom-control-label" for="multiple_choice_table">Selección Multiple (tabla)</label>
               </div>
 
             </div>
@@ -325,7 +377,8 @@
       </div>
 
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" data-dismiss="modal">Guardar</button>
+        <button type="submit" class="btn btn-primary" >Seleccionar</button>
+        <div  data-dismiss="modal" #closeBtn></div>
       </div>
     </div>
   </div>
@@ -335,69 +388,4 @@
 </div>
 
 
-<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-
-  <form [formGroup]="formType" (ngSubmit)="typeQuestion()" class="needs-validation" novalidate>
-  
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalCenterTitle">Nueva Pregunta</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-  
-        <div class="modal-body">
-          <div class="container-fluid">
-            <div class="row">
-              <div class="col-md-6">
-  
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="customRadio1" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion">
-                  <label class="custom-control-label" for="customRadio1">Pregunta Abierta</label>
-                </div>
-  
-              </div>
-              <div class="col-md-6">
-                <img src="https://i.pinimg.com/originals/da/c8/d4/dac8d4cb582558f281b6d0e1711c4838.gif" class="img-quiestion-type">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-  
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="customRadio2" name="typeQuestion" class="custom-control-input">
-                  <label class="custom-control-label" for="customRadio2">Selección Multiple</label>
-                </div>
-  
-              </div>
-              <div class="col-md-6">
-                <img src="https://i.pinimg.com/originals/b9/83/17/b98317fb6a4557174555cd3330aba443.gif" class="img-quiestion-type">
-              </div>
-            </div>
-            <div class="row">
-              <div class="col-md-6">
-  
-                <div class="custom-control custom-radio">
-                  <input type="radio" id="customRadio3" name="typeQuestion" class="custom-control-input">
-                  <label class="custom-control-label" for="customRadio3">Selección Multiple (tabla)</label>
-                </div>
-  
-              </div>
-              <div class="col-md-6">
-                <img src="https://i.pinimg.com/originals/9e/58/94/9e58940d4cafe94af5521b018e8a601e.gif" class="img-quiestion-type">
-              </div>
-            </div>
-          </div>
-        </div>
-  
-        <div class="modal-footer">
-          <button type="submit" class="btn btn-primary" data-dismiss="modal">Guardar</button>
-        </div>
-      </div>
-    </div>
-  
-  </form>
-  
-  </div>
+</div>
