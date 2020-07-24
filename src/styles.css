@@ -1,6 +1,6 @@
 /* You can add global styles to this file, and also import other style files */
 html,body {
-  /*overflow: hidden;*/
+  overflow: auto;
   scroll-behavior: smooth;
   font-family: 'Poppins', sans-serif;
   height: 100%;
@@ -540,6 +540,7 @@ ngx-sortable .sortable-container{
 .style-table .cont-table{
   overflow: auto;
   padding-bottom: 13px;
+  margin-top: 20px;
 }
 
 .style-table .scroll-table{
@@ -710,4 +711,17 @@ ngx-sortable .sortable-container{
 .box-profile h3{
   text-align: center;
   color: white;
+}
+
+.load-comp{
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+}
+
+.load-comp .spinner-border {
+  width: 9rem;
+  height: 9rem;
 }

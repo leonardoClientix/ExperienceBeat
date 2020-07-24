@@ -24,7 +24,7 @@
               </div>
               <div class="col-md-12 mb-12"> 
                 <label for="validationTextarea">Descripción</label>
-                <ckeditor id="validationTextarea" [editor]="Editor" required (keyup)="updateQuiz()" (change)="updateQuiz()" formControlName="description" ></ckeditor>
+                <ckeditor id="validationTextarea" [editor]="Editor" required (keyup)="updateQuiz($event)"  formControlName="description"  #dbt></ckeditor>
               </div>
               <div class="col-md-12 mb-12"> 
                 <label for="initial_textTextarea">Texto Inicial</label>
@@ -112,10 +112,10 @@
   </ul>
 </div>
 
-
-
 <div class="cont-step animated bounceInRight" *ngIf="step == 'configuration-questions'">
   <h1>Configuración de Preguntas</h1>
+
+  <form  #forma="ngForm">
 
   <ngx-sortable [items]="quiz.questions" [listStyle]="listStyle" [showHeader]="false" (listSorted)="listOrderChanged($event)" >
     <ng-template let-item>
@@ -123,45 +123,45 @@
         <div class="sortable-list-item">
       
             <div class="row boxQuestion" *ngIf="item.typeDesign == 'message'">
-              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="colorQuestion" [style.background]="colorQuestionAlone0">
-                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone0" ></ckeditor>
+              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
+                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" name="description_{{item.id}}" ngModel (keyup)="saveQuestions(forma.controls,'description_'+item.id,item)" [(ngModel)]="item.description"></ckeditor>
               </div>
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
-                  <li><div [colorPicker]="colorQuestionAlone0" (colorPickerChange)="colorQuestionAlone0 = $event" class="rad-color" [style.background]="colorQuestion" [style.background]="colorQuestionAlone0" id="color-question" title="Tarjeta Pregunta"></div></li>
-                  <li><div [colorPicker]="TxtQuestionAlone0" (colorPickerChange)="TxtQuestionAlone0 = $event" class="rad-color" [style.background]="TxtQuestionAlone0" [style.background]="TxtQuestion"id="color-question" title="Texto Pregunta"></div></li> 
-                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" ></fa-icon></li>
+                  <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="quiz.colors.question" [style.background]="item.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
+                  <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color"  [style.background]="quiz.colors.txtquestion" [style.background]="item.colors.txtquestion" id="color-question" title="Texto Pregunta"></div></li> 
+                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
                   <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
                 </ul>
               </div>
             </div> 
 
-            <div class="row boxQuestion" *ngIf="item.idQuestion == 2">
-              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="colorQuestion" [style.background]="colorQuestionAlone1">
-                <textarea class="cont-question" [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone1"></textarea>
+            <div class="row boxQuestion" *ngIf="item.typeDesign == 'multiple_choice'">
+              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
+                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" name="description_{{item.id}}" ngModel (keyup)="saveQuestions(forma.controls,'description_'+item.id,item)"></ckeditor>
         
                   <div class="list-check">
-                    <div class="form-check form-check-inline" *ngFor="let idqs of item.itemOpt; let i = index">
+                    <div class="form-check form-check-inline" *ngFor="let idqs of item.items; let i = index">
                       <input class="form-check-input" type="radio" name="question_{{i}}"  [value]="opt"  id="inlineCheckbox_{{i}}" #data>
-                      <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt"  [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone1"/></span></label>
-                      <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item.idQuestion,'itemOpt',i)">-</div> 
+                      <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt"  [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion"/></span></label>
+                      <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item,'multiple_choice',i)">-</div> 
                     </div>
                   </div> 
 
               </div>
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
-                  <li><div [colorPicker]="colorQuestionAlone1" (colorPickerChange)="colorQuestionAlone1 = $event" class="rad-color" [style.background]="colorQuestionAlone1" [style.background]="colorQuestion" id="color-question" title="Tarjeta Pregunta"></div></li>
-                  <li><div [colorPicker]="TxtQuestionAlone1" (colorPickerChange)="TxtQuestionAlone1 = $event" class="rad-color" [style.background]="TxtQuestionAlone1" [style.background]="TxtQuestion"id="color-question" title="Texto Pregunta"></div></li> 
+                  <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="item.colors.question" [style.background]="quiz.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
+                  <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="item.colors.txtquestion" [style.background]="quiz.colors.txtquestion"id="color-question" title="Texto Pregunta"></div></li> 
                   <li> <fa-icon [icon]="faClone" class="conf-icon" title="Clonar pregunta" ></fa-icon></li>
                   <li> <fa-icon [icon]="faEdit" class="conf-icon" title="Editar pregunta" ></fa-icon></li>    
-                  <li> <fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item.idQuestion,'itemOpt')"></fa-icon></li>    
+                  <li> <fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item,'multiple_choice')"></fa-icon></li>    
                 </ul>
               </div>
             </div> 
 
 
-            <div class="row boxQuestion" *ngIf="item.idQuestion == 3">
+            <!-- <div class="row boxQuestion" *ngIf="item.idQuestion == 3">
               <div class="col-md-11 mb-11 cont-itemquestion style-labels" [style.background]="colorQuestion" [style.background]="colorQuestionAlone2">
                 <textarea class="cont-question" [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone2"></textarea>
         
@@ -183,92 +183,93 @@
                   <li> <fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item.idQuestion,'itemCubi')"></fa-icon></li>  
                 </ul>
               </div>
-            </div> 
+            </div>  -->
 
 
-            <div class="row boxQuestion" *ngIf="item.idQuestion == 4">
-              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="colorQuestion" [style.background]="colorQuestionAlone3">
-                <textarea class="cont-question" [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone3"></textarea>
+            <div class="row boxQuestion" *ngIf="item.typeDesign == 'check_label'">
+
+              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
+                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" ></ckeditor>
        
                   <div class="list-check">
                     <div class="row">
-
-                    <div class="col-md-6" *ngFor="let lab of item.itemCheckMult; let l = index">
-
-                      <div class="row">
-                          <div class="label-option col-md-3">
-                            <input name="inp-item" class="input-opt" [style.color]="TxtOption"  [style.color]="TxtQuestionAlone3" />
-                          </div>
-                          <div class="items-options-list col-md-3">
-                            <div class="form-check form-check-inline" *ngFor="let idqs of item.itemCheckMult[l].options; let i = index">
-                              <input class="form-check-input inp-checkbox" type="radio" name="question_{{i}}" [value]="opt"  id="inlineCheckbox_{{i}}" #dataCkMensaje>
-                              <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt" [style.color]="TxtOption" [style.color]="TxtQuestionAlone3" /></span></label>
-                              <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item.idQuestion,'itemCheckMult',i)">-</div> 
+                      <div class="col-md-6" *ngFor="let lab of item.items; let l = index">
+                        <div class="row">
+                            <div class="label-option col-md-3">
+                              <input name="inp-item" class="input-opt" [style.color]="quiz.colors.txtoption"  [style.color]="item.colors.txtquestion" />
                             </div>
-                            <ul class="confg-controls ind-cont">
-                              <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOptLabel(item.idQuestion,'itemCheckMult',l)"></fa-icon></li>
-                            </ul>
-                            
-                          </div>
+                            <div class="items-options-list col-md-3">
+                              <div class="form-check form-check-inline" *ngFor="let idqs of item.items[l].options; let i = index">
+                                <input class="form-check-input inp-checkbox" type="radio" name="question_{{i}}" [value]="opt"  id="inlineCheckbox_{{i}}" #dataCkMensaje>
+                                <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" /></span></label>
+                                <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item.items[l],'check_label',i)">-</div> 
+                              </div>
+                              <ul class="confg-controls ind-cont">
+                                <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOptLabel(item.items[l],'check_label')"></fa-icon></li>
+                              </ul>
+                            </div>
+                        </div>
                       </div>
-
                     </div>
-
-                    </div>
-                  </div>
-
-
+                  </div> 
               </div>
+
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
-                  <li><div [colorPicker]="colorQuestionAlone3" (colorPickerChange)="colorQuestionAlone3 = $event" class="rad-color" [style.background]="colorQuestionAlone3" [style.background]="colorQuestion" id="color-question" title="Tarjeta Pregunta"></div></li>
-                  <li><div [colorPicker]="TxtQuestionAlone3" (colorPickerChange)="TxtQuestionAlone3 = $event" class="rad-color" [style.background]="TxtQuestionAlone3" [style.background]="TxtQuestion" id="color-question" title="Texto Pregunta"></div></li> 
+                  <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="item.colors.question" [style.background]="quiz.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
+                  <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="item.colors.txtquestion" [style.background]="quiz.colors.txtquestion" id="color-question" title="Texto Pregunta"></div></li> 
                   <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" ></fa-icon></li>
                   <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
-                  <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item.idQuestion,'itemCheckMult')"></fa-icon></li>        
+                  <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item,'check_label')"></fa-icon></li>        
                 </ul>
               </div>
+
             </div> 
 
+
             <div class="row boxQuestion" *ngIf="item.typeDesign == 'open_question'">
-              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="colorQuestion" [style.background]="colorQuestionAlone4">
-                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone4" ></ckeditor>
+
+              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
+                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" ></ckeditor>
                 <textarea class="cont-question-txt"></textarea>
               </div>
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
-                  <li><div [colorPicker]="colorQuestionAlone4" (colorPickerChange)="colorQuestionAlone4 = $event" class="rad-color" [style.background]="colorQuestion" [style.background]="colorQuestionAlone4" id="color-question" title="Tarjeta Pregunta"></div></li>
-                  <li><div [colorPicker]="TxtQuestionAlone4" (colorPickerChange)="TxtQuestionAlone4 = $event" class="rad-color" [style.background]="TxtQuestionAlone4" [style.background]="TxtQuestion"id="color-question" title="Texto Pregunta"></div></li> 
+                  <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="quiz.colors.question" [style.background]="item.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
+                  <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="item.colors.txtquestion" [style.background]="quiz.colors.txtquestion" id="color-question" title="Texto Pregunta"></div></li> 
                   <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" ></fa-icon></li>
                   <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
                 </ul>
               </div>
+
             </div> 
+
           
-            <div class="row boxQuestion style-table" *ngIf="item.idQuestion == 6">
-              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="colorQuestion" [style.background]="colorQuestionAlone5">
-                <textarea class="cont-question" [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone5"></textarea>
+            <div class="row boxQuestion style-table" *ngIf="item.typeDesign == 'table'">
+
+              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
+                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" ></ckeditor>
                 <div class="row cont-table">
                   <div class="col-md-4 mb-4 box-fixed">
                     <div class="col-md-12 mb-12 tr head-table"></div>
-                    <div *ngFor="let lab of item.itemTable; let l = index">
-                      <div class="col-md-12 mb-12 tr head-table"><input name="opnum" class="input-opt w-full" [style.color]="TxtOption" [style.color]="TxtQuestionAlone5" /></div>
+                    <div *ngFor="let lab of item.items; let l = index">
+                      <div class="col-md-12 mb-12 tr head-table"><input name="opnum" class="input-opt w-full" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" /></div>
                     </div>
                   </div>
                   
                   <div class="col-md-12 mb-12">
                     
-                    <div *ngFor="let lab of item.itemTable; let l = index" class="free-fixed row">
+                    <div *ngFor="let lab of item.items; let l = index" class="free-fixed row">
 
                       <div *ngIf="l == 0" class="w-full">
                         <ul class="confg-controls conf-int">
-                          <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOptLabel(item.idQuestion,'itemTable',l)"></fa-icon></li>
+                          <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOptLabel(item.items[l],'table')"></fa-icon></li>
                         </ul>
-                        <div  *ngFor="let idqs of item.itemTable[l].options; let i = index" class="col-md-4 col-td">
+                        <div  *ngFor="let idqs of item.items[l].options; let i = index" class="col-md-4 col-td">
                           <div class="row" >
-                            <div class="col-md-12 mb-12 tr head-table"><input name="opnum" class="input-opt w-full" [style.color]="TxtOption" [style.color]="TxtQuestionAlone5" /></div> 
+                            <div class="col-md-12 mb-12 tr head-table"><input name="opnum" class="input-opt w-full" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" /></div> 
                           </div>
-                          <div class="row" *ngFor="let lab of item.itemTable; let d = index">
+                          <div class="row" *ngFor="let lab of item.items; let d = index">
                             <div class="col-md-4 mb-4 td"></div>
                           </div>
                         </div>
@@ -280,19 +281,22 @@
               </div>
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
-                  <li><div [colorPicker]="colorQuestionAlone5" (colorPickerChange)="colorQuestionAlone5 = $event" class="rad-color" [style.background]="colorQuestion" [style.background]="colorQuestionAlone5" id="color-question" title="Tarjeta Pregunta"></div></li>
-                  <li><div [colorPicker]="TxtQuestionAlone5" (colorPickerChange)="TxtQuestionAlone5 = $event" class="rad-color" [style.background]="TxtQuestionAlone5" [style.background]="TxtQuestion"id="color-question" title="Texto Pregunta"></div></li> 
+                  <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="quiz.colors.question" [style.background]="item.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
+                  <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="item.colors.txtquestion" [style.background]="quiz.colors.txtquestion" id="color-question" title="Texto Pregunta"></div></li> 
                   <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" ></fa-icon></li>
                   <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
-                  <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item.idQuestion,'itemTable')"></fa-icon></li>
+                  <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item,'table')"></fa-icon></li>
                 </ul>
               </div>
+
             </div> 
+
 
         </div>
 
     </ng-template>
 </ngx-sortable>
+</form>
 
 </div>
 
@@ -319,6 +323,7 @@
 
       <div class="modal-body">
         <div class="container-fluid">
+
           <div class="row">
             <div class="col-md-6">
 
@@ -332,8 +337,8 @@
               <img src="https://i.pinimg.com/originals/da/c8/d4/dac8d4cb582558f281b6d0e1711c4838.gif" class="img-quiestion-type">
             </div>
           </div>
-          <div class="row">
 
+          <div class="row">
             <div class="col-md-6">
 
               <div class="custom-control custom-radio">
@@ -345,8 +350,8 @@
             <div class="col-md-6">
               <img src="https://i.pinimg.com/originals/da/c8/d4/dac8d4cb582558f281b6d0e1711c4838.gif" class="img-quiestion-type">
             </div>
-
           </div>
+          
           <div class="row">
             <div class="col-md-6">
 
@@ -360,12 +365,13 @@
               <img src="https://i.pinimg.com/originals/b9/83/17/b98317fb6a4557174555cd3330aba443.gif" class="img-quiestion-type">
             </div>
           </div>
+
           <div class="row">
             <div class="col-md-6">
 
               <div class="custom-control custom-radio">
-                <input type="radio" id="multiple_choice_table" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion"  value="multiple_choice_table">
-                <label class="custom-control-label" for="multiple_choice_table">Selección Multiple (tabla)</label>
+                <input type="radio" id="multiple_choice_table" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion"  value="table">
+                <label class="custom-control-label" for="multiple_choice_table">Tabla</label>
               </div>
 
             </div>
@@ -373,6 +379,21 @@
               <img src="https://i.pinimg.com/originals/9e/58/94/9e58940d4cafe94af5521b018e8a601e.gif" class="img-quiestion-type">
             </div>
           </div>
+
+          <div class="row">
+            <div class="col-md-6">
+
+              <div class="custom-control custom-radio">
+                <input type="radio" id="label_check" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion"  value="check_label">
+                <label class="custom-control-label" for="label_check">Label check</label>
+              </div>
+
+            </div>
+            <div class="col-md-6">
+              <img src="https://i.pinimg.com/originals/9e/58/94/9e58940d4cafe94af5521b018e8a601e.gif" class="img-quiestion-type">
+            </div>
+          </div>
+
         </div>
       </div>
 
@@ -388,4 +409,9 @@
 </div>
 
 
+</div>
+<div class="d-flex justify-content-center load-comp" *ngIf="loading == true">
+  <div class="spinner-border" role="status">
+    <span class="sr-only">Loading...</span>
+  </div>
 </div>

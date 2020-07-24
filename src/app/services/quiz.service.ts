@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { FileItemsModule } from '../models/file-items.module';
 import { AngularFirestore } from '@angular/fire/firestore';
-import * as firebase from 'firebase';
+import * as firebase from 'firebase/app';
 import { QuizModule } from '../models/quiz.module';
 
 @Injectable({
