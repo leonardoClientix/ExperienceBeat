@@ -6,7 +6,7 @@
 
     <div class="col-md-6 mb-6">
 
-        <form [formGroup]="form" (ngSubmit)="save()" class="needs-validation" novalidate>
+        <form [formGroup]="form" (ngSubmit)="save()" class="needs-validation form-list-input" novalidate>
 
             <div class="form-row">
               <div class="col-md-12 mb-3">
@@ -22,20 +22,30 @@
                     <label class="custom-file-label form-control-lg inp-file" for="validatedCustomFile" *ngIf="quiz.logo">{{ quiz.logo }}</label>
                 </div>
               </div>
-              <div class="col-md-12 mb-12"> 
+              <div class="col-md-12 mb-12 mt-3"> 
                 <label for="validationTextarea">Descripción</label>
                 <ckeditor id="validationTextarea" [editor]="Editor" required (keyup)="updateQuiz($event)"  formControlName="description"  #dbt></ckeditor>
               </div>
-              <div class="col-md-12 mb-12"> 
+              <div class="col-md-12 mb-12 mt-3"> 
                 <label for="initial_textTextarea">Texto Inicial</label>
                 <ckeditor id="initial_textTextarea" [editor]="Editor" required (keyup)="updateQuiz()" (change)="updateQuiz()" formControlName="initial_text" ></ckeditor>
               </div>
-              <div class="col-md-12 mb-12"> 
+              <div class="col-md-12 mb-12 mt-3"> 
                 <label for="final_textTextarea">Texto Final</label>
                 <ckeditor id="final_textTextarea" [editor]="Editor" required (keyup)="updateQuiz()" (change)="updateQuiz()" formControlName="final_text" ></ckeditor>
               </div>
-
-              <div class="col-md-12 mb-12">
+              <div class="col-md-12 mb-3 mt-3">
+                <label for="validatedCustomFile_user">Carga de Usuarios</label>
+                <div class="custom-file">   
+                    <input type="file" class="custom-file-input" #csvReaderUsers name="Upload CSV" id="txtFileUpload" (change)="uploadListener($event,'users')" accept=".csv" >
+                    <label class="custom-file-label form-control-lg " for="validatedCustomFile_user" >Seleccionar archivo...</label>
+                </div>
+              </div>
+              <div class="col-md-12 mb-12 mt-3"> 
+                <label for="final_textTextarea">Campos de entrada <fa-icon [icon]="faEdit" class="conf-icon"  title="Configurar campos" data-toggle="modal" data-target="#modalConfigInputs" ></fa-icon> </label>
+              </div>
+ 
+              <div class="col-md-12 mb-12 mt-5">
                 <h3>Colores de la encuesta</h3>
               </div>
               <div class="col-md-4 mb-3"> 
@@ -75,7 +85,19 @@
           <div class="header-preview col-md-12" [style.background]="colorHeader" [style.color]="colorTitle" [style.background]="quiz.colors.header" [style.color]="quiz.colors.name">
             <img class="logo-preview" [src]="quiz.logo"> {{ form.controls['nameQuiz'].value }}
           </div>
-          <div class="col-md-11 mb-11 box-cont txt-center" [style.background]="colorQuestion" [style.color]="TxtQuestion" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion" [innerHTML]="form.controls['initial_text'].value"></div>
+          <div class="col-md-11 mb-11 box-cont txt-center" [style.background]="colorQuestion" [style.color]="TxtQuestion" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
+            <div [innerHTML]="form.controls['initial_text'].value"></div>
+
+            <div class="form-group row mt-4" *ngFor="let itemInp of quiz.inputs; let h = index">
+                    
+              <div class="col-sm-12">
+                <div class="input-preview"> {{ itemInp.placeholder }} </div>
+              </div>
+
+            </div>
+            
+
+          </div>
         </div>
         
         <div class="box-preview col-md-12" [style.background]="colorBackground" [style.background]="quiz.colors.background" >
@@ -124,26 +146,30 @@
       
             <div class="row boxQuestion" *ngIf="item.typeDesign == 'message'">
               <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
-                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" name="description_{{item.id}}" ngModel (keyup)="saveQuestions(forma.controls,'description_'+item.id,item)" [(ngModel)]="item.description"></ckeditor>
+                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [name]="'description_'+item.id" ngModel [(ngModel)]="item.description"></ckeditor>
               </div>
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
                   <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="quiz.colors.question" [style.background]="item.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
                   <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color"  [style.background]="quiz.colors.txtquestion" [style.background]="item.colors.txtquestion" id="color-question" title="Texto Pregunta"></div></li> 
                   <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
-                  <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
                 </ul>
               </div>
             </div> 
 
+
             <div class="row boxQuestion" *ngIf="item.typeDesign == 'multiple_choice'">
               <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
-                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" name="description_{{item.id}}" ngModel (keyup)="saveQuestions(forma.controls,'description_'+item.id,item)"></ckeditor>
+                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [name]="'description_'+item.id" ngModel [(ngModel)]="item.description"></ckeditor>
         
                   <div class="list-check">
                     <div class="form-check form-check-inline" *ngFor="let idqs of item.items; let i = index">
                       <input class="form-check-input" type="radio" name="question_{{i}}"  [value]="opt"  id="inlineCheckbox_{{i}}" #data>
-                      <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt"  [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion"/></span></label>
+                      <label class="form-check-label" for="inlineCheckbox_{{i}}" >
+                        <span translate="no">
+                         <input class="input-opt"  [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [name]="item.id+'_opt_'+i" [(ngModel)]="idqs.name"/>
+                        </span>
+                      </label>
                       <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item,'multiple_choice',i)">-</div> 
                     </div>
                   </div> 
@@ -153,55 +179,29 @@
                 <ul class="confg-controls">
                   <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="item.colors.question" [style.background]="quiz.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
                   <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="item.colors.txtquestion" [style.background]="quiz.colors.txtquestion"id="color-question" title="Texto Pregunta"></div></li> 
-                  <li> <fa-icon [icon]="faClone" class="conf-icon" title="Clonar pregunta" ></fa-icon></li>
-                  <li> <fa-icon [icon]="faEdit" class="conf-icon" title="Editar pregunta" ></fa-icon></li>    
+                  <li> <fa-icon [icon]="faClone" class="conf-icon" title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
+                  <li> <fa-icon [icon]="faEdit" class="conf-icon" title="Editar pregunta" data-toggle="modal" data-target="#modalEditQuestion" (click)="modalTypeQuestion = true"></fa-icon></li>    
                   <li> <fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item,'multiple_choice')"></fa-icon></li>    
                 </ul>
               </div>
             </div> 
 
-
-            <!-- <div class="row boxQuestion" *ngIf="item.idQuestion == 3">
-              <div class="col-md-11 mb-11 cont-itemquestion style-labels" [style.background]="colorQuestion" [style.background]="colorQuestionAlone2">
-                <textarea class="cont-question" [style.color]="TxtQuestion" [style.color]="TxtQuestionAlone2"></textarea>
-        
-                  <div class="list-check two-box">
-                    <div class="form-check form-check-inline box-action " [style.background]="colorOption" *ngFor="let idqs of item.itemCubi; let i = index">
-                      <input class="form-check-input inp-checkbox" type="checkbox" name="question_{{i}}" [value]="opt"  id="inlineCheckbox_{{i}}" #data>
-                      <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" [style.color]="TxtOption" class="input-opt"  [style.color]="TxtQuestionAlone2" style=""/></span></label>
-                      <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item.idQuestion,'itemCubi',i)">-</div> 
-                    </div>
-                  </div>
-
-              </div>
-              <div class="col-md-1 mb-1">
-                <ul class="confg-controls">
-                  <li><div [colorPicker]="colorQuestionAlone2" (colorPickerChange)="colorQuestionAlone2 = $event" class="rad-color" [style.background]="colorQuestionAlone2" [style.background]="colorQuestion" id="color-question" title="Tarjeta Pregunta"></div></li>
-                  <li><div [colorPicker]="TxtQuestionAlone2" (colorPickerChange)="TxtQuestionAlone2 = $event" class="rad-color" [style.background]="TxtQuestionAlone2" [style.background]="TxtQuestion"id="color-question" title="Texto Pregunta"></div></li> 
-                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" ></fa-icon></li>
-                  <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
-                  <li> <fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item.idQuestion,'itemCubi')"></fa-icon></li>  
-                </ul>
-              </div>
-            </div>  -->
-
-
             <div class="row boxQuestion" *ngIf="item.typeDesign == 'check_label'">
 
               <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
-                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" ></ckeditor>
+                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [name]="'description_'+item.id" ngModel [(ngModel)]="item.description"></ckeditor>
        
                   <div class="list-check">
                     <div class="row">
                       <div class="col-md-6" *ngFor="let lab of item.items; let l = index">
                         <div class="row">
                             <div class="label-option col-md-3">
-                              <input name="inp-item" class="input-opt" [style.color]="quiz.colors.txtoption"  [style.color]="item.colors.txtquestion" />
+                              <input class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l" [(ngModel)]="lab.label"/>
                             </div>
                             <div class="items-options-list col-md-3">
                               <div class="form-check form-check-inline" *ngFor="let idqs of item.items[l].options; let i = index">
                                 <input class="form-check-input inp-checkbox" type="radio" name="question_{{i}}" [value]="opt"  id="inlineCheckbox_{{i}}" #dataCkMensaje>
-                                <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" /></span></label>
+                                <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l+'_opt_'+i" [(ngModel)]="idqs.name"/></span></label>
                                 <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item.items[l],'check_label',i)">-</div> 
                               </div>
                               <ul class="confg-controls ind-cont">
@@ -218,7 +218,7 @@
                 <ul class="confg-controls">
                   <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="item.colors.question" [style.background]="quiz.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
                   <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="item.colors.txtquestion" [style.background]="quiz.colors.txtquestion" id="color-question" title="Texto Pregunta"></div></li> 
-                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" ></fa-icon></li>
+                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)" ></fa-icon></li>
                   <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
                   <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item,'check_label')"></fa-icon></li>        
                 </ul>
@@ -230,14 +230,14 @@
             <div class="row boxQuestion" *ngIf="item.typeDesign == 'open_question'">
 
               <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
-                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" ></ckeditor>
+                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" name="description_{{item.id}}" ngModel [(ngModel)]="item.description"></ckeditor>
                 <textarea class="cont-question-txt"></textarea>
               </div>
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
                   <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="quiz.colors.question" [style.background]="item.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
-                  <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="item.colors.txtquestion" [style.background]="quiz.colors.txtquestion" id="color-question" title="Texto Pregunta"></div></li> 
-                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" ></fa-icon></li>
+                  <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="quiz.colors.txtquestion" [style.background]="item.colors.txtquestion"  id="color-question" title="Texto Pregunta"></div></li> 
+                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
                   <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
                 </ul>
               </div>
@@ -248,12 +248,14 @@
             <div class="row boxQuestion style-table" *ngIf="item.typeDesign == 'table'">
 
               <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
-                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" ></ckeditor>
+                <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" name="description_{{item.id}}" ngModel [(ngModel)]="item.description"></ckeditor>
                 <div class="row cont-table">
                   <div class="col-md-4 mb-4 box-fixed">
                     <div class="col-md-12 mb-12 tr head-table"></div>
                     <div *ngFor="let lab of item.items; let l = index">
-                      <div class="col-md-12 mb-12 tr head-table"><input name="opnum" class="input-opt w-full" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" /></div>
+                      <div class="col-md-12 mb-12 tr head-table">
+                        <input class="input-opt w-full" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l" [(ngModel)]="lab.label"/>
+                      </div>
                     </div>
                   </div>
                   
@@ -267,7 +269,9 @@
                         </ul>
                         <div  *ngFor="let idqs of item.items[l].options; let i = index" class="col-md-4 col-td">
                           <div class="row" >
-                            <div class="col-md-12 mb-12 tr head-table"><input name="opnum" class="input-opt w-full" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" /></div> 
+                            <div class="col-md-12 mb-12 tr head-table">
+                              <input  class="input-opt w-full" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l+'_opt_'+i" [(ngModel)]="idqs.name"/>
+                            </div> 
                           </div>
                           <div class="row" *ngFor="let lab of item.items; let d = index">
                             <div class="col-md-4 mb-4 td"></div>
@@ -283,7 +287,7 @@
                 <ul class="confg-controls">
                   <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="quiz.colors.question" [style.background]="item.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
                   <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="item.colors.txtquestion" [style.background]="quiz.colors.txtquestion" id="color-question" title="Texto Pregunta"></div></li> 
-                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" ></fa-icon></li>
+                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
                   <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
                   <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item,'table')"></fa-icon></li>
                 </ul>
@@ -300,22 +304,186 @@
 
 </div>
 
+
+
+<div class="cont-step animated bounceInRight" *ngIf="step == 'conditional-questions'">
+  <h1>Condicionales y Alertas</h1>
+
+  <form  #forma="ngForm">
+
+  <div *ngFor="let item of quiz.questions; let idQ = index">
+  
+            <div class="row boxQuestion" *ngIf="item.typeDesign == 'message'">
+              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
+                <div class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [innerHTML]="item.description"></div>
+              </div>
+              <div class="col-md-1 mb-1">
+                <ul class="confg-controls">
+                  <li> <fa-icon [icon]="faEdit" class="conf-icon" title="Editar pregunta" data-toggle="modal" data-target="#modalConditionalQuestion" (click)="idQuestionFilter = idQ"></fa-icon></li>   
+                </ul>
+              </div>
+            </div> 
+
+
+            <div class="row boxQuestion" *ngIf="item.typeDesign == 'multiple_choice'">
+              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
+                <div class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [innerHTML]="item.description"></div>
+        
+                  <div class="list-check">
+                    <div class="form-check form-check-inline" *ngFor="let idqs of item.items; let i = index">
+                      <input class="form-check-input" type="radio" name="question_{{i}}"  [value]="opt"  id="inlineCheckbox_{{i}}" #data>
+                      <label class="form-check-label" for="inlineCheckbox_{{i}}" >
+                        <span translate="no">
+                         <div [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion">{{ idqs.name }}</div>
+                        </span>
+                      </label>
+                    </div>
+                  </div> 
+
+              </div>
+              <div class="col-md-1 mb-1">
+                <ul class="confg-controls">
+                  <li> <fa-icon [icon]="faEdit" class="conf-icon" title="Editar pregunta" data-toggle="modal" data-target="#modalEditQuestion" ></fa-icon></li>       
+                </ul>
+              </div>
+            </div> 
+
+            <div class="row boxQuestion" *ngIf="item.typeDesign == 'check_label'">
+
+              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
+                <div class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [innerHTML]="item.description"></div>
+       
+                  <div class="list-check">
+                    <div class="row">
+                      <div class="col-md-6" *ngFor="let lab of item.items; let l = index">
+                        <div class="row">
+                            <div class="label-option col-md-3">
+                              <input class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l" [(ngModel)]="lab.label"/>
+                            </div>
+                            <div class="items-options-list col-md-3">
+                              <div class="form-check form-check-inline" *ngFor="let idqs of item.items[l].options; let i = index">
+                                <input class="form-check-input inp-checkbox" type="radio" name="question_{{i}}" [value]="opt"  id="inlineCheckbox_{{i}}" #dataCkMensaje>
+                                <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l+'_opt_'+i" [(ngModel)]="idqs.name"/></span></label>
+                                <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item.items[l],'check_label',i)">-</div> 
+                              </div>
+                              <ul class="confg-controls ind-cont">
+                                <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOptLabel(item.items[l],'check_label')"></fa-icon></li>
+                              </ul>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div> 
+
+              </div>
+
+              <div class="col-md-1 mb-1">
+                <ul class="confg-controls">
+                  <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="item.colors.question" [style.background]="quiz.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
+                  <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="item.colors.txtquestion" [style.background]="quiz.colors.txtquestion" id="color-question" title="Texto Pregunta"></div></li> 
+                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)" ></fa-icon></li>
+                  <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
+                  <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item,'check_label')"></fa-icon></li>        
+                </ul>
+              </div>
+
+            </div> 
+
+
+            <div class="row boxQuestion" *ngIf="item.typeDesign == 'open_question'">
+
+              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
+                <div class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [innerHTML]="item.description"></div>
+                <textarea class="cont-question-txt"></textarea>
+              </div>
+              <div class="col-md-1 mb-1">
+                <ul class="confg-controls">
+                  <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="quiz.colors.question" [style.background]="item.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
+                  <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="quiz.colors.txtquestion" [style.background]="item.colors.txtquestion"  id="color-question" title="Texto Pregunta"></div></li> 
+                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
+                  <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
+                </ul>
+              </div>
+
+            </div> 
+
+          
+            <div class="row boxQuestion style-table" *ngIf="item.typeDesign == 'table'">
+
+              <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
+                <div class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [innerHTML]="item.description"></div>
+                <div class="row cont-table">
+                  <div class="col-md-4 mb-4 box-fixed">
+                    <div class="col-md-12 mb-12 tr head-table"></div>
+                    <div *ngFor="let lab of item.items; let l = index">
+                      <div class="col-md-12 mb-12 tr head-table">
+                        <div  [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion">{{ lab.label }}</div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="col-md-12 mb-12">
+                    
+                    <div *ngFor="let lab of item.items; let l = index" class="free-fixed row">
+
+                      <div *ngIf="l == 0" class="w-full">
+                        <ul class="confg-controls conf-int">
+                          <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOptLabel(item.items[l],'table')"></fa-icon></li>
+                        </ul>
+                        <div  *ngFor="let idqs of item.items[l].options; let i = index" class="col-md-4 col-td">
+                          <div class="row" >
+                            <div class="col-md-12 mb-12 tr head-table">
+                              <div [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" >{{ idqs.name }}</div>
+                            </div> 
+                          </div>
+                          <div class="row" *ngFor="let lab of item.items; let d = index">
+                            <div class="col-md-4 mb-4 td"></div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-1 mb-1">
+                <ul class="confg-controls">
+                  <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="quiz.colors.question" [style.background]="item.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
+                  <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="item.colors.txtquestion" [style.background]="quiz.colors.txtquestion" id="color-question" title="Texto Pregunta"></div></li> 
+                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
+                  <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
+                  <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item,'table')"></fa-icon></li>
+                </ul>
+              </div>
+
+            </div> 
+
+  </div>
+</form>
+
+</div>
+
 <div class="ctr-btns">
   <ul>
     <li><fa-icon [icon]="faArrowAltCircleLeft" class="plus-question"  title="Atrás" *ngIf="step == 'configuration-questions'" (click)="steps('basic-parameters')" ></fa-icon></li>
-    <li><fa-icon [icon]="faArrowAltCircleRight" class="plus-question"  title="Seguiente" *ngIf="step == 'configuration-questions'" (click)="steps('basic-parameters')" ></fa-icon></li>
+    <li><fa-icon [icon]="faArrowAltCircleRight" class="plus-question"  title="Siguiente" *ngIf="step == 'configuration-questions'" (click)="steps('conditional-questions')" ></fa-icon></li>
     <li><fa-icon [icon]="faPlusCircle" class="plus-question"  title="Agregar Pregunta" *ngIf="step == 'configuration-questions'"  data-toggle="modal" data-target="#exampleModalCenter" (click)="modalTypeQuestion = true"></fa-icon></li>
+
+    <li><fa-icon [icon]="faArrowAltCircleLeft" class="plus-question"  title="Atrás" *ngIf="step == 'conditional-questions'" (click)="steps('configuration-questions')" ></fa-icon></li>
+    <li><fa-icon [icon]="faCheckCircle" class="plus-question"  title="Finalizar" *ngIf="step == 'conditional-questions'"  ></fa-icon></li>
   </ul>
 </div>
 
-<div [ngClass]="{'show': modalTypeQuestion == true}" [ngStyle]="{'display': modalTypeQuestion == true ? 'block' : 'none' }" class="modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+<div  class="modal" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
 
-<form [formGroup]="formTypeQuestion" (ngSubmit)="typeQuestion()" class="needs-validation" novalidate>
+<!-- <form [formGroup]="formTypeQuestion" (ngSubmit)="typeQuestion()" class="needs-validation" novalidate> -->
+
+  <form #formType="ngForm">
 
   <div class="modal-dialog modal-lg modal-dialog-centered" role="document"> 
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalCenterTitle">Nuevo Componente</h5>
+        <h2 class="modal-title" id="exampleModalCenterTitle">Nuevo Componente</h2>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -328,7 +496,7 @@
             <div class="col-md-6">
 
               <div class="custom-control custom-radio">
-                <input type="radio" id="message" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion" value="message">
+                <input type="radio" id="message" name="typeQuestion" class="custom-control-input"  value="message" ngModel>
                 <label class="custom-control-label" for="message">Mensaje</label>
               </div>
 
@@ -342,7 +510,7 @@
             <div class="col-md-6">
 
               <div class="custom-control custom-radio">
-                <input type="radio" id="open_question" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion" value="open_question">
+                <input type="radio" id="open_question" name="typeQuestion" class="custom-control-input"  value="open_question" ngModel>
                 <label class="custom-control-label" for="open_question">Pregunta Abierta</label>
               </div>
 
@@ -356,7 +524,7 @@
             <div class="col-md-6">
 
               <div class="custom-control custom-radio">
-                <input type="radio" id="multiple_choice" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion"  value="multiple_choice">
+                <input type="radio" id="multiple_choice" name="typeQuestion" class="custom-control-input"  value="multiple_choice" ngModel>
                 <label class="custom-control-label" for="multiple_choice">Selección Multiple</label>
               </div>
 
@@ -370,7 +538,7 @@
             <div class="col-md-6">
 
               <div class="custom-control custom-radio">
-                <input type="radio" id="multiple_choice_table" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion"  value="table">
+                <input type="radio" id="multiple_choice_table" name="typeQuestion" class="custom-control-input"   value="table" ngModel>
                 <label class="custom-control-label" for="multiple_choice_table">Tabla</label>
               </div>
 
@@ -384,7 +552,7 @@
             <div class="col-md-6">
 
               <div class="custom-control custom-radio">
-                <input type="radio" id="label_check" name="typeQuestion" class="custom-control-input" formControlName="typeQuestion"  value="check_label">
+                <input type="radio" id="label_check" name="typeQuestion" class="custom-control-input"  value="check_label" ngModel>
                 <label class="custom-control-label" for="label_check">Label check</label>
               </div>
 
@@ -398,8 +566,8 @@
       </div>
 
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" >Seleccionar</button>
-        <div  data-dismiss="modal" #closeBtn></div>
+        <button type="submit" class="btn btn-primary" (click)="typeQuestion(formType)" data-dismiss="modal">Seleccionar</button>
+        <div   #closeBtn></div>
       </div>
     </div>
   </div>
@@ -407,6 +575,239 @@
 </form>
 
 </div>
+
+
+<div class="modal" id="modalEditQuestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+
+  <form [formGroup]="formTypeQuestion" (ngSubmit)="typeQuestion()" class="needs-validation" novalidate>
+  
+    <div class="modal-dialog modal-lg modal-dialog-centered" role="document"> 
+      <div class="modal-content">
+        <div class="modal-header">
+          <h2 class="modal-title" id="exampleModalCenterTitle">Editar Pregunta</h2>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+  
+        <div class="modal-body">
+          <div class="container-fluid">
+
+            <h3>Diseño</h3>
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                  <label class="form-check-label" for="inlineCheckbox1">Básico</label>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                  <label class="form-check-label" for="inlineCheckbox1">1</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                  <label class="form-check-label" for="inlineCheckbox1">2</label>
+                </div>
+                <div class="form-check form-check-inline">
+                  <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
+                  <label class="form-check-label" for="inlineCheckbox1">3</label>
+                </div>
+              </div>
+            </div>    
+  
+          </div>
+        </div>
+  
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary" >Seleccionar</button>
+          <div  data-dismiss="modal" #closeBtn></div>
+        </div>
+      </div>
+    </div>
+  
+  </form>
+  
+  </div>
+
+
+  <div class="modal" id="modalConfigInputs" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+
+    <form #formInput="ngForm" class="needs-validation" novalidate>
+    
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document"> 
+        <div class="modal-content">
+          <div class="modal-header">
+            <h2 class="modal-title" id="exampleModalCenterTitle">Editar Configuración</h2>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+    
+          <div class="modal-body">
+            <div class="container-fluid">
+
+              <div  class="cont-input">
+
+                  <div class="col-sm-12">
+                    <div class="row">
+                    <div class="col-sm-10">
+                      <p class="mini-txt">Los campos configurados a continuación saldrán antes de comenzar la encuesta despues del texto inicial</p>
+                    </div>
+                    <div class="col-sm-2">
+                      <fa-icon [icon]="faPlus" title="Agregar Input" class="icon-condi" (click)="addInputType()"></fa-icon>
+                    </div> 
+                    </div>
+                  </div>
+                 
+                  <div class="form-group row mt-4" *ngFor="let itemInp of quiz.inputs; let h = index">
+
+                    <label for="colFormLabel" class="col-sm-3 col-form-label">Nombre del campo</label>
+                    <div class="col-sm-5">
+                      <input type="text" class="form-control" id="colFormLabel{{h}}" name="colFormLabel{{h}}" [(ngModel)]="itemInp.placeholder">
+                      <div class="push_input"  *ngIf="itemInp.name != ' '"> {{ itemInp.name }} </div>
+                    </div>
+                    <div class="col-sm-4">
+                      <fa-icon [icon]="faBook" title="Seleccionar campo de la base de datos" class="icon-condi px-2" (click)="selectInput(itemInp)"></fa-icon>  
+                      <fa-icon [icon]="faTimesCircle" title="Seleccionar campo de la base de datos" class="icon-condi px-2" (click)="deleteInput(quiz.inputs,h)"></fa-icon> 
+                    </div>
+                     
+                    <div class="box-list-input" *ngIf="itemInp.selAct">
+                      <div class="list-group" *ngFor="let item of listObj; let w = index" >
+                        <div class="list-group-item list-group-item-action" *ngIf="listObj[w] != 'configQuiz'"  (click)="saveTypeInput(listObj[w],itemInp)">{{ listObj[w] }}</div>
+                      </div>
+                    </div>
+
+                  </div>
+                  
+                
+
+              </div>
+
+  
+            </div>
+          </div>
+    
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-dismiss="modal" >Guardar</button>
+           
+          </div>
+        </div>
+      </div>
+    
+    </form>
+    
+    </div>
+
+    <div class="modal" id="modalConditionalQuestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+
+      <form #formConditional="ngForm" (ngSubmit)="configQuestion(formConditional)" class="needs-validation" novalidate>
+      
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document"> 
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title" id="exampleModalCenterTitle">Editar Configuración</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+      
+            <div class="modal-body">
+              <div class="container-fluid">
+  
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="home-tab" data-toggle="tab" href="#home" role="tab" aria-controls="home" aria-selected="true">Condicionales</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link" id="profile-tab" data-toggle="tab" href="#profile" role="tab" aria-controls="profile" aria-selected="false">Alertas</a>
+                  </li>
+                </ul>
+                <div class="tab-content" id="myTabConditional">
+                  <div class="tab-pane tap-conf fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+  
+                    <h3>Tipo de Condición</h3>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" id="inlineCheckbox1" name="typeConditional" value="input_data" ngModel>
+                      <label class="form-check-label" for="inlineCheckbox1">Datos de entrada</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" id="inlineCheckbox2" name="typeConditional" value="response" ngModel>
+                      <label class="form-check-label" for="inlineCheckbox2">Respuesta</label>
+                    </div>
+  
+                    <div *ngIf="formConditional.form.controls.typeConditional">
+  
+                      <div  class="cont-input">
+  
+                        <div *ngIf="formConditional.form.controls.typeConditional.value == 'input_data'">
+  
+                          <div class="col-sm-12">
+                            <div class="row">
+                            <div class="col-sm-10">
+                              <p class="mini-txt">Los campos configurados a continuación saldrán antes de comenzar la encuesta </p>
+                            </div>
+                            <div class="col-sm-2">
+                              <fa-icon [icon]="faPlus" title="Agregar Input" class="icon-condi" (click)="addInputType()"></fa-icon>
+                            </div> 
+                            </div>
+                          </div>
+                          <div class="form-group row mt-4" *ngFor="let itemInp of quiz.inputs; let h = index">
+                            <label for="colFormLabel" class="col-sm-3 col-form-label">Nombre del campo</label>
+                            <div class="col-sm-5">
+                              <input type="text" class="form-control" id="colFormLabel{{h}}" name="colFormLabel{{h}}" [(ngModel)]="itemInp.placeholder">
+                              <div class="push_input"  *ngIf="itemInp.name != ' '"> {{ itemInp.name }} </div>
+                            </div>
+                            <div class="col-sm-4">
+
+                              <fa-icon [icon]="faBook" title="Seleccionar campo de la base de datos" class="icon-condi px-2" (click)="selectInput(itemInp)"></fa-icon>     
+                              <fa-icon [icon]="faExchangeAlt" title="Buscar datos relacionados" class="icon-condi px-2" (click)="getUsers(itemInp)" #getUser></fa-icon> 
+
+                              <input type="file" class="custom-file-input" #csvRelatedInput name="Upload CSV" id="uploadInputsRelated" (change)="uploadRelatedInput($event,h,itemInp,formConditional)" accept=".csv" >
+                              <fa-icon [icon]="faUpload" title="Subir datos relacionados" class="icon-condi px-2" for="uploadInputsRelated" (click)="uploadRelatedInput()"></fa-icon> 
+
+                              <fa-icon [icon]="faTimesCircle" title="Eliminar campo" class="icon-condi px-2" (click)="deleteInput(quiz.inputs,h)"></fa-icon>
+
+                              <ng-select *ngIf="itemInp.selFilter" [multiple]="true" name="selectedFilterInput{{ h }}" [(ngModel)]="dataLisInput"  placeholder="Filtrar por : "  (change)="saveFilterUserQuestion( $event, itemInp.name  )">
+                                <ng-option *ngFor="let udat of dataDuplicate(listUsers,itemInp.name)" [value]="udat"  selected>{{ udat }}</ng-option>
+                              </ng-select>
+
+                            </div>
+
+                            <div class="box-list-input" *ngIf="itemInp.selAct" >
+                              <div class="list-group" *ngFor="let item of listObj; let w = index" >
+                                <div class="list-group-item list-group-item-action" *ngIf="listObj[w] != 'configQuiz'"  (click)="saveTypeInput(listObj[w],itemInp)">{{ listObj[w] }}</div>
+                              </div>
+                            </div>
+
+                          </div>
+                          
+                        </div>
+  
+                      </div>
+   
+                    </div>
+  
+                  </div>
+                  <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">
+                    <h3>Alertas</h3>
+                  </div>
+                </div>
+    
+              </div>
+            </div>
+      
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" >Seleccionar</button>
+              <div  data-dismiss="modal" #closeBtn></div>
+            </div>
+          </div>
+        </div>
+      
+      </form>
+      
+      </div>
 
 
 </div>

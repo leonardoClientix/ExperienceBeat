@@ -1,13 +1,16 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { NgForm, FormGroup, FormControl , Validators , FormArray} from '@angular/forms';
-import { faClone, faEdit, faSave, faArrowAltCircleRight, faArrowAltCircleLeft, faPlusCircle,faSortDown, faSortUp, faAngleLeft,faAngleRight, faPlus } from '@fortawesome/free-solid-svg-icons';
+import { faClone, faEdit, faSave, faArrowAltCircleRight, faArrowAltCircleLeft, faPlusCircle,faSortDown, faSortUp, faAngleLeft,faAngleRight, faPlus, faCheckCircle, faBook, faTimesCircle,faExchangeAlt, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { QuizService } from '../../../services/quiz.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { QuizModule } from '../../../models/quiz.module';
 import { QuestionsModule } from 'src/app/models/questions.module';
 import { ColorModule } from '../../../models/color.module';
 import { CKEditorComponent } from '@ckeditor/ckeditor5-angular';
-
+import { QuestionsService } from 'src/app/services/questions.service';
+import { UserModule } from 'src/app/models/user.module';
+import { UsersService } from 'src/app/services/users.service';
+import { InputModule } from 'src/app/models/input.module';
 
 @Component({
   selector: 'app-config-questions',
@@ -20,14 +23,20 @@ export class ConfigQuestionsComponent implements OnInit {
   public quiz:QuizModule;
   public questions:QuestionsModule;
   public colors:ColorModule;
+  public records: any[] = [];
    
   modalTypeQuestion = false;
   @ViewChild('closeBtn') closeBtn: ElementRef;
   @ViewChild('dbt') dbt: CKEditorComponent;
+  @ViewChild('csvReaderQuestions', { static: false })  csvReaderQuestions:any;
+  @ViewChild('csvReaderUsers', { static: false })  csvReaderUsers:any;
+  @ViewChild('csvRelatedInput', { static: false })  csvRelatedInput:any;
+
  
   fileLogo: any;
   form:FormGroup;
   formTypeQuestion:FormGroup;
+  formConditional: FormGroup;
 
   step = "basic-parameters";
   faClone = faClone;
@@ -38,10 +47,23 @@ export class ConfigQuestionsComponent implements OnInit {
   faSortDown = faSortDown;
   faSortUp = faSortUp;
   faArrowAltCircleLeft = faArrowAltCircleLeft;
+  faCheckCircle = faCheckCircle;
   faAngleLeft = faAngleLeft;
   faAngleRight = faAngleRight;
   faPlus = faPlus;
+  faTimesCircle = faTimesCircle;
+  faExchangeAlt = faExchangeAlt;
+  faUpload = faUpload;
   loading = true;
+  typeConditional;
+  faBook = faBook;
+  inputActive = false;
+  listObj = [];
+  inputsData = [];
+  listUsers = [];
+  idQuestionFilter;
+  dataLisInput = [];
+ 
 
   question:Object = {
     logo : null,
@@ -53,9 +75,11 @@ export class ConfigQuestionsComponent implements OnInit {
 
   constructor(
     public _quizService : QuizService,
-    private cdRef:ChangeDetectorRef
+    private cdRef:ChangeDetectorRef,
+    public _questions:QuestionsService,
+    public _users:UsersService
   ) {
-    
+
     if(localStorage.getItem('step')){ 
       this.step = localStorage.getItem('step');
     }
@@ -114,6 +138,7 @@ export class ConfigQuestionsComponent implements OnInit {
       this.quiz = new QuizModule();
       this.quiz.colors = new ColorModule();
       this.quiz.questions = [];
+      this.quiz.inputs = [];
       this.quiz.colors.name = '#000000';
       this.quiz.colors.header = '#cacaca';
       this.quiz.colors.background = '#ffffff';
@@ -205,9 +230,11 @@ export class ConfigQuestionsComponent implements OnInit {
   
   }
 
-  typeQuestion(){
+  typeQuestion( formType:NgForm ){
+    console.log(formType);
 
-    let typeQuestion = this.formTypeQuestion.controls['typeQuestion'].value;
+    //let typeQuestion = this.formTypeQuestion.controls['typeQuestion'].value;
+    let typeQuestion = formType.form.controls.typeQuestion.value;
     let dataQuestion: QuestionsModule = new QuestionsModule();
     
     let count_question = this.quiz.questions.length+1; 
@@ -239,13 +266,20 @@ export class ConfigQuestionsComponent implements OnInit {
     
       default:
         break;
-    }
+    } 
 
     this.quiz.questions.push(dataQuestion);
-    this.modalTypeQuestion = false;
-    this.closeBtn.nativeElement.click();
 
-    console.log(this.quiz.questions);
+   
+    //this.modalTypeQuestion = false;
+    //this.closeBtn.nativeElement.click();
+
+   // console.log(this.quiz.questions[this.quiz.questions.length-1]);
+    
+    this._quizService.updateQuiz(this.quiz,localStorage.getItem("id_quiz"));
+
+    console.log(this.quiz);
+
   }
 
   addOptLabel(item,typeDesign){   
@@ -259,7 +293,7 @@ export class ConfigQuestionsComponent implements OnInit {
         break;
     }
 
-    this._quizService.updateQuiz(this.quiz,localStorage.getItem("id_quiz"));
+   // this._quizService.updateQuiz(this.quiz.questions[this.quiz.questions.length-1],localStorage.getItem("id_quiz"));
 
   }
 
@@ -277,7 +311,7 @@ export class ConfigQuestionsComponent implements OnInit {
         break;
     }
 
-    this._quizService.updateQuiz(this.quiz,localStorage.getItem("id_quiz"));
+    //this._quizService.updateQuiz(this.quiz.questions[this.quiz.questions.length-1],localStorage.getItem("id_quiz"));
 
   }
 
@@ -295,27 +329,7 @@ export class ConfigQuestionsComponent implements OnInit {
         break;
     }
 
-    this._quizService.updateQuiz(this.quiz,localStorage.getItem("id_quiz"));
-
-  }
-
-  saveQuestions( data:NgForm,input,item:QuestionsModule){
-
-    console.log("data",data);
-    console.log("input",input);
-    
-    item.description = data[input].value;
-
-    switch (item.typeDesign) {
-      case 'message':
-        
-        break;
-    
-      default:
-        break;
-    }
-
-    console.log(this.quiz);
+    //this._quizService.updateQuiz(this.quiz.questions[this.quiz.questions.length-1],localStorage.getItem("id_quiz"));
 
   }
 
@@ -325,13 +339,324 @@ export class ConfigQuestionsComponent implements OnInit {
     let count_question = this.quiz.questions.length+1; 
         clonQuestion.id = count_question;
     this.quiz.questions.push(clonQuestion); 
-      console.log(this.quiz);
+     // this._quizService.updateQuiz(this.quiz.questions[this.quiz.questions.length-1],localStorage.getItem("id_quiz"));
 
+  }
+
+  configQuestion( data:NgForm ){
+    let type = data.form.controls.typeConditional.value;
+  }
+
+  addInputType(){
+    if(this.quiz.inputs === undefined){
+      this.quiz.inputs = [];
+    }
+    this.quiz.inputs.push({name:' ',placeholder:'',selAct: false,selFilter: false});
+  }
+
+  selectInput(item){
+    this._users.getUserQuiz().subscribe((data)=>{
+      this.listObj = Object.keys(data[0]);
+      item.selAct = !item.selAct;
+    });
+  } 
+
+  saveTypeInput(item,obj){
+    obj.name = item;
+    obj.selAct = false;
+    this.inputActive = false;
+  }
+ 
+  getUsers( data:InputModule ){
+
+    data.selFilter = !data.selFilter;
+    this._users.getUserQuiz().subscribe((data:any)=>{
+      this.listUsers = data;
+    });
+
+  }
+
+  uploadRelatedInput($event?, idInput?, dataInput?,daForm?){
+
+    this.csvRelatedInput.nativeElement.click();
+    
+    if($event){
+      
+    dataInput.selFilter = true;
+   
+      let files = $event.srcElement.files;
+
+        if (this.isValidCSVFile(files[0])) {
+
+            let input = $event.target;
+            let reader = new FileReader();
+            reader.readAsText(input.files[0], 'ISO-8859-1');
+      
+            reader.onload = () => {
+              let csvData = reader.result;
+              let csvRecordsArray = (<string>csvData).split(/\r\n|\n/);
+              let headersRow = this.getHeaderArray(csvRecordsArray);
+      
+              console.log(csvRecordsArray);
+              console.log(daForm.form['controls']['selectedFilterInput'+idInput]);
+
+              this._users.getFilterUserInput( csvRecordsArray , dataInput.name ).subscribe((parm:any)=>{
+                 this.dataLisInput = parm;     
+              });
+            
+            };
+      
+            reader.onerror = function () {
+              console.log('Ocurrio un error al leer el archivo!');
+            };
+      
+        } else {
+            alert("El archivo no es CSV");
+            this.fileReset();
+        }
+
+    }
+    
+  }
+
+  dataDuplicate( obj, input ){
+
+    let acum = [];
+    for (let index = 0; index < obj.length; index++) {
+      if(acum.indexOf(obj[index][input]) == -1){
+          acum.push(obj[index][input]);
+      }
+    }
+    return acum;
+
+  }
+
+  saveFilterUserQuestion( value,input ){
+    this._users.updateFiltersQuestion(this.idQuestionFilter,value,input);
   }
 
   listOrderChanged(data){
     console.log('dat',data);
   }  
+
+  deleteInput(item,id){
+    item.splice(id, 1);
+  }
+
+  uploadListener($event: any, type): void {
+
+    let files = $event.srcElement.files;
+    if (this.isValidCSVFile(files[0])) {
+
+      let input = $event.target;
+      let reader = new FileReader();
+      reader.readAsText(input.files[0], 'ISO-8859-1');
+
+      reader.onload = () => {
+        let csvData = reader.result;
+        let csvRecordsArray = (<string>csvData).split(/\r\n|\n/);
+        let headersRow = this.getHeaderArray(csvRecordsArray);
+
+        if( type == "questions") {
+          this.records = this.getDataQuestions(csvRecordsArray, headersRow.length);
+          this._questions.addQuestion(this.records);
+          
+        }
+
+        if( type == "users") {
+          this.records = this.getDataUsers(csvRecordsArray, headersRow.length);
+          console.log(this.records);
+          this._users.addUsers(this.records);
+        }
+ 
+      };
+
+      reader.onerror = function () {
+        console.log('Ocurrio un error al leer el archivo!');
+      };
+
+    } else {
+      alert("El archivo no es CSV");
+      this.fileReset();
+    }
+    
+  }
+
+  isValidCSVFile(file: any) {
+    return file.name.endsWith(".csv");
+  }
+
+  getHeaderArray(csvRecordsArr: any) {
+    let headers = (<string>csvRecordsArr[0]).split(';');
+    let headerArray = [];
+
+    for (let j = 0; j < headers.length; j++) {
+      headerArray.push(headers[j]);
+    }
+
+    return headerArray;
+  }
+
+  getDataQuestions(csvRecordsArray: any, headerLength: any) {
+
+    let csvArr = [];
+    let csvMessage:any = {};
+    let itemInput:any = [];
+    let inputs = [];
+    let list:any = [];
+
+    let dataMessage = csvRecordsArray[1].split(';');
+    let dataInput = csvRecordsArray[2].split(';');
+    dataInput = dataInput[1].split('|');
+
+    for( let w = 0; w < dataInput.length; w++) {
+      itemInput = dataInput[w].split(',');
+      inputs.push(itemInput);
+    }
+
+    for( let t = 0; t < inputs.length; t++) {
+        list.push({ name: inputs[t][0], type: inputs[t][1], placeholder: inputs[t][2] });
+    }
+
+    csvMessage.message = dataMessage[1];
+    csvMessage.data =  list;
+    // agregar mensaje de bienvenida
+    this._questions.addMessage(csvMessage);
+
+    for (let i = 1; i < csvRecordsArray.length; i++) {
+      let curruntRecord = (<string>csvRecordsArray[i]).split(';');
+
+      if (curruntRecord.length == headerLength) {
+        let csvRecord:QuestionsModule = new QuestionsModule();
+        csvRecord.id = parseFloat(curruntRecord[0]);
+
+        let listOption =  curruntRecord[0].split('.');
+        // lista de preguntas
+        if(listOption.length == 1){
+          // lista de opciones de cada pregunta
+          let valueOption = this.getOptions(curruntRecord[0], csvRecordsArray, headerLength );
+         
+          csvRecord.parameters = { message: curruntRecord[1], option: valueOption, repeat: curruntRecord[4], valcheck: [] };
+          csvRecord.mandatory = curruntRecord[2];
+          csvRecord.typeDesign = curruntRecord[3];
+          csvRecord.assets = curruntRecord[5];
+          csvRecord.conditional = curruntRecord[6];
+          csvRecord.variable = curruntRecord[7];
+          csvRecord.multiple = curruntRecord[8];
+          csvRecord.text = curruntRecord[9];
+          csvRecord.rack = curruntRecord[10];
+          csvRecord.order = curruntRecord[11];
+          csvRecord.comparator = curruntRecord[12];
+          csvRecord.check = curruntRecord[13];
+          csvRecord.matriz = curruntRecord[14];
+          csvRecord.miltiCheck = curruntRecord[15];
+          csvRecord.alerts = curruntRecord[16];
+          csvArr.push(csvRecord);
+
+        }
+
+      }
+    }
+
+    return csvArr;
+  }
+
+  getDataUsers(csvRecordsArray: any, headerLength: any){
+
+    let csvDataUser = [];
+    let headerData:any = [];
+    let csvData:any = {};
+    let dataSave = [];
+    let cont = 0;
+    headerLength = headerLength-1;
+
+    for (let i = 0; i < csvRecordsArray.length; i++) {
+      let curruntRecord = (<string>csvRecordsArray[i]).split(';');
+ 
+      for (let a = 0; a < curruntRecord.length; a++) {
+        if(i == 0){
+          headerData.push(curruntRecord[a]);
+        } else {
+          csvDataUser.push(curruntRecord[a]);
+        }
+      }
+    }
+
+    for (let c = 0; c < csvDataUser.length; c++) {
+
+      if(headerData[cont]){
+        csvData[headerData[cont]] = csvDataUser[c];
+        csvData['configQuiz'] = [{ idQuiz: localStorage.getItem('id_quiz') }];
+      } 
+    
+      if(cont == headerLength){
+        console.log(csvData);
+        dataSave.push(csvData);
+        csvData = {};
+        cont = 0;
+      } else {
+        cont++;
+      }
+       
+    }
+    
+    return dataSave;
+
+  }
+
+
+  getOptions( idQuestion, csvRecordsArray: any, headerLength: any ){
+
+    let csvOption = [];
+
+    for (let i = 1; i < csvRecordsArray.length; i++) {
+
+      let curruntRecord = (<string>csvRecordsArray[i]).split(';');
+
+      if (curruntRecord.length == headerLength) {
+
+        let csvRecord:QuestionsModule = new QuestionsModule();
+        let listOption =  curruntRecord[0].split('.');
+
+        if(listOption.length == 2 && idQuestion == listOption[0]){
+
+          csvRecord.id = curruntRecord[0];
+          if(curruntRecord[3] == "value"){
+            csvRecord.options = curruntRecord[1].split(',');
+          } else {
+            csvRecord.options = curruntRecord[1];
+          }
+          csvRecord.mandatory = curruntRecord[2];
+          csvRecord.valcheck = [];
+          csvRecord.repeat = curruntRecord[4];
+          csvRecord.typeDesign = curruntRecord[3];
+          csvRecord.assets = curruntRecord[5];
+          csvRecord.conditional = curruntRecord[6];
+          csvRecord.variable = curruntRecord[7];
+          csvRecord.multiple = curruntRecord[8];
+          csvRecord.text = curruntRecord[9];
+          csvRecord.rack = curruntRecord[10];
+          csvRecord.order = curruntRecord[11];
+          csvRecord.comparator = curruntRecord[12];
+          csvRecord.check = curruntRecord[13];
+          csvRecord.matriz = curruntRecord[14];
+          csvRecord.miltiCheck = curruntRecord[15];
+          csvRecord.alerts = curruntRecord[16];
+          csvOption.push(csvRecord);
+
+        }
+      }
+
+    }
+
+    return csvOption;
+  }
+
+  fileReset() {
+    this.csvReaderQuestions.nativeElement.value = "";
+    this.csvReaderUsers.nativeElement.value = "";
+    this.records = [];
+  }
   
 
 

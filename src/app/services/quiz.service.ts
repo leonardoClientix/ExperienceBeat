@@ -80,6 +80,10 @@ export class QuizService {
         return this.db.collection("quiz").doc(idDocumentFire).update(JSON.parse(JSON.stringify(data)));
     }
 
+    updateQuestion(data,idDocumentFire){
+       // return this.db.collection("quiz").doc(idDocumentFire).set()
+    }
+
     getQuiz(idDocumentFire){
         return this.db.collection("quiz").doc(idDocumentFire).valueChanges();
     }

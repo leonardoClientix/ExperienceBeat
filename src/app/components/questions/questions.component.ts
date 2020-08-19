@@ -44,8 +44,6 @@ export class QuestionsComponent  implements OnInit {
 
 
   public records: any[] = [];
-  @ViewChild('csvReaderQuestions', { static: false })  csvReaderQuestions:any;
-  @ViewChild('csvReaderUsers', { static: false })  csvReaderUsers:any;
   @ViewChild('camp', { static: false })  camp:any;
   //@ViewChild('dcheck', { static: false })  dcheck:any;
 
@@ -406,177 +404,6 @@ export class QuestionsComponent  implements OnInit {
     this.showMessage = false;
   }
 
-  uploadListener($event: any, type): void {
-
-    let files = $event.srcElement.files;
-    if (this.isValidCSVFile(files[0])) {
-
-      let input = $event.target;
-      let reader = new FileReader();
-      reader.readAsText(input.files[0], 'ISO-8859-1');
-
-      reader.onload = () => {
-        let csvData = reader.result;
-        let csvRecordsArray = (<string>csvData).split(/\r\n|\n/);
-        let headersRow = this.getHeaderArray(csvRecordsArray);
-
-        if( type == "questions") {
-          this.records = this.getDataQuestions(csvRecordsArray, headersRow.length);
-          this._questions.addQuestion(this.records);
-          
-        }
-
-        if( type == "users") {
-          this.records = this.getDataUsers(csvRecordsArray, headersRow.length);
-          this._users.addUsers(this.records);
-        }
-
-      };
-
-      reader.onerror = function () {
-        console.log('Ocurrio un error al leer el archivo!');
-      };
-
-    } else {
-      alert("El archivo no es CSV");
-      this.fileReset();
-    }
-    
-  }
-
-  getDataUsers(csvRecordsArray: any, headerLength: any){
-
-    let csvDataUser = [];
-    for (let i = 1; i < csvRecordsArray.length; i++) {
-      let curruntRecord = (<string>csvRecordsArray[i]).split(';');
-      let csvUsers: UserModule = new UserModule();
-
-      if (curruntRecord.length == headerLength) {
-
-          csvUsers.id = Number(curruntRecord[0]);
-          csvUsers.name = curruntRecord[1];
-          csvUsers.email = curruntRecord[2];
-          csvUsers.rol = curruntRecord[3];
-          csvUsers.macro_process = curruntRecord[4];
-          csvDataUser.push(csvUsers);
-
-      }
-    }
-    return csvDataUser;
-
-  }
-
-  getDataQuestions(csvRecordsArray: any, headerLength: any) {
-
-    let csvArr = [];
-    let csvMessage:any = {};
-    let itemInput:any = [];
-    let inputs = [];
-    let list:any = [];
-
-    let dataMessage = csvRecordsArray[1].split(';');
-    let dataInput = csvRecordsArray[2].split(';');
-    dataInput = dataInput[1].split('|');
-
-    for( let w = 0; w < dataInput.length; w++) {
-      itemInput = dataInput[w].split(',');
-      inputs.push(itemInput);
-    }
-
-    for( let t = 0; t < inputs.length; t++) {
-        list.push({ name: inputs[t][0], type: inputs[t][1], placeholder: inputs[t][2] });
-    }
-
-    csvMessage.message = dataMessage[1];
-    csvMessage.data =  list;
-    // agregar mensaje de bienvenida
-    this._questions.addMessage(csvMessage);
-
-    for (let i = 1; i < csvRecordsArray.length; i++) {
-      let curruntRecord = (<string>csvRecordsArray[i]).split(';');
-
-      if (curruntRecord.length == headerLength) {
-        let csvRecord:QuestionsModule = new QuestionsModule();
-        csvRecord.id = parseFloat(curruntRecord[0]);
-
-        let listOption =  curruntRecord[0].split('.');
-        // lista de preguntas
-        if(listOption.length == 1){
-          // lista de opciones de cada pregunta
-          let valueOption = this.getOptions(curruntRecord[0], csvRecordsArray, headerLength );
-         
-          csvRecord.parameters = { message: curruntRecord[1], option: valueOption, repeat: curruntRecord[4], valcheck: [] };
-          csvRecord.mandatory = curruntRecord[2];
-          csvRecord.typeDesign = curruntRecord[3];
-          csvRecord.assets = curruntRecord[5];
-          csvRecord.conditional = curruntRecord[6];
-          csvRecord.variable = curruntRecord[7];
-          csvRecord.multiple = curruntRecord[8];
-          csvRecord.text = curruntRecord[9];
-          csvRecord.rack = curruntRecord[10];
-          csvRecord.order = curruntRecord[11];
-          csvRecord.comparator = curruntRecord[12];
-          csvRecord.check = curruntRecord[13];
-          csvRecord.matriz = curruntRecord[14];
-          csvRecord.miltiCheck = curruntRecord[15];
-          csvRecord.alerts = curruntRecord[16];
-          csvArr.push(csvRecord);
-
-        }
-
-      }
-    }
-
-    return csvArr;
-  }
-
-  getOptions( idQuestion, csvRecordsArray: any, headerLength: any ){
-
-    let csvOption = [];
-
-    for (let i = 1; i < csvRecordsArray.length; i++) {
-
-      let curruntRecord = (<string>csvRecordsArray[i]).split(';');
-
-      if (curruntRecord.length == headerLength) {
-
-        let csvRecord:QuestionsModule = new QuestionsModule();
-        let listOption =  curruntRecord[0].split('.');
-
-        if(listOption.length == 2 && idQuestion == listOption[0]){
-
-          csvRecord.id = curruntRecord[0];
-          if(curruntRecord[3] == "value"){
-            csvRecord.options = curruntRecord[1].split(',');
-          } else {
-            csvRecord.options = curruntRecord[1];
-          }
-          csvRecord.mandatory = curruntRecord[2];
-          csvRecord.valcheck = [];
-          csvRecord.repeat = curruntRecord[4];
-          csvRecord.typeDesign = curruntRecord[3];
-          csvRecord.assets = curruntRecord[5];
-          csvRecord.conditional = curruntRecord[6];
-          csvRecord.variable = curruntRecord[7];
-          csvRecord.multiple = curruntRecord[8];
-          csvRecord.text = curruntRecord[9];
-          csvRecord.rack = curruntRecord[10];
-          csvRecord.order = curruntRecord[11];
-          csvRecord.comparator = curruntRecord[12];
-          csvRecord.check = curruntRecord[13];
-          csvRecord.matriz = curruntRecord[14];
-          csvRecord.miltiCheck = curruntRecord[15];
-          csvRecord.alerts = curruntRecord[16];
-          csvOption.push(csvRecord);
-
-        }
-      }
-
-    }
-
-    return csvOption;
-  }
-
   getHeaderArray(csvRecordsArr: any) {
     let headers = (<string>csvRecordsArr[0]).split(';');
     let headerArray = [];
@@ -590,12 +417,6 @@ export class QuestionsComponent  implements OnInit {
 
   isValidCSVFile(file: any) {
     return file.name.endsWith(".csv");
-  }
-
-  fileReset() {
-     this.csvReaderQuestions.nativeElement.value = "";
-     this.csvReaderUsers.nativeElement.value = "";
-     this.records = [];
   }
 
   validateQuestion(item,data){
