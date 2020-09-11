@@ -17,6 +17,8 @@ export class QuizModule {
     public initial_text: string;
     public final_text: string;
     public colors: ColorModule;
+    public creation_date:Date;
+    public update_date:Date = new Date();
     public inputs: InputModule[];
     public questions: QuestionsModule[];
 } 

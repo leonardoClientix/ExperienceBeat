@@ -15,7 +15,7 @@ export class QuestionsModule {
    public colors: ColorModule;
    public items: any[];
    public options?: any;
-   public mandatory: any; //si
+   public mandatory = false; //si
    public typeDesign: any; // si
    public assets: any;
    public conditional: any; //si

@@ -9,10 +9,21 @@ import { Router , ActivatedRoute } from '@angular/router';
 export class AppComponent {
   title = 'encuestas';
   alertQuiz = false;
+  url;
+ 
 
   constructor(
     private router:Router,
-  ){}
+    private activatedRoute:ActivatedRoute
+  ){
+
+  }
+
+  ngAfterContentChecked() {
+    if( this.activatedRoute.snapshot.children.length != 0 && this.activatedRoute.snapshot.children[0].url.length != 0){
+      this.url = this.activatedRoute.snapshot.children[0].url[0].path;
+    }     
+  }
 
   stateQuiz(){
 

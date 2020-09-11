@@ -6,7 +6,7 @@ import { AngularFirestore , AngularFirestoreCollection} from '@angular/fire/fire
 })
 export class ResponseService {
 
-  collection:any = "response_leonardo";
+  collection:any = "response_app";
   dataUpdate = [];
 
   private itemsCollection: AngularFirestoreCollection<any>;
@@ -19,9 +19,17 @@ export class ResponseService {
     return this.afs.collection(this.collection).doc(idDocumentFire).valueChanges();
   }
   addResponse(data){
-    return this.afs.collection(this.collection).add( JSON.parse(JSON.stringify(data)) );
+    return this.afs.collection(this.collection).add( JSON.parse(JSON.stringify(data))).then((data) =>{
+      localStorage.setItem("id_response",data.id);
+    });
   }
 
+  updateResponse(data){
+    let idDocumentFire = localStorage.getItem('id_response');
+    return this.afs.collection(this.collection).doc(idDocumentFire).update({
+      questions: data
+    });
+  }
 
   updateResponsew(idDocumentFire,data,type,idQuestion){
 
@@ -41,4 +49,6 @@ export class ResponseService {
     }
 
   }
+
+  
 }

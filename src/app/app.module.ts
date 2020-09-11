@@ -27,6 +27,7 @@ import { CKEditorModule } from '@ckeditor/ckeditor5-angular';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
+import { PreviewQuizComponent } from './components/admin/preview-quiz/preview-quiz.component';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
     LoginComponent,
     ConfigQuestionsComponent,
     ListQuizComponent,
-    DashboardComponent
+    DashboardComponent,
+    PreviewQuizComponent
   ],
   imports: [
     BrowserModule,

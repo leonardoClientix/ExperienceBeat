@@ -7,8 +7,7 @@ import { SigoutService } from './services/sigout.service';
 import { ConfigQuestionsComponent } from './components/admin/config-questions/config-questions.component';
 import { ListQuizComponent } from './components/admin/list-quiz/list-quiz.component';
 import { DashboardComponent } from './components/admin/dashboard/dashboard.component';
-
-
+import { PreviewQuizComponent } from './components/admin/preview-quiz/preview-quiz.component';
 
 
 
@@ -17,7 +16,9 @@ const ROUTES: Routes = [
   {  path: 'dashboard', component: DashboardComponent },
   {  path: 'login', component: LoginComponent, canActivate: [ SigoutService ] },
   {  path: 'list-quiz', component: ListQuizComponent, canActivate: [ AuthService ] },
+  {  path: 'config-questions/:id', component: ConfigQuestionsComponent, canActivate: [ AuthService ] },
   {  path: 'config-questions', component: ConfigQuestionsComponent, canActivate: [ AuthService ] },
+  {  path: 'preview/:id', component: PreviewQuizComponent, canActivate: [ AuthService ] },
   {  path: '**', pathMatch: 'full', component: QuestionsComponent }
    // { path: '**', pathMatch: 'full' , redirectTo: 'preguntas'},
 ];

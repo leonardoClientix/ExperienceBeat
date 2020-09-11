@@ -138,4 +138,9 @@ export class UsersService {
     //return this.afs.collection("users_prueba", ref => ref.where('configQuiz','array-contains', { idQuiz: localStorage.getItem('id_quiz') })).doc(idDocumentFire).update(JSON.parse(JSON.stringify(data)));
   }
 
+  searchInput(input,value){
+      this.itemsCollection = this.afs.collection<QuestionsModule>("users_prueba", ref => ref.where(input, '==', value));
+      return this.itemsCollection.valueChanges();
+  }
+
 }

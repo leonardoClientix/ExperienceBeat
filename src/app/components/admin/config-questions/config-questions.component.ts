@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { NgForm, FormGroup, FormControl , Validators , FormArray} from '@angular/forms';
-import { faClone, faEdit, faSave, faArrowAltCircleRight, faArrowAltCircleLeft, faPlusCircle,faSortDown, faSortUp, faAngleLeft,faAngleRight, faPlus, faCheckCircle, faBook, faTimesCircle,faExchangeAlt, faUpload } from '@fortawesome/free-solid-svg-icons';
+import { faClone, faEdit, faSave, faArrowAltCircleRight, faArrowAltCircleLeft, faPlusCircle,faSortDown, faSortUp, faAngleLeft,faAngleRight, faPlus, faCheckCircle, faBook, faTimesCircle,faExchangeAlt, faUpload, faAsterisk, faWindowClose, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { QuizService } from '../../../services/quiz.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { QuizModule } from '../../../models/quiz.module';
@@ -11,6 +11,7 @@ import { QuestionsService } from 'src/app/services/questions.service';
 import { UserModule } from 'src/app/models/user.module';
 import { UsersService } from 'src/app/services/users.service';
 import { InputModule } from 'src/app/models/input.module';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-config-questions',
@@ -54,6 +55,9 @@ export class ConfigQuestionsComponent implements OnInit {
   faTimesCircle = faTimesCircle;
   faExchangeAlt = faExchangeAlt;
   faUpload = faUpload;
+  faAsterisk = faAsterisk;
+  faWindowClose = faWindowClose;
+  faTimes = faTimes;
   loading = true;
   typeConditional;
   faBook = faBook;
@@ -62,6 +66,7 @@ export class ConfigQuestionsComponent implements OnInit {
   inputsData = [];
   listUsers = [];
   idQuestionFilter;
+  configModalQuestion:any = {};
   dataLisInput = [];
  
 
@@ -74,11 +79,20 @@ export class ConfigQuestionsComponent implements OnInit {
   }
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     public _quizService : QuizService,
     private cdRef:ChangeDetectorRef,
     public _questions:QuestionsService,
     public _users:UsersService
   ) {
+
+    this.activatedRoute.params.subscribe( data => {
+
+      if(data['id']){
+        localStorage.setItem("id_quiz",data['id']);
+      }
+      
+    });
 
     if(localStorage.getItem('step')){ 
       this.step = localStorage.getItem('step');
@@ -183,7 +197,7 @@ export class ConfigQuestionsComponent implements OnInit {
         break;
     }
 
-    this.updateQuiz();
+    // this.updateQuiz();
  
   }
 
@@ -191,6 +205,25 @@ export class ConfigQuestionsComponent implements OnInit {
 
     this.step = after;
     localStorage.setItem("step",this.step);
+
+    if(after == 'configuration-questions'){
+
+      this.quiz.name = this.form.controls['nameQuiz'].value;
+      this.quiz.description = this.form.controls['description'].value;
+      this.quiz.initial_text = this.form.controls['initial_text'].value;
+      this.quiz.final_text = this.form.controls['final_text'].value;
+      
+  
+      if(localStorage.getItem('id_quiz')){
+        this._quizService.updateQuiz(this.quiz,localStorage.getItem("id_quiz"));
+      } else { 
+        this.quiz.creation_date = new Date();
+        this._quizService.saveQuiz(this.quiz);
+      }
+
+    }
+
+    console.log(this.quiz);
 
   }
 
@@ -201,33 +234,24 @@ export class ConfigQuestionsComponent implements OnInit {
 
   } 
 
-  updateQuiz(){
+  // updateQuiz(){
 
-    this.quiz.name = this.form.controls['nameQuiz'].value;
-    this.quiz.description = this.form.controls['description'].value;
-    this.quiz.initial_text = this.form.controls['initial_text'].value;
-    this.quiz.final_text = this.form.controls['final_text'].value;
+  //   this.quiz.name = this.form.controls['nameQuiz'].value;
+  //   this.quiz.description = this.form.controls['description'].value;
+  //   this.quiz.initial_text = this.form.controls['initial_text'].value;
+  //   this.quiz.final_text = this.form.controls['final_text'].value;
 
-    if(localStorage.getItem('id_quiz')){
-      this._quizService.updateQuiz(this.quiz,localStorage.getItem("id_quiz"));
-    } else { 
-      this._quizService.saveQuiz(this.quiz);
-    }
-
-     // console.log(this.dbt.editorInstance.settData('hols'));
-
-    //  ClassicEditor.create( document.querySelector( '#validationTextarea' ) )
-    // .then( editor => {
-    //     console.log( editor );
-
-    //     editor.setData( '<p>Some text.</p>' );
-
-      
-    // } )
-    // .catch( error => {
-    //     console.error( error );
-    // } );
+  //   if(localStorage.getItem('id_quiz')){
+  //     this._quizService.updateQuiz(this.quiz,localStorage.getItem("id_quiz"));
+  //   } else { 
+  //     this._quizService.saveQuiz(this.quiz);
+  //   }
   
+  // }
+
+  saveQuizQuestion(){
+    console.log(this.quiz);
+    this._quizService.updateQuiz(this.quiz,localStorage.getItem("id_quiz"));
   }
 
   typeQuestion( formType:NgForm ){
@@ -304,7 +328,8 @@ export class ConfigQuestionsComponent implements OnInit {
         item.items.push({label:'',options : [{ name : ''}]});
         break;
       case 'table':
-        item.items.push({label:'',options : [{ name : ''}]});
+        item.items.push({label:'',options : item.items[0].options });
+       // item.items.push({label:'',options : [{ name : ''}]});
         break;
       case 'multiple_choice':
         item.items.push({ name : ''});
@@ -344,6 +369,8 @@ export class ConfigQuestionsComponent implements OnInit {
   }
 
   configQuestion( data:NgForm ){
+
+    console.log(data);
     let type = data.form.controls.typeConditional.value;
   }
 
@@ -432,7 +459,14 @@ export class ConfigQuestionsComponent implements OnInit {
   }
 
   saveFilterUserQuestion( value,input ){
-    this._users.updateFiltersQuestion(this.idQuestionFilter,value,input);
+    this._users.updateFiltersQuestion(this.configModalQuestion.idQuestionFilter,value,input);
+  }
+
+  openModalConfigQuestion(idQuestion,item){
+    this.configModalQuestion = {};
+    this.configModalQuestion.idQuestionFilter = idQuestion;
+    this.configModalQuestion.typeDesign = item.typeDesign;
+    this.configModalQuestion.items = item.items;
   }
 
   listOrderChanged(data){
@@ -441,6 +475,14 @@ export class ConfigQuestionsComponent implements OnInit {
 
   deleteInput(item,id){
     item.splice(id, 1);
+  }
+
+  deleteQuestion(id){
+    let indexOf = this.quiz.questions.findIndex(i => i.id === id); 
+    let r = confirm("¿Esta seguro que quiere eliminar esta pregunta?");
+    if (r == true) {
+        this.quiz.questions.splice(indexOf, 1);
+    } 
   }
 
   uploadListener($event: any, type): void {
@@ -537,7 +579,7 @@ export class ConfigQuestionsComponent implements OnInit {
           let valueOption = this.getOptions(curruntRecord[0], csvRecordsArray, headerLength );
          
           csvRecord.parameters = { message: curruntRecord[1], option: valueOption, repeat: curruntRecord[4], valcheck: [] };
-          csvRecord.mandatory = curruntRecord[2];
+          //csvRecord.mandatory = curruntRecord[2];
           csvRecord.typeDesign = curruntRecord[3];
           csvRecord.assets = curruntRecord[5];
           csvRecord.conditional = curruntRecord[6];
@@ -626,7 +668,7 @@ export class ConfigQuestionsComponent implements OnInit {
           } else {
             csvRecord.options = curruntRecord[1];
           }
-          csvRecord.mandatory = curruntRecord[2];
+          //csvRecord.mandatory = curruntRecord[2];
           csvRecord.valcheck = [];
           csvRecord.repeat = curruntRecord[4];
           csvRecord.typeDesign = curruntRecord[3];

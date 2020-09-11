@@ -54,8 +54,7 @@ th.mat-sort-header-sorted {
   height: 20px;
   border-radius: 50%;
   background-color: #5ea2ef;
-  border: none;
-  margin-left: 5px;
+  border: 1px #a0a0a0 solid;
   cursor: pointer;
 }
 .top-50{
@@ -355,7 +354,32 @@ textarea, input {
   font-size: 20px;
   font-family: 'Poppins', sans-serif;
   color: #6d6969;
+  word-break: break-all;
 }
+
+.list-filter-question .ng-dropdown-panel .ng-dropdown-panel-items .ng-option {
+  word-break: break-all !important;
+  white-space: initial !important;
+  font-size: 11px;
+}
+ .list-filter-question .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value .ng-value-label{
+  width: 75%;
+  overflow: hidden;
+}
+/*
+.list-filter-question .ng-select.ng-select-multiple .ng-select-container .ng-value-container{
+  width: 90%;
+  padding-right: 7px;
+}
+
+*/
+.list-filter-question {
+  width: 294px;
+} 
+
+.list-filter-question .ng-select.ng-select-multiple .ng-select-container .ng-value-container .ng-value{
+  max-width: 113px;
+} 
 
 .cont-itemquestion{
   background-color: #eaedf3;
@@ -401,12 +425,13 @@ textarea, input {
 }
 
 .plus-question{
-  color: #007bff;
-  font-size: 57px;
+  color: #4b95e2;
+  font-size: 38px;
   padding: 10px;
   border-radius: 50%;
   cursor: pointer;
 }
+
 
 .img-quiestion-type{
   width: 100%;
@@ -417,10 +442,14 @@ textarea, input {
   padding: 0;
 }
 
+ul.confg-controls li {
+  margin: 7px;
+}
+
 .conf-int{
-  margin: 16px;
+  margin: 5px;
   position: fixed;
-  left: 21px;
+  left: 27px;
   z-index: 1;
 }
 
@@ -443,8 +472,10 @@ textarea, input {
 }
 
 .confg-controls .conf-icon svg{
-  width: 16px;
-  height: 16px;
+  width: 100%;
+  height: 100%;
+  font-size: 5px;
+  padding: 2px;
 }
 
 .conf-icon{
@@ -452,12 +483,12 @@ textarea, input {
   background-color: #060c17;
   color: white;
   padding: 7px;
-  margin: 5px;
   cursor: pointer;
+  display: block;
 }
-.confg-controls li {
+/* .confg-controls li {
   min-height: 40px;
-}
+} */
 
 .box-button {
   margin: 19px;
@@ -471,11 +502,14 @@ textarea, input {
   position: fixed;
   bottom: 35px;
   right: 35px;
+  background-color: #ffffffd6;
+  border-radius: 26px;
 }
 
 .ctr-btns ul{
   list-style: none;
   margin: 0;
+  padding: 0;
 }
 
 .ctr-btns li {
@@ -528,7 +562,7 @@ ngx-sortable .sortable-container{
 } 
 
 .style-table .head-table{
-  min-height: 50px;
+  min-height: 54px;
   background-color: white;
 }
 
@@ -550,7 +584,7 @@ ngx-sortable .sortable-container{
 
 .style-table .tr{
   border: solid 1px #ddd;
-  padding: 12px;
+  padding: 6px;
   text-align: center;
   margin: 0 !important;
   padding-left: 8px;
@@ -563,7 +597,7 @@ ngx-sortable .sortable-container{
   min-width: 100%;
   background-color: #e2e2e2;
   border: solid 1px #f3f3f3;
-  min-height: 50px;
+  min-height: 54px;
 }
 
 .style-table .free-fixed{
@@ -773,4 +807,48 @@ ngx-sortable .sortable-container{
 }
 #uploadInputsRelated{
   display: none;
+}
+.cont-item-alert {
+  margin-top: 52px !important;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 46px;
+}
+
+.cont-item-alert .tit{
+  font-weight: bold;
+  margin-bottom: 7px;
+  font-size: 15px;
+}
+
+.inp-quiz{
+  width: 53%;
+  margin: 0 auto;
+}
+
+.background-prev{
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  bottom: 0;
+  overflow-y: scroll;
+}
+
+.prev-data .ck.ck-editor__main>.ck-editor__editable {
+  background-color: initial !important;
+}
+
+.mens-data .alert-danger{
+  width: fit-content;
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.style-table .active {
+  background-color: #0000003b;
+}
+
+.ico-mandatory.active{
+  background-color: #b70505;
 }

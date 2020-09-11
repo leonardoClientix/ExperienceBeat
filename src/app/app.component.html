@@ -1,4 +1,4 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+<nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top" *ngIf="url !='preview'">
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo03" aria-controls="navbarTogglerDemo03" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
@@ -17,8 +17,7 @@
          Encuestas
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item" href="#">Listado de encuestas</a>
-          <a class="dropdown-item" href="#">Reportes</a>
+          <a class="dropdown-item" [routerLink]="['/list-quiz']" routerLinkActive="active">Listado de encuestas</a>
         </div>
       </li>
     </ul>
@@ -27,7 +26,7 @@
     </form>
   </div>
 </nav>
-<div class="container top-50">
+<div  [ngClass]="{'container top-50': url !='preview'}">
   <router-outlet></router-outlet>
 </div>
 

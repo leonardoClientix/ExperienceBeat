@@ -1,6 +1,6 @@
 <div class="cont-step animated fadeIn">
 
-  <div class="background-head">
+  <!-- <div class="background-head">
 
     <div class="col-md-2 mb-2 box-profile">
       <div class="card">
@@ -12,83 +12,23 @@
       </div>
     </div>
     
-  </div>
+  </div> -->
 
     <h1>Encuestas</h1>
     <div class="row">
 
-      <div class="col-md-4 mb-4">
+      <div class="col-md-4 mb-4" *ngFor="let item of listQuiz">
         <div class="card">
           <div class="card-body">
-            <h3 class="card-title">Encuesta de satisfacción</h3>
-            <h5 class="card-subtitle mb-2 text-muted"><b>Creado: </b>2020-06-02</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Ver encuesta</a>
+            <h3 class="card-title">{{ item.name }}</h3>
+            <h5 class="card-subtitle mb-2 text-muted"><b>Creado: </b>{{ item.creation_date | date }}</h5>
+            <p class="card-text" [innerHTML]="item.description "></p>
+            <a class="card-link" [routerLink]="['/preview', item.idDocument ]" target="_blank" >Ver encuesta</a>
+            <a class="card-link" [routerLink]="['/config-questions', item.idDocument ]" target="_blank" >Editar</a>
             <a href="#" class="card-link">Estadísticas</a>
           </div>
         </div>
       </div>
-
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Encuesta de satisfacción</h3>
-            <h5 class="card-subtitle mb-2 text-muted"><b>Creado: </b>2020-06-02</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Ver encuesta</a>
-            <a href="#" class="card-link">Estadísticas</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Encuesta de satisfacción</h3>
-            <h5 class="card-subtitle mb-2 text-muted"><b>Creado: </b>2020-06-02</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Ver encuesta</a>
-            <a href="#" class="card-link">Estadísticas</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Encuesta de satisfacción</h3>
-            <h5 class="card-subtitle mb-2 text-muted"><b>Creado: </b>2020-06-02</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Ver encuesta</a>
-            <a href="#" class="card-link">Estadísticas</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Encuesta de satisfacción</h3>
-            <h5 class="card-subtitle mb-2 text-muted"><b>Creado: </b>2020-06-02</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Ver encuesta</a>
-            <a href="#" class="card-link">Estadísticas</a>
-          </div>
-        </div>
-      </div>
-
-      <div class="col-md-4 mb-4">
-        <div class="card">
-          <div class="card-body">
-            <h3 class="card-title">Encuesta de satisfacción</h3>
-            <h5 class="card-subtitle mb-2 text-muted"><b>Creado: </b>2020-06-02</h5>
-            <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-            <a href="#" class="card-link">Ver encuesta</a>
-            <a href="#" class="card-link">Estadísticas</a>
-          </div>
-        </div>
-      </div>
-
 
     </div>
 </div>
