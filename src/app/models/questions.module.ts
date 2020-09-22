@@ -30,5 +30,7 @@ export class QuestionsModule {
    public miltiCheck: any;
    public alerts: any;
    public valcheck: any; // si
-   public repeat: any = ''; //si
+   public maximum_responses: number; 
+   public minimal_responses: number; 
+   //public repeat: any = ''; //si
 }

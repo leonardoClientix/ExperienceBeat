@@ -25,7 +25,7 @@
             <p class="card-text" [innerHTML]="item.description "></p>
             <a class="card-link" [routerLink]="['/preview', item.idDocument ]" target="_blank" >Ver encuesta</a>
             <a class="card-link" [routerLink]="['/config-questions', item.idDocument ]" target="_blank" >Editar</a>
-            <a href="#" class="card-link">Estadísticas</a>
+            <a href="#" class="card-link" [routerLink]="['/dashboard', item.idDocument ]" target="_blank" >Estadísticas</a>
           </div>
         </div>
       </div>

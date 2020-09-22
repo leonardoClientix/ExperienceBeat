@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 import { UsersService } from 'src/app/services/users.service';
 import { ResponseService } from 'src/app/services/response.service';
 import { ResponseModule } from 'src/app/models/response.module';
+import { ConsoleService } from '@ng-select/ng-select/lib/console.service';
 
 @Component({
   selector: 'app-preview-quiz',
@@ -18,6 +19,7 @@ export class PreviewQuizComponent implements OnInit {
   loading = true;
   showInput:boolean = true;
   showQuestions:boolean = false;
+  showEndQuiz:boolean = false;
   formDataUser:NgForm;
   formPrev:NgForm;
   validExist = false;
@@ -33,11 +35,18 @@ export class PreviewQuizComponent implements OnInit {
   ) {
 
     this.activatedRoute.params.subscribe( data => {
-
+      this.response.id_quiz = data['id'];
       this._quizService.getQuiz(data['id']).subscribe( resp => {
         this.quiz = resp;
         
-        setInterval(() => { this.saveResponse(this.formPrev); }, 30000);
+        
+          setInterval(() => { 
+            if(this.response.user && (!this.quiz.state || this.quiz.state == 'process') ){
+              this.saveResponse('process'); 
+            }
+          }, 30000);
+        
+        
         this.loading = false;
       });
 
@@ -59,15 +68,7 @@ export class PreviewQuizComponent implements OnInit {
       this._usersService.searchInput(name,value).subscribe( list =>{
 
           if(list.length != 0){   
-            this.validExist = false;
-            this.showInput = false;
-            this.showQuestions = true;
-
-            this.response.user  = userData.value;
-            this.response.questions = [];
-           
-            return this._responseService.addResponse(this.response);
-            
+            this.validExist = false; 
           } else {
             this.validExist = true;
           }
@@ -75,14 +76,42 @@ export class PreviewQuizComponent implements OnInit {
       });
 
     }
+
+    if(!this.validExist){
+      
+      this.showInput = false;
+      this.showQuestions = true;
+      this.response.user  = userData.value;
+      this.response.creation_date = new Date();
+      this.quiz.end_date = '';
+      this.response.state = 'process';
+      this.response.questions = [];
+           
+      return this._responseService.addResponse(this.response);
+    }
     
   }
 
-  saveResponse( form:NgForm){
-    return this._responseService.updateResponse(this.quiz.questions);   
+  saveResponse( state ){
+
+    this.quiz.state = state;
+
+    if(state == 'finished'){
+      this.quiz.end_date = new Date();
+      this.showInput = false;
+      this.showQuestions = false;
+      this.showEndQuiz = true;
+    } 
+
+    console.log(this.quiz);
+
+    return this._responseService.updateResponse(this.quiz);  
+
   }
 
-  stateQuiz(item,data?,type?){
+  stateQuiz(item,data?,type?,input?){
+
+    let validate;
 
     switch (type) { 
       case 'open_question':
@@ -91,6 +120,7 @@ export class PreviewQuizComponent implements OnInit {
       case 'table':
 
         let indexOfStevie_table = item.options.findIndex(i => i.name === data);
+
         if(item.options[indexOfStevie_table].check){
           delete item.options[indexOfStevie_table].check;
         } else {
@@ -110,19 +140,49 @@ export class PreviewQuizComponent implements OnInit {
         break;
       
       case 'multiple_choice':
-  
-        if(item.check){
-          delete item.check;
-        } else {
-          Object.assign(item, {'check': true});
-        }
 
+          if(data.check == true){
+            delete data.check;
+            delete item.alert;
+          } else {
+
+             validate = this.validNumResponse(item,data);
+
+            if(validate.valid){
+              Object.assign(data, {'check': true});
+              delete item.alert;
+            } else {
+              delete data.check;
+              item.alert = validate.message;
+              Object.assign(data, {'check': true});       
+            }
+            
+          }
+
+          setTimeout(() => {
+            delete item.alert;
+          }, 9000);
+        
         break;
     
       default:
         break;
     }
 
+  }
+
+  validNumResponse(question,respon){
+
+    const checks = question.items.filter(data => data.check === true);
+    let indexOf = checks.findIndex(i => i.check === true);
+   
+    if(checks.length >= question.maximum_responses){
+        checks[indexOf].check = false; 
+        return { 'message': 'Recuerda que puedes seleccionar maximo '+question.maximum_responses+' respuestas y minimo '+question.minimal_responses , 'valid':false }
+    } else {
+        return { 'valid': true }
+    }
+ 
   }
 
 }

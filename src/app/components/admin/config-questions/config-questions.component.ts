@@ -670,7 +670,7 @@ export class ConfigQuestionsComponent implements OnInit {
           }
           //csvRecord.mandatory = curruntRecord[2];
           csvRecord.valcheck = [];
-          csvRecord.repeat = curruntRecord[4];
+         // csvRecord.repeat = curruntRecord[4];
           csvRecord.typeDesign = curruntRecord[3];
           csvRecord.assets = curruntRecord[5];
           csvRecord.conditional = curruntRecord[6];

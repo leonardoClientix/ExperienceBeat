@@ -13,13 +13,13 @@ import { PreviewQuizComponent } from './components/admin/preview-quiz/preview-qu
 
 const ROUTES: Routes = [ 
   {  path: 'report', component: ReportComponent },
-  {  path: 'dashboard', component: DashboardComponent },
+  {  path: 'dashboard/:id', component: DashboardComponent },
   {  path: 'login', component: LoginComponent, canActivate: [ SigoutService ] },
   {  path: 'list-quiz', component: ListQuizComponent, canActivate: [ AuthService ] },
   {  path: 'config-questions/:id', component: ConfigQuestionsComponent, canActivate: [ AuthService ] },
   {  path: 'config-questions', component: ConfigQuestionsComponent, canActivate: [ AuthService ] },
-  {  path: 'preview/:id', component: PreviewQuizComponent, canActivate: [ AuthService ] },
-  {  path: '**', pathMatch: 'full', component: QuestionsComponent }
+  {  path: 'preview/:id', component: PreviewQuizComponent },
+  {  path: '**', pathMatch: 'full', redirectTo: 'list-quiz' }
    // { path: '**', pathMatch: 'full' , redirectTo: 'preguntas'},
 ];
 

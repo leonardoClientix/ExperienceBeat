@@ -606,21 +606,6 @@ ngx-sortable .sortable-container{
 }
 
 
-@media (max-width: 576px){
-  .two-box{
-    padding: 0;
-    margin: 0;
-  }
-  .list-check, .list-check-box{
-    margin: 0;
-  }
-  input[type=radio] {
-    border: 0px;
-    width: 24px;
-    height: 2em;
-  }
-}
-
 /* DASHBOARD */
 
 .box-data{
@@ -851,4 +836,99 @@ ngx-sortable .sortable-container{
 
 .ico-mandatory.active{
   background-color: #b70505;
+}
+
+.btn-rigt{
+  margin: 21px;
+  float: right;
+  font-size: 19px;
+}
+
+.item-check{
+    background-color: khaki;
+    padding: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    width: fit-content;
+    border-radius: 10px;
+}
+
+.box-data .prev-table-item{
+  float: left;
+}
+
+.resp-limit {
+  width: 100%;
+  display: flex;
+  color: black;
+  font-size: 12px;
+  padding: 8px;
+}
+.resp-limit ul {
+  padding: 0;
+  list-style: none;
+  margin: 0;
+}
+.resp-limit li {
+  float: left;
+}
+.resp-limit li label {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+
+.resp-limit li .num-resp::-webkit-inner-spin-button{
+  -webkit-appearance: none;
+}
+
+.resp-limit li .num-resp{
+  -moz-appearance:textfield;
+  width: 32px;
+  text-align: center;
+  padding-left: 4px;
+  height: 24px;
+  border-radius: 6px;
+}
+
+.id_question {
+  position: absolute;
+  top: 9px;
+  left: 9px;
+  z-index: 1;
+  background-color: #ffffff8c;
+  padding: 5px;
+  width: 33px;
+  height: 33px;
+  text-align: center;
+  line-height: 24px;
+  border-radius: 50%;
+  font-size: 19px;
+}
+
+@media (max-width: 576px){
+  .two-box{
+    padding: 0;
+    margin: 0;
+  }
+  .list-check, .list-check-box{
+    margin: 0;
+  }
+  input[type=radio] {
+    border: 0px;
+    width: 24px;
+    height: 2em;
+  }
+  .mens-data{
+    width: auto;
+  }
+  .inp-quiz{
+    width: auto;
+  }
+  .top-50{
+    padding: 36px;
+    margin: inherit;
+  }
+  .cont-itemquestion{
+    padding: 34px !important;
+  }
 }

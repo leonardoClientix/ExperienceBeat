@@ -4,7 +4,7 @@ import { AppComponent } from './app.component';
 import { QuestionsComponent } from './components/questions/questions.component';
 import { APP_ROUTES } from './app-routing';
 import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
+import { AngularFirestore, AngularFirestoreModule } from '@angular/fire/firestore';
 import { environment } from '../environments/environment';
 import { KeyArrayPipe } from './pipes/key-array.pipe';
 import { Nl2BrPipeModule } from 'nl2br-pipe';
@@ -28,6 +28,9 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PreviewQuizComponent } from './components/admin/preview-quiz/preview-quiz.component';
+import * as firebase from 'firebase';
+
+
 
 @NgModule({
   declarations: [
@@ -69,4 +72,10 @@ import { PreviewQuizComponent } from './components/admin/preview-quiz/preview-qu
 })
 export class AppModule {
 
+  constructor(
+   // private afs: AngularFirestore 
+  ){
+    //afs.firestore.settings({ experimentalForceLongPolling: true });
+  }
+  
 }

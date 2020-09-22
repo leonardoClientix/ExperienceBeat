@@ -15,7 +15,10 @@ export class ResponseService {
     private afs: AngularFirestore
   ) { }
 
-  getResponse(idQuestion,idDocumentFire){
+  // getResponse(idQuestion,idDocumentFire){
+  //   return this.afs.collection(this.collection).doc(idDocumentFire).valueChanges();
+  // }
+  getResponse(idDocumentFire){
     return this.afs.collection(this.collection).doc(idDocumentFire).valueChanges();
   }
   addResponse(data){
@@ -27,7 +30,9 @@ export class ResponseService {
   updateResponse(data){
     let idDocumentFire = localStorage.getItem('id_response');
     return this.afs.collection(this.collection).doc(idDocumentFire).update({
-      questions: data
+      questions: data.questions,
+      state: data.state,
+      end_date: data.end_date
     });
   }
 
@@ -48,6 +53,10 @@ export class ResponseService {
       //return this.afs.collection(this.collection , ref => ref.where('id', '==', idQuestion)).doc(idDocumentFire).update( JSON.parse(JSON.stringify(data)) );
     }
 
+  }
+
+  getQuizAllResponse(id){
+    return this.afs.collection(this.collection, ref => ref.where('id_quiz', '==', id)).valueChanges({idField: 'idDocument'});
   }
 
   

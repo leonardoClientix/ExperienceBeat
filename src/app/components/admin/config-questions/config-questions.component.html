@@ -6,14 +6,14 @@
 
     <div class="col-md-6 mb-6">
 
-        <form [formGroup]="form" (ngSubmit)="save()" class="needs-validation form-list-input" novalidate>
+        <form [formGroup]="form" class="needs-validation form-list-input" novalidate>
 
             <div class="form-row">
               <div class="col-md-12 mb-3">
                 <label for="validationServer01">Nombre de la encuesta</label>
-                <input [(colorPicker)]="colorTitle" class="rad-color" [style.background]="colorTitle" name="colorTitle" formControlName="colorTitle" (colorPickerChange)="changeColor('colorTitle',$event)" [style.background]="quiz.colors.name" [style.color]="quiz.colors.name"  />
+                <input [(colorPicker)]="quiz.colors.name" class="rad-color ml-2"  name="colorTitle" formControlName="colorTitle" (colorPickerChange)="changeColor('colorTitle',$event)" [style.background]="quiz.colors.name" [style.color]="quiz.colors.name"  />
                 <input type="text" class="form-control form-control-lg " id="validationServer01" formControlName="nameQuiz" required  >
-              </div>
+              </div> 
               <div class="col-md-12 mb-3">
                 <label for="validatedCustomFile">Logo</label>
                 <div class="custom-file">   
@@ -42,7 +42,7 @@
                 </div>
               </div>
               <div class="col-md-12 mb-12 mt-3"> 
-                <label for="final_textTextarea">Campos de entrada <fa-icon [icon]="faEdit" class="conf-icon"  title="Configurar campos" data-toggle="modal" data-target="#modalConfigInputs" ></fa-icon> </label>
+                <label for="final_textTextarea" class="confg-controls">Campos de entrada <fa-icon [icon]="faEdit" class="conf-icon"  title="Configurar campos" data-toggle="modal" data-target="#modalConfigInputs" ></fa-icon> </label>
               </div>
  
               <div class="col-md-12 mb-12 mt-5">
@@ -50,27 +50,27 @@
               </div>
               <div class="col-md-4 mb-3"> 
                 <label for="validatedCustomFile">Cabecera</label>
-                <input [(colorPicker)]="colorHeader" class="rad-color" [style.background]="colorHeader" formControlName="colorHeader" id="color-header"  (colorPickerChange)="changeColor('colorHeader',$event)" [style.background]="quiz.colors.header" [style.color]="quiz.colors.header"/>
+                <input [(colorPicker)]="quiz.colors.header" class="rad-color ml-2"  formControlName="colorHeader" id="color-header"  (colorPickerChange)="changeColor('colorHeader',$event)" [style.background]="quiz.colors.header" [style.color]="quiz.colors.header"/>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="validatedCustomFile">Fondo</label>
-                <input [(colorPicker)]="colorBackground" class="rad-color" [style.background]="colorBackground" formControlName="colorBackground" id="color-background" (colorPickerChange)="changeColor('colorBackground',$event)" [style.background]="quiz.colors.background" [style.color]="quiz.colors.background"/>
+                <input [(colorPicker)]="quiz.colors.background" class="rad-color ml-2" formControlName="colorBackground" id="color-background" (colorPickerChange)="changeColor('colorBackground',$event)" [style.background]="quiz.colors.background" [style.color]="quiz.colors.background"/>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="validatedCustomFile">Tarjeta Pregunta</label>
-                <input [(colorPicker)]="colorQuestion" class="rad-color" [style.background]="colorQuestion" formControlName="colorQuestion" id="color-question" (colorPickerChange)="changeColor('colorQuestion',$event)" [style.background]="quiz.colors.question" [style.color]="quiz.colors.question"/>
+                <input [(colorPicker)]="quiz.colors.question" class="rad-color ml-2" formControlName="colorQuestion" id="color-question" (colorPickerChange)="changeColor('colorQuestion',$event)" [style.background]="quiz.colors.question" [style.color]="quiz.colors.question"/>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="validatedCustomFile">Texto Pregunta</label>
-                <input [(colorPicker)]="TxtQuestion" class="rad-color" [style.background]="TxtQuestion" formControlName="TxtQuestion" id="color-question" (colorPickerChange)="changeColor('TxtQuestion',$event)" [style.background]="quiz.colors.txtquestion" [style.color]="quiz.colors.txtquestion"/>
+                <input [(colorPicker)]="quiz.colors.txtquestion" class="rad-color ml-2" formControlName="TxtQuestion" id="color-question" (colorPickerChange)="changeColor('TxtQuestion',$event)" [style.background]="quiz.colors.txtquestion" [style.color]="quiz.colors.txtquestion"/>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="validatedCustomFile">Opciones</label>
-                <input [(colorPicker)]="colorOption" class="rad-color" [style.background]="colorOption" formControlName="colorOption" id="color-question" (colorPickerChange)="changeColor('colorOption',$event)" [style.background]="quiz.colors.option" [style.color]="quiz.colors.option"/>
+                <input [(colorPicker)]="quiz.colors.option" class="rad-color ml-2" formControlName="colorOption" id="color-question" (colorPickerChange)="changeColor('colorOption',$event)" [style.background]="quiz.colors.option" [style.color]="quiz.colors.option"/>
               </div>
               <div class="col-md-4 mb-3">
                 <label for="validatedCustomFile">Texto Opciones</label>
-                <input [(colorPicker)]="TxtOption" class="rad-color" [style.background]="TxtOption" id="color-question" formControlName="TxtOption" (colorPickerChange)="changeColor('TxtOption',$event)" [style.background]="quiz.colors.txtoption" [style.color]="quiz.colors.txtoption"/>
+                <input [(colorPicker)]="quiz.colors.txtoption" class="rad-color ml-2" id="color-question" formControlName="TxtOption" (colorPickerChange)="changeColor('TxtOption',$event)" [style.background]="quiz.colors.txtoption" [style.color]="quiz.colors.txtoption"/>
               </div>
             </div>
         
@@ -81,13 +81,13 @@
 
     <div class="col-md-6 mb-6">
 
-        <div class="box-preview col-md-12" [style.background]="colorBackground" [style.background]="quiz.colors.background" *ngIf="form.controls['initial_text'].value">
+        <div class="box-preview col-md-12" [style.background]="quiz.colors.background" *ngIf="form.controls['initial_text'].value">
           
-          <div class="header-preview col-md-12" [style.background]="colorHeader" [style.color]="colorTitle" [style.background]="quiz.colors.header" [style.color]="quiz.colors.name">
+          <div class="header-preview col-md-12"  [style.background]="quiz.colors.header" [style.color]="quiz.colors.name">
             <img class="logo-preview" [src]="quiz.logo"> {{ form.controls['nameQuiz'].value }}
           </div>
 
-          <div class="col-md-11 mb-11 box-cont txt-center" [style.background]="colorQuestion" [style.color]="TxtQuestion" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
+          <div class="col-md-11 mb-11 box-cont txt-center"  [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
             <div [innerHTML]="form.controls['initial_text'].value"></div>
             <div class="form-group row mt-4" *ngFor="let itemInp of quiz.inputs; let h = index">             
               <div class="col-sm-12">
@@ -98,26 +98,26 @@
 
         </div>
         
-        <div class="box-preview col-md-12" [style.background]="colorBackground" [style.background]="quiz.colors.background" >
-            <div class="header-preview col-md-12" [style.background]="colorHeader" [style.color]="colorTitle" [style.background]="quiz.colors.header" [style.color]="quiz.colors.name" *ngIf="!form.controls['initial_text'].value">
+        <div class="box-preview col-md-12"  [style.background]="quiz.colors.background" >
+            <div class="header-preview col-md-12"  [style.background]="quiz.colors.header" [style.color]="quiz.colors.name" *ngIf="!form.controls['initial_text'].value">
               <img class="logo-preview" [src]="quiz.logo"> {{ form.controls['nameQuiz'].value }}
             </div>
-            <div class="col-md-11 mb-11 box-cont" [style.background]="colorQuestion" [style.color]="TxtQuestion" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
+            <div class="col-md-11 mb-11 box-cont"  [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             </div>
-            <div class="col-md-11 mb-11 box-cont" [style.background]="colorQuestion" [style.color]="TxtQuestion" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
+            <div class="col-md-11 mb-11 box-cont"  [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             </div>
-            <div class="col-md-11 mb-11 box-cont" [style.background]="colorQuestion" [style.color]="TxtQuestion" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
+            <div class="col-md-11 mb-11 box-cont"  [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             </div>
-            <div class="col-md-11 mb-11 box-cont" [style.background]="colorQuestion" [style.color]="TxtQuestion" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
+            <div class="col-md-11 mb-11 box-cont"  [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
             </div>
         </div>
 
-        <div class="box-preview col-md-12" [style.background]="colorBackground" [style.background]="quiz.colors.background" *ngIf="form.controls['final_text'].value">
-          <div class="col-md-11 mb-11 box-cont txt-center" [style.background]="colorQuestion" [style.color]="TxtQuestion" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion" [innerHTML]="form.controls['final_text'].value"></div>
+        <div class="box-preview col-md-12" [style.background]="quiz.colors.background" *ngIf="form.controls['final_text'].value">
+          <div class="col-md-11 mb-11 box-cont txt-center" [style.background]="quiz.colors.question" [style.color]="quiz.colors.txtquestion" [innerHTML]="form.controls['final_text'].value"></div>
         </div>
 
     </div>
@@ -161,10 +161,15 @@
             <div class="row boxQuestion" *ngIf="item.typeDesign == 'multiple_choice'">
               <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
                 <ckeditor [editor]="Editor"  class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [name]="'description_'+item.id" ngModel [(ngModel)]="item.description"></ckeditor>
-        
+                <div class="resp-limit">
+                  <ul>
+                    <li><label>Respuestas Max:</label><input type="number" class="num-resp" [name]="'max_resp_'+item.id" [(ngModel)]="item.maximum_responses"></li>
+                    <li><label>Respuestas Min:</label><input type="number" class="num-resp" [name]="'min_resp_'+item.id" [(ngModel)]="item.minimal_responses"></li>
+                  </ul>
+                </div>
                   <div class="list-check">
                     <div class="form-check form-check-inline" *ngFor="let idqs of item.items; let i = index">
-                      <input class="form-check-input" type="radio" name="question_{{i}}"  [value]="opt"  id="inlineCheckbox_{{i}}" #data>
+                      <input class="form-check-input" type="radio" name="question_{{i}}"   id="inlineCheckbox_{{i}}" #data>
                       <label class="form-check-label" for="inlineCheckbox_{{i}}" >
                         <span translate="no">
                          <input class="input-opt"  [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [name]="item.id+'_opt_'+i" [(ngModel)]="idqs.name"/>
@@ -202,7 +207,7 @@
                             </div>
                             <div class="items-options-list col-md-3">
                               <div class="form-check form-check-inline" *ngFor="let idqs of item.items[l].options; let i = index">
-                                <input class="form-check-input inp-checkbox" type="radio" name="question_{{i}}" [value]="opt"  id="inlineCheckbox_{{i}}" #dataCkMensaje>
+                                <input class="form-check-input inp-checkbox" type="radio" name="question_{{i}}"  id="inlineCheckbox_{{i}}" #dataCkMensaje>
                                 <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l+'_opt_'+i" [(ngModel)]="idqs.name"/></span></label>
                                 <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item.items[l],'check_label',i)">-</div> 
                               </div>
@@ -337,7 +342,7 @@
         
                   <div class="list-check">
                     <div class="form-check form-check-inline" *ngFor="let idqs of item.items; let i = index">
-                      <input class="form-check-input" type="radio" name="question_{{i}}"  [value]="opt"  id="inlineCheckbox_{{i}}" #data>
+                      <input class="form-check-input" type="radio" name="question_{{i}}"   id="inlineCheckbox_{{i}}" #data>
                       <label class="form-check-label" for="inlineCheckbox_{{i}}" >
                         <span translate="no">
                          <div [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion">{{ idqs.name }}</div>
@@ -368,7 +373,7 @@
                             </div>
                             <div class="items-options-list col-md-3">
                               <div class="form-check form-check-inline" *ngFor="let idqs of item.items[l].options; let i = index">
-                                <input class="form-check-input inp-checkbox" type="radio" name="question_{{i}}" [value]="opt"  id="inlineCheckbox_{{i}}" #dataCkMensaje>
+                                <input class="form-check-input inp-checkbox" type="radio" name="question_{{i}}"   id="inlineCheckbox_{{i}}" #dataCkMensaje>
                                 <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l+'_opt_'+i" [(ngModel)]="idqs.name"/></span></label> 
                               </div>
                             </div>
