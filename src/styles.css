@@ -436,7 +436,7 @@ textarea, input {
 .img-quiestion-type{
   width: 100%;
 }
-.confg-controls {
+.confg-controls , .sub-controls{
   list-style: none;
   margin: 0;
   padding: 0;
@@ -444,6 +444,10 @@ textarea, input {
 
 ul.confg-controls li {
   margin: 7px;
+  clear: left;
+  overflow: hidden;
+  display: block;
+  width: max-content;
 }
 
 .conf-int{
@@ -451,6 +455,23 @@ ul.confg-controls li {
   position: fixed;
   left: 27px;
   z-index: 1;
+}
+
+.sub-controls li{
+  float: left;
+  clear: initial !important;
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  margin-right: 0 !important;
+}
+
+.confg-controls .sub-controls{
+  margin-left: 30px;
+  width: max-content;
+}
+
+.item-left{
+  float: left;
 }
 
 .ind-cont{
@@ -485,6 +506,9 @@ ul.confg-controls li {
   padding: 7px;
   cursor: pointer;
   display: block;
+}
+.sub-controls .conf-icon {
+  background-color: #d6a81f;
 }
 /* .confg-controls li {
   min-height: 40px;
@@ -903,6 +927,18 @@ ngx-sortable .sortable-container{
   line-height: 24px;
   border-radius: 50%;
   font-size: 19px;
+}
+
+.input-other{
+  margin-left: 12px;
+  border-radius: 9px;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+.item-other{
+  margin: 0;
+  font-weight: bold;
+  margin-left: 5px;
 }
 
 @media (max-width: 576px){

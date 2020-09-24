@@ -9,6 +9,7 @@ import { QuizService } from 'src/app/services/quiz.service';
 import { ResponseService } from '../../../services/response.service';
 //import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
+import { DatePipe } from '@angular/common';
  
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
 
@@ -35,6 +36,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private activatedRoute:ActivatedRoute,
     private _responseService:ResponseService,
+    private datePipe: DatePipe
   ) { 
 
     this.activatedRoute.params.subscribe( data => {
@@ -396,7 +398,7 @@ export class DashboardComponent implements OnInit {
       //Object.assign(quest,dataResponse[index].user);
 
        for (let b = 0; b < dataResponse[index].questions.length; b++) {
-         let response:any = this.rebuildQuiestionsExcel("B",index, b, allRespon[b],titles_question );   
+         let response:any = this.rebuildQuiestionsExcel("B",index, b, allRespon[b],dataResponse[index].creation_date ,titles_question );   
              edas = Object.assign(response,user);
 
              if(response.typeDesign == "check_label" || response.typeDesign == "table" || response.typeDesign == "multiple_choice" ){
@@ -527,8 +529,9 @@ export class DashboardComponent implements OnInit {
 
   }
 
-  rebuildQuiestionsExcel( order, idRegistro, id, question, title ){
+  rebuildQuiestionsExcel( order, idRegistro, id, question, creation_date, title ){
 
+    question[order+'-'+idRegistro+'_'+id+'_creation_date'] = this.datePipe.transform(new Date(creation_date),"yyyy-MM-dd");
     question[order+'-'+idRegistro+'_'+id+'_description'] = question.description;
     question[order+'-'+idRegistro+'_'+id+'_typeDesign'] = question.typeDesign;
     question[order+'-'+idRegistro+'_'+id+'_mandatory'] = question.mandatory;

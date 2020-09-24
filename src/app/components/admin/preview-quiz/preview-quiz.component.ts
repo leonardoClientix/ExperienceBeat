@@ -141,10 +141,33 @@ export class PreviewQuizComponent implements OnInit {
       
       case 'multiple_choice':
 
+          if(data.type){
+              if(data.type == 'none'){
+                  const element_none = item.items.filter(as => as.check === true && as.type != 'none');
+                  for (let t = 0; t < element_none.length; t++) {
+                    delete element_none[t].check;     
+                  }
+              }
+
+              if(data.type == 'other'){
+                 data.value = '';
+              }
+          }
+
           if(data.check == true){
             delete data.check;
             delete item.alert;
+            if(data.type == 'other'){
+              delete data.value;
+            }
           } else {
+
+            if(data.type != 'none'){
+                let indexOf_type = item.items.findIndex(as => as.check === true && as.type == 'none');
+                if(indexOf_type != -1){
+                  delete item.items[indexOf_type].check;
+                }   
+            }
 
              validate = this.validNumResponse(item,data);
 
@@ -168,6 +191,8 @@ export class PreviewQuizComponent implements OnInit {
       default:
         break;
     }
+
+    console.log(data);
 
   }
 

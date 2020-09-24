@@ -43,11 +43,13 @@
                     <div class="list-check">
                       <div class="form-check form-check-inline" *ngFor="let idqs of item.items; let i = index">
                         <input class="form-check-input" type="radio" name="question_{{idQ}}_{{i}}"  id="inlineCheckbox_{{idQ}}_{{i}}" (click)="stateQuiz(item, idqs,'multiple_choice',input)"  [checked]="idqs.check"   ngModel #input>
+                       
                         <label class="form-check-label" for="inlineCheckbox_{{idQ}}_{{i}}" >
                           <span translate="no">
                            <div [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion">{{ idqs.name }}</div>
                           </span>
                         </label>
+                        <input type="text" class="input-other" name="other_{{idQ}}_{{i}}" *ngIf="idqs.check && idqs.type =='other'" [(ngModel)]="idqs.value">
                       </div>
                     </div> 
   

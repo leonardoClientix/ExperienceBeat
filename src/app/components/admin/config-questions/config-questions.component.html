@@ -172,7 +172,7 @@
                       <input class="form-check-input" type="radio" name="question_{{i}}"   id="inlineCheckbox_{{i}}" #data>
                       <label class="form-check-label" for="inlineCheckbox_{{i}}" >
                         <span translate="no">
-                         <input class="input-opt"  [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [name]="item.id+'_opt_'+i" [(ngModel)]="idqs.name"/>
+                         <input class="input-opt"  [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [name]="item.id+'_opt_'+i" [(ngModel)]="idqs.name" />
                         </span>
                       </label>
                       <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item,'multiple_choice',i)">-</div> 
@@ -187,7 +187,13 @@
                   <li> <fa-icon [icon]="faClone" class="conf-icon" title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
                   <li> <fa-icon [icon]="faAsterisk" class="conf-icon ico-mandatory"  title="Pregunta obligatoria" [ngClass]="{'active': item.mandatory}"  (click)="item.mandatory = !item.mandatory"></fa-icon></li>
                   <li> <fa-icon [icon]="faEdit" class="conf-icon" title="Editar pregunta" data-toggle="modal" data-target="#modalEditQuestion" (click)="modalTypeQuestion = true"></fa-icon></li>    
-                  <li> <fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item,'multiple_choice')"></fa-icon></li>    
+                  <li> 
+                    <fa-icon [icon]="faPlus" class="conf-icon item-left" title="Agregar Opción" (click)="addOpt(item,'multiple_choice')"></fa-icon>
+                    <ul class="sub-controls">
+                      <li> <fa-icon [icon]="faExclamationCircle" class="conf-icon" title="Ninguna de las Opciones" (click)="addOpt(item,'multiple_choice','none')"></fa-icon></li>
+                      <li> <fa-icon [icon]="faNetworkWired" class="conf-icon" title="Otra opción" (click)="addOpt(item,'multiple_choice','other')"></fa-icon></li>
+                    </ul>
+                  </li>    
                   <li> <fa-icon [icon]="faTimes" class="conf-icon"  title="Eliminar pregunta" (click)="deleteQuestion(item.id)"></fa-icon></li>
                 </ul>
               </div>

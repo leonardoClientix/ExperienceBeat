@@ -29,6 +29,7 @@ import { NgbPaginationModule, NgbAlertModule } from '@ng-bootstrap/ng-bootstrap'
 import { NgSelectModule } from '@ng-select/ng-select';
 import { PreviewQuizComponent } from './components/admin/preview-quiz/preview-quiz.component';
 import * as firebase from 'firebase';
+import {DatePipe} from '@angular/common';
 
 
 
@@ -67,7 +68,7 @@ import * as firebase from 'firebase';
     NgbAlertModule,
     NgSelectModule
   ],
-  providers: [],
+  providers: [ DatePipe ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

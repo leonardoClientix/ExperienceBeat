@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { NgForm, FormGroup, FormControl , Validators , FormArray} from '@angular/forms';
-import { faClone, faEdit, faSave, faArrowAltCircleRight, faArrowAltCircleLeft, faPlusCircle,faSortDown, faSortUp, faAngleLeft,faAngleRight, faPlus, faCheckCircle, faBook, faTimesCircle,faExchangeAlt, faUpload, faAsterisk, faWindowClose, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faClone, faEdit, faSave, faArrowAltCircleRight, faArrowAltCircleLeft, faPlusCircle,faSortDown, faSortUp, faAngleLeft,faAngleRight, faPlus, faCheckCircle, faBook, faTimesCircle,faExchangeAlt, faUpload, faAsterisk, faWindowClose, faTimes, faExclamationCircle, faNetworkWired } from '@fortawesome/free-solid-svg-icons';
 import { QuizService } from '../../../services/quiz.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { QuizModule } from '../../../models/quiz.module';
@@ -58,6 +58,8 @@ export class ConfigQuestionsComponent implements OnInit {
   faAsterisk = faAsterisk;
   faWindowClose = faWindowClose;
   faTimes = faTimes;
+  faExclamationCircle = faExclamationCircle;
+  faNetworkWired = faNetworkWired;
   loading = true;
   typeConditional;
   faBook = faBook;
@@ -321,21 +323,47 @@ export class ConfigQuestionsComponent implements OnInit {
 
   }
 
-  addOpt(item,typeDesign){
+  addOpt(item,typeDesign,option?){
+
+    let optValue;
+
+    if(option == 'none'){
+       optValue = "Ninguna";
+    } else if(option == 'other'){
+       optValue = "Otra, ¿Cuál?";
+    } else {
+      optValue = "Ninguna";
+    }
 
     switch (typeDesign) {
       case 'check_label':
-        item.items.push({label:'',options : [{ name : ''}]});
+        if(option){
+          item.items.push({ label:'', options : [{ name : optValue }], type : option });
+        } else {
+          item.items.push({ label:'', options : [{ name : ''}] });
+        }
         break;
       case 'table':
-        item.items.push({label:'',options : item.items[0].options });
-       // item.items.push({label:'',options : [{ name : ''}]});
+        if(option){
+          item.items.push({label:'', options : item.items[0].options, type : option });
+        } else {
+          item.items.push({label:'', options : item.items[0].options });
+        }
         break;
       case 'multiple_choice':
-        item.items.push({ name : ''});
+        
+        if(option){
+          item.items.push({ name : optValue , type : option });
+        } else {
+          item.items.push({ name : ''});
+        }
+
         break;
     }
 
+    
+
+    console.log(item);
     //this._quizService.updateQuiz(this.quiz.questions[this.quiz.questions.length-1],localStorage.getItem("id_quiz"));
 
   }

@@ -140,7 +140,7 @@
                     <div class="col-md-9 mb-9">
                          <div [innerHTML]="item.description"></div>
                          <ul *ngFor="let idqs of item.items; let i = index">
-                            <li [ngClass]="{'item-check': idqs.check }">{{ idqs.name }}</li>
+                            <li [ngClass]="{'item-check': idqs.check }">{{ idqs.name }} <label *ngIf="idqs.check && idqs.type =='other'" class="item-other">{{ idqs.value }}</label> </li>
                         </ul>
                     </div>
                 </div>
