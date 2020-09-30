@@ -17,6 +17,7 @@ export class QuestionsModule {
    public options?: any;
    public mandatory = false; //si
    public typeDesign: any; // si
+   public responsiveDesign: any;
    public assets: any;
    public conditional: any; //si
    public variable: any;

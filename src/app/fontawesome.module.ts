@@ -1,0 +1,81 @@
+import { 
+    faClone, faEdit, faSave, faArrowAltCircleRight, faArrowAltCircleLeft, faPlusCircle,faSortDown, faSortUp, 
+    faAngleLeft,faAngleRight, faPlus, faCheckCircle, faBook, faTimesCircle,faExchangeAlt, faUpload, faAsterisk, 
+    faWindowClose, faTimes, faExclamationCircle, faNetworkWired,faSurprise,faSmile,faSmileBeam,faSmileWink,faSadTear,
+    faSadCry,faMehRollingEyes,faMehBlank,faMeh,faGrinWink,faGrinStars,faGrinSquint,faGrinSquintTears,faGrinHearts,
+    faGrinBeam,faGrinAlt,faGrin,faTired,faLaughWink,faLaughSquint,faLaughBeam,faLaugh,faKissWinkHeart,faKissBeam,
+    faKiss,faGrinTongueWink,faGrinTongueSquint,faGrinTongue,faGrinTears,faGrinBeamSweat,faGrimace,faFrownOpen,
+    faFrown,faFlushed,faAngry,faDizzy,faHeart,faHeartbeat,faHeartBroken,faExclamationTriangle
+} from '@fortawesome/free-solid-svg-icons';
+
+export  const  FA_ICONS  =  { 
+
+  options : {
+    faClone:faClone,
+    faEdit:faEdit,
+    faSave:faSave,
+    faArrowAltCircleRight:faArrowAltCircleRight,
+    faPlusCircle:faPlusCircle,
+    faSortDown:faSortDown,
+    faSortUp:faSortUp,
+    faArrowAltCircleLeft:faArrowAltCircleLeft,
+    faCheckCircle:faCheckCircle,
+    faAngleLeft:faAngleLeft,
+    faAngleRight:faAngleRight,
+    faPlus:faPlus,
+    faTimesCircle:faTimesCircle,
+    faExchangeAlt:faExchangeAlt,
+    faUpload:faUpload,
+    faAsterisk:faAsterisk,
+    faWindowClose:faWindowClose,
+    faTimes:faTimes,
+    faExclamationCircle:faExclamationCircle,
+    faNetworkWired:faNetworkWired,
+    faExclamationTriangle:faExclamationTriangle,
+    faBook:faBook
+  }, 
+  faces : {
+    faSurprise:faSurprise,
+    faSmile:faSmile,
+    faSmileBeam:faSmileBeam,
+    faSmileWink:faSmileWink,
+    faSadTear:faSadTear,
+    faSadCry:faSadCry,
+    faMehRollingEyes:faMehRollingEyes,
+    faMehBlank:faMehBlank,
+    faMeh:faMeh,
+    faGrinWink:faGrinWink,
+    faGrinStars:faGrinStars,
+    faGrinSquint:faGrinSquint,
+    faGrinSquintTears,
+    faGrinHearts:faGrinHearts,
+    faGrinBeam:faGrinBeam,
+    faGrinAlt:faGrinAlt,
+    faGrin:faGrin,
+    faTired:faTired,
+    faLaughWink:faLaughWink,
+    faLaughSquint:faLaughSquint,
+    faLaughBeam:faLaughBeam,
+    faLaugh:faLaugh,
+    faKissWinkHeart:faKissWinkHeart,
+    faKissBeam:faKissBeam,
+    faKiss:faKiss,
+    faGrinTongueWink:faGrinTongueWink,
+    faGrinTongueSquint:faGrinTongueSquint,
+    faGrinTongue:faGrinTongue,
+    faGrinTears:faGrinTears,
+    faGrinBeamSweat:faGrinBeamSweat,
+    faGrimace:faGrimace,
+    faFrownOpen:faFrownOpen,
+    faFrown:faFrown,
+    faFlushed:faFlushed,
+    faAngry:faAngry,
+    faDizzy:faDizzy
+  },
+  heart : {
+    faHeart:faHeart,
+    faHeartbeat:faHeartbeat,
+    faHeartBroken:faHeartBroken
+  }
+
+};

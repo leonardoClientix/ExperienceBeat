@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute } from "@angular/router";
 import { QuizService } from "./../../../services/quiz.service";
 import { QuizModule } from 'src/app/models/quiz.module';
@@ -7,6 +7,8 @@ import { UsersService } from 'src/app/services/users.service';
 import { ResponseService } from 'src/app/services/response.service';
 import { ResponseModule } from 'src/app/models/response.module';
 import { ConsoleService } from '@ng-select/ng-select/lib/console.service';
+import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { FA_ICONS } from 'src/app/fontawesome.module';
 
 @Component({
   selector: 'app-preview-quiz',
@@ -25,6 +27,7 @@ export class PreviewQuizComponent implements OnInit {
   validExist = false;
   public resepQuestions = new ResponseModule();
   public response:any = {};
+  @ViewChild('sliData', { static: false })  sliData:any;
   
 
   constructor(
@@ -196,6 +199,37 @@ export class PreviewQuizComponent implements OnInit {
 
   }
 
+  saveSlider(input,item){
+
+    for (const key in item.items) {
+      if (Object.prototype.hasOwnProperty.call(item.items, key)) {
+
+        if(item.items[key].name == input.value){
+          Object.assign(item.items[key], {'check': true});   
+        } else {
+          delete item.items[key].check;
+        }
+        
+      }
+    }
+
+  }
+
+  sliColor(data,item?){
+    if(!item){
+      
+    this.sliData._elementRef.nativeElement.children[0].children[2].children[2].style.background = data;
+    this.sliData._elementRef.nativeElement.children[0].children[2].children[1].style.background = data;
+    this.sliData._elementRef.nativeElement.children[0].children[0].children[1].style.background = data;
+    } else {
+
+      item._elementRef.nativeElement.children[0].children[2].children[2].style.background = data;
+      item._elementRef.nativeElement.children[0].children[2].children[1].style.background = data;
+      item._elementRef.nativeElement.children[0].children[0].children[1].style.background = data;
+
+    }
+  }
+
   validNumResponse(question,respon){
 
     const checks = question.items.filter(data => data.check === true);
@@ -208,6 +242,63 @@ export class PreviewQuizComponent implements OnInit {
         return { 'valid': true }
     }
  
+  }
+
+  selectIconOption(type,id){
+
+    let icon:IconDefinition = FA_ICONS.options.faExclamationTriangle;
+
+    switch (type) {
+      case 'faces':
+
+            switch (id) {
+              case 0:
+                icon = FA_ICONS.faces.faAngry;
+                break;
+              case 1:
+                icon = FA_ICONS.faces.faFrown;
+                break;
+              case 2:
+                icon = FA_ICONS.faces.faMeh;
+                break;
+              case 3:
+                icon = FA_ICONS.faces.faSmile;
+                break;
+              case 4:
+                icon = FA_ICONS.faces.faGrin;
+                break;
+              case 5:
+                icon = FA_ICONS.faces.faGrinAlt;
+                break;
+              case 6:
+                icon = FA_ICONS.faces.faLaugh;
+                break;
+              case 7:
+                icon = FA_ICONS.faces.faGrinBeam;
+                break;
+              case 8:
+                icon = FA_ICONS.faces.faGrinStars;
+                break;
+            
+              default:
+                break;
+            }
+
+        break;
+
+      case 'heart':
+
+            icon = FA_ICONS.heart.faHeart;
+            
+        break;
+    
+      default:
+        break;
+    }
+
+
+    return icon;
+
   }
 
 }

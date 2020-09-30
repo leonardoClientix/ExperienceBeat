@@ -100,6 +100,7 @@ textarea, input {
 .list-check  {
   margin-left: 44px;
   margin-top: 34px;
+  margin-right: 44px;
 }
 .list-check label, .list-check-box label{
   color: #000000;
@@ -940,7 +941,41 @@ ngx-sortable .sortable-container{
   font-weight: bold;
   margin-left: 5px;
 }
-
+.icon-response{
+  font-size: 31px;
+}
+.tab-hidden {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  background-color: #ffffff9e;
+  z-index: 2;
+}
+.item_square{
+  margin: 0px auto;
+  display: block;
+  text-align: center;
+  padding: 7px 16px;
+  border-radius: 7px;
+  background: #797777;
+}
+.color-horizon {
+  float: left;
+}
+.iconDesign{
+  font-size: 39px;
+  margin: 12px;
+  vertical-align: middle;
+}
+.content-slider{
+  margin-top: 24px;
+}
+.content-slider .mat-slider-horizontal{
+  min-width: 100% !important;
+}
+.radio-hidden{
+  display: none;
+}
 @media (max-width: 576px){
   .two-box{
     padding: 0;

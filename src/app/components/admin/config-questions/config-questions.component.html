@@ -42,7 +42,7 @@
                 </div>
               </div>
               <div class="col-md-12 mb-12 mt-3"> 
-                <label for="final_textTextarea" class="confg-controls">Campos de entrada <fa-icon [icon]="faEdit" class="conf-icon"  title="Configurar campos" data-toggle="modal" data-target="#modalConfigInputs" ></fa-icon> </label>
+                <label for="final_textTextarea" class="confg-controls">Campos de entrada <fa-icon [icon]="FA_ICONS.options.faEdit" class="conf-icon"  title="Configurar campos" data-toggle="modal" data-target="#modalConfigInputs" ></fa-icon> </label>
               </div>
  
               <div class="col-md-12 mb-12 mt-5">
@@ -128,7 +128,7 @@
 
 <div class="ctr-btns">
   <ul>
-    <li><fa-icon [icon]="faArrowAltCircleRight" class="plus-question"  title="Siguiente" *ngIf="step == 'basic-parameters'" (click)="steps('configuration-questions')" ></fa-icon></li>
+    <li><fa-icon [icon]="FA_ICONS.options.faArrowAltCircleRight" class="plus-question"  title="Siguiente" *ngIf="step == 'basic-parameters'" (click)="steps('configuration-questions')" ></fa-icon></li>
   </ul>
 </div>
 
@@ -150,9 +150,9 @@
                 <ul class="confg-controls">
                   <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="quiz.colors.question" [style.background]="item.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
                   <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color"  [style.background]="quiz.colors.txtquestion" [style.background]="item.colors.txtquestion" id="color-question" title="Texto Pregunta"></div></li> 
-                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
-                  <li> <fa-icon [icon]="faAsterisk" class="conf-icon ico-mandatory"  title="Pregunta obligatoria" [ngClass]="{'active': item.mandatory}"  (click)="item.mandatory = !item.mandatory"></fa-icon></li>
-                  <li> <fa-icon [icon]="faTimes" class="conf-icon"  title="Eliminar pregunta" (click)="deleteQuestion(item.id)"></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faAsterisk" class="conf-icon ico-mandatory"  title="Pregunta obligatoria" [ngClass]="{'active': item.mandatory}"  (click)="item.mandatory = !item.mandatory"></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faTimes" class="conf-icon"  title="Eliminar pregunta" (click)="deleteQuestion(item.id)"></fa-icon></li>
                 </ul>
               </div>
             </div> 
@@ -169,14 +169,24 @@
                 </div>
                   <div class="list-check">
                     <div class="form-check form-check-inline" *ngFor="let idqs of item.items; let i = index">
-                      <input class="form-check-input" type="radio" name="question_{{i}}"   id="inlineCheckbox_{{i}}" #data>
-                      <label class="form-check-label" for="inlineCheckbox_{{i}}" >
+                      <input class="form-check-input" type="radio" name="question_{{i}}"  id="inlineCheckbox_{{i}}"  *ngIf="item.responsiveDesign == 'basic'"  #data>
+                      <fa-icon *ngIf="item.responsiveDesign == 'faces' || item.responsiveDesign == 'heart'" class="iconDesign" [icon]="selectIconOption(item.responsiveDesign,i)" [style.color]="idqs.color" (mouseover)="idqs.hover=true" (mouseleave)="idqs.hover=false" [ngStyle]="{color: idqs.hover==true  ? item.colorHover : idqs.color  }"></fa-icon>
+
+                      <label class="form-check-label" for="inlineCheckbox_{{i}}">
                         <span translate="no">
-                         <input class="input-opt"  [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [name]="item.id+'_opt_'+i" [(ngModel)]="idqs.name" />
+                         <input class="input-opt"  *ngIf="item.responsiveDesign != 'square'" [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [name]="item.id+'_opt_'+i" [(ngModel)]="idqs.name" />
+                         <input class="item_square"  *ngIf="item.responsiveDesign == 'square'"  [style.color]="item.colorFont"  [name]="item.id+'_opt_'+i" [(ngModel)]="idqs.name" (mouseover)="idqs.hover=true" (mouseleave)="idqs.hover=false" [ngStyle]="{background: idqs.hover==true  ? item.colorHover : idqs.color  }" />
                         </span>
                       </label>
+
                       <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item,'multiple_choice',i)">-</div> 
                     </div>
+
+                    <div *ngIf="item.responsiveDesign == 'slider'" class="col-md-12 content-slider">
+                      <mat-slider min="item.items[0].name" [max]="item.items[item.items?.length-1].name"  [step]="item.items[1].name-item.items[0].name" thumbLabel   [style.color]="sliColor(item.color,idSlider) " #idSlider></mat-slider>
+                    </div>
+                   
+                
                   </div> 
 
               </div>
@@ -184,17 +194,17 @@
                 <ul class="confg-controls">
                   <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="item.colors.question" [style.background]="quiz.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
                   <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="item.colors.txtquestion" [style.background]="quiz.colors.txtquestion"id="color-question" title="Texto Pregunta"></div></li> 
-                  <li> <fa-icon [icon]="faClone" class="conf-icon" title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
-                  <li> <fa-icon [icon]="faAsterisk" class="conf-icon ico-mandatory"  title="Pregunta obligatoria" [ngClass]="{'active': item.mandatory}"  (click)="item.mandatory = !item.mandatory"></fa-icon></li>
-                  <li> <fa-icon [icon]="faEdit" class="conf-icon" title="Editar pregunta" data-toggle="modal" data-target="#modalEditQuestion" (click)="modalTypeQuestion = true"></fa-icon></li>    
+                  <li> <fa-icon [icon]="FA_ICONS.options.faClone" class="conf-icon" title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faAsterisk" class="conf-icon ico-mandatory"  title="Pregunta obligatoria" [ngClass]="{'active': item.mandatory}"  (click)="item.mandatory = !item.mandatory"></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faEdit" class="conf-icon" title="Editar pregunta" data-toggle="modal" data-target="#modalEditQuestion" (click)="modalEditQuestion(item)"></fa-icon></li>    
                   <li> 
-                    <fa-icon [icon]="faPlus" class="conf-icon item-left" title="Agregar Opción" (click)="addOpt(item,'multiple_choice')"></fa-icon>
+                    <fa-icon [icon]="FA_ICONS.options.faPlus" class="conf-icon item-left" title="Agregar Opción" (click)="addOpt(item,'multiple_choice')"></fa-icon>
                     <ul class="sub-controls">
-                      <li> <fa-icon [icon]="faExclamationCircle" class="conf-icon" title="Ninguna de las Opciones" (click)="addOpt(item,'multiple_choice','none')"></fa-icon></li>
-                      <li> <fa-icon [icon]="faNetworkWired" class="conf-icon" title="Otra opción" (click)="addOpt(item,'multiple_choice','other')"></fa-icon></li>
+                      <li> <fa-icon [icon]="FA_ICONS.options.faExclamationCircle" class="conf-icon" title="Ninguna de las Opciones" (click)="addOpt(item,'multiple_choice','none')"></fa-icon></li>
+                      <li> <fa-icon [icon]="FA_ICONS.options.faNetworkWired" class="conf-icon" title="Otra opción" (click)="addOpt(item,'multiple_choice','other')"></fa-icon></li>
                     </ul>
                   </li>    
-                  <li> <fa-icon [icon]="faTimes" class="conf-icon"  title="Eliminar pregunta" (click)="deleteQuestion(item.id)"></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faTimes" class="conf-icon"  title="Eliminar pregunta" (click)="deleteQuestion(item.id)"></fa-icon></li>
                 </ul>
               </div>
             </div> 
@@ -218,7 +228,7 @@
                                 <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item.items[l],'check_label',i)">-</div> 
                               </div>
                               <ul class="confg-controls ind-cont">
-                                <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOptLabel(item.items[l],'check_label')"></fa-icon></li>
+                                <li><fa-icon [icon]="FA_ICONS.options.faPlus" class="conf-icon" title="Agregar Opción" (click)="addOptLabel(item.items[l],'check_label')"></fa-icon></li>
                               </ul>
                             </div>
                         </div>
@@ -231,11 +241,11 @@
                 <ul class="confg-controls">
                   <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="item.colors.question" [style.background]="quiz.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
                   <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="item.colors.txtquestion" [style.background]="quiz.colors.txtquestion" id="color-question" title="Texto Pregunta"></div></li> 
-                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)" ></fa-icon></li>
-                  <li> <fa-icon [icon]="faAsterisk" class="conf-icon ico-mandatory"  title="Pregunta obligatoria" [ngClass]="{'active': item.mandatory}"  (click)="item.mandatory = !item.mandatory"></fa-icon></li>
-                  <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
-                  <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item,'check_label')"></fa-icon></li>   
-                  <li> <fa-icon [icon]="faTimes" class="conf-icon"  title="Eliminar pregunta" (click)="deleteQuestion(item.id)"></fa-icon></li>     
+                  <li> <fa-icon [icon]="FA_ICONS.options.faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)" ></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faAsterisk" class="conf-icon ico-mandatory"  title="Pregunta obligatoria" [ngClass]="{'active': item.mandatory}"  (click)="item.mandatory = !item.mandatory"></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
+                  <li><fa-icon [icon]="FA_ICONS.options.faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item,'check_label')"></fa-icon></li>   
+                  <li> <fa-icon [icon]="FA_ICONS.options.faTimes" class="conf-icon"  title="Eliminar pregunta" (click)="deleteQuestion(item.id)"></fa-icon></li>     
                 </ul>
               </div>
 
@@ -252,10 +262,10 @@
                 <ul class="confg-controls">
                   <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="quiz.colors.question" [style.background]="item.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
                   <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="quiz.colors.txtquestion" [style.background]="item.colors.txtquestion"  id="color-question" title="Texto Pregunta"></div></li> 
-                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
-                  <li> <fa-icon [icon]="faAsterisk" class="conf-icon ico-mandatory"  title="Pregunta obligatoria" [ngClass]="{'active': item.mandatory}"  (click)="item.mandatory = !item.mandatory"></fa-icon></li>
-                  <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
-                  <li> <fa-icon [icon]="faTimes" class="conf-icon"  title="Eliminar pregunta" (click)="deleteQuestion(item.id)"></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faAsterisk" class="conf-icon ico-mandatory"  title="Pregunta obligatoria" [ngClass]="{'active': item.mandatory}"  (click)="item.mandatory = !item.mandatory"></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
+                  <li> <fa-icon [icon]="FA_ICONS.options.faTimes" class="conf-icon"  title="Eliminar pregunta" (click)="deleteQuestion(item.id)"></fa-icon></li>
                 </ul>
               </div>
 
@@ -282,7 +292,7 @@
 
                       <div *ngIf="l == 0" class="w-full">
                         <ul class="confg-controls conf-int">
-                          <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOptLabel(item.items[l],'table')"></fa-icon></li>
+                          <li><fa-icon [icon]="FA_ICONS.options.faPlus" class="conf-icon" title="Agregar Opción" (click)="addOptLabel(item.items[l],'table')"></fa-icon></li>
                         </ul>
                         <div  *ngFor="let idqs of item.items[l].options; let i = index" class="col-md-4 col-td">
                           <div class="row" >
@@ -304,11 +314,11 @@
                 <ul class="confg-controls">
                   <li><div [colorPicker]="item.colors.question" (colorPickerChange)="item.colors.question = $event" class="rad-color" [style.background]="quiz.colors.question" [style.background]="item.colors.question" id="color-question" title="Tarjeta Pregunta"></div></li>
                   <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="item.colors.txtquestion" [style.background]="quiz.colors.txtquestion" id="color-question" title="Texto Pregunta"></div></li> 
-                  <li> <fa-icon [icon]="faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
-                  <li> <fa-icon [icon]="faAsterisk" class="conf-icon ico-mandatory"  title="Pregunta obligatoria" [ngClass]="{'active': item.mandatory}"  (click)="item.mandatory = !item.mandatory"></fa-icon></li>
-                  <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
-                  <li><fa-icon [icon]="faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item,'table')"></fa-icon></li>
-                  <li> <fa-icon [icon]="faTimes" class="conf-icon"  title="Eliminar pregunta" (click)="deleteQuestion(item.id)"></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)"></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faAsterisk" class="conf-icon ico-mandatory"  title="Pregunta obligatoria" [ngClass]="{'active': item.mandatory}"  (click)="item.mandatory = !item.mandatory"></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
+                  <li><fa-icon [icon]="FA_ICONS.options.faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item,'table')"></fa-icon></li>
+                  <li> <fa-icon [icon]="FA_ICONS.options.faTimes" class="conf-icon"  title="Eliminar pregunta" (click)="deleteQuestion(item.id)"></fa-icon></li>
                 </ul>
               </div>
 
@@ -336,31 +346,48 @@
               </div>
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
-                  <li> <fa-icon [icon]="faEdit" class="conf-icon" title="Editar pregunta" data-toggle="modal" data-target="#modalConditionalQuestion" (click)="openModalConfigQuestion(item.id,item)"></fa-icon></li>   
+                  <li> <fa-icon [icon]="FA_ICONS.options.faEdit" class="conf-icon" title="Editar pregunta" data-toggle="modal" data-target="#modalConditionalQuestion" (click)="openModalConfigQuestion(item.id,item)"></fa-icon></li>   
                 </ul>
               </div>
             </div> 
-
 
             <div class="row boxQuestion" *ngIf="item.typeDesign == 'multiple_choice'">
               <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
                 <div class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [innerHTML]="item.description"></div>
         
                   <div class="list-check">
+
                     <div class="form-check form-check-inline" *ngFor="let idqs of item.items; let i = index">
-                      <input class="form-check-input" type="radio" name="question_{{i}}"   id="inlineCheckbox_{{i}}" #data>
-                      <label class="form-check-label" for="inlineCheckbox_{{i}}" >
-                        <span translate="no">
-                         <div [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion">{{ idqs.name }}</div>
-                        </span>
-                      </label>
+
+                        <div *ngIf="item.responsiveDesign == 'basic'">
+                          <input class="form-check-input" type="radio" name="question_{{i}}"   id="inlineCheckbox_{{i}}" #data>
+                          <label class="form-check-label" for="inlineCheckbox_{{i}}" >
+                            <span translate="no">
+                            <div [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion">{{ idqs.name }}</div>
+                            </span>
+                          </label>
+                        </div>
+
+                        <div *ngIf="item.responsiveDesign == 'faces' || item.responsiveDesign == 'heart'">
+                          <fa-icon class="iconDesign" [icon]="selectIconOption(item.responsiveDesign,i)" [style.color]="idqs.color" (mouseover)="idqs.hover=true" (mouseleave)="idqs.hover=false" [ngStyle]="{color: idqs.hover==true  ? item.colorHover : idqs.color  }"></fa-icon>
+                        </div>
+
+                        <div *ngIf="item.responsiveDesign == 'square'">
+                          <label (mouseover)="idqs.hover=true" (mouseleave)="idqs.hover=false" [style.color]="item.colorFont" [ngStyle]="{background: idqs.hover==true  ? item.colorHover : idqs.color }" class="form-check-label item_square" for="optDesig_4_{{i}}">{{ idqs.name }}</label>
+                        </div>
+                        
                     </div>
+
+                    <div *ngIf="item.responsiveDesign == 'slider'" class="content-slider">
+                      <mat-slider min="item.items[0].name" [max]="item.items[item.items?.length-1].name"  [step]="item.items[1].name-item.items[0].name" thumbLabel   [style.color]="sliColor(item.color,idSlider) " #idSlider></mat-slider>
+                    </div>
+
                   </div> 
 
               </div>
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
-                  <li> <fa-icon [icon]="faEdit" class="conf-icon" title="Editar pregunta" data-toggle="modal" data-target="#modalConditionalQuestion" (click)="openModalConfigQuestion(item.id,item)" ></fa-icon></li>       
+                  <li> <fa-icon [icon]="FA_ICONS.options.faEdit" class="conf-icon" title="Editar pregunta" data-toggle="modal" data-target="#modalConditionalQuestion" (click)="openModalConfigQuestion(item.id,item)" ></fa-icon></li>       
                 </ul>
               </div>
             </div> 
@@ -392,7 +419,7 @@
 
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
-                  <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" data-toggle="modal" data-target="#modalConditionalQuestion" (click)="openModalConfigQuestion(item.id,item)" ></fa-icon></li>     
+                  <li> <fa-icon [icon]="FA_ICONS.options.faEdit" class="conf-icon"  title="Editar pregunta" data-toggle="modal" data-target="#modalConditionalQuestion" (click)="openModalConfigQuestion(item.id,item)" ></fa-icon></li>     
                 </ul>
               </div>
 
@@ -407,7 +434,7 @@
               </div>
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
-                  <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" data-toggle="modal" data-target="#modalConditionalQuestion" (click)="openModalConfigQuestion(idQ,item)"></fa-icon></li>    
+                  <li> <fa-icon [icon]="FA_ICONS.options.faEdit" class="conf-icon"  title="Editar pregunta" data-toggle="modal" data-target="#modalConditionalQuestion" (click)="openModalConfigQuestion(idQ,item)"></fa-icon></li>    
                 </ul>
               </div>
 
@@ -452,7 +479,7 @@
               </div>
               <div class="col-md-1 mb-1">
                 <ul class="confg-controls">
-                  <li> <fa-icon [icon]="faEdit" class="conf-icon"  title="Editar pregunta" data-toggle="modal" data-target="#modalConditionalQuestion" (click)="openModalConfigQuestion(item.id,item)" ></fa-icon></li>          
+                  <li> <fa-icon [icon]="FA_ICONS.options.faEdit" class="conf-icon"  title="Editar pregunta" data-toggle="modal" data-target="#modalConditionalQuestion" (click)="openModalConfigQuestion(item.id,item)" ></fa-icon></li>          
                 </ul>
               </div>
 
@@ -465,13 +492,13 @@
 
 <div class="ctr-btns">
   <ul>
-    <li><fa-icon [icon]="faArrowAltCircleLeft" class="plus-question"  title="Atrás" *ngIf="step == 'configuration-questions'" (click)="steps('basic-parameters')" ></fa-icon></li>
-    <li><fa-icon [icon]="faArrowAltCircleRight" class="plus-question"  title="Siguiente" *ngIf="step == 'configuration-questions'" (click)="steps('conditional-questions')" ></fa-icon></li>
-    <li><fa-icon [icon]="faSave" class="plus-question"  title="Guardar Encuesta" *ngIf="step == 'configuration-questions'"  (click)="saveQuizQuestion()"></fa-icon></li>
-    <li><fa-icon [icon]="faPlusCircle" class="plus-question"  title="Agregar Pregunta" *ngIf="step == 'configuration-questions'"  data-toggle="modal" data-target="#exampleModalCenter" (click)="modalTypeQuestion = true"></fa-icon></li>
+    <li><fa-icon [icon]="FA_ICONS.options.faArrowAltCircleLeft" class="plus-question"  title="Atrás" *ngIf="step == 'configuration-questions'" (click)="steps('basic-parameters')" ></fa-icon></li>
+    <li><fa-icon [icon]="FA_ICONS.options.faArrowAltCircleRight" class="plus-question"  title="Siguiente" *ngIf="step == 'configuration-questions'" (click)="steps('conditional-questions')" ></fa-icon></li>
+    <li><fa-icon [icon]="FA_ICONS.options.faSave" class="plus-question"  title="Guardar Encuesta" *ngIf="step == 'configuration-questions'"  (click)="saveQuizQuestion()"></fa-icon></li>
+    <li><fa-icon [icon]="FA_ICONS.options.faPlusCircle" class="plus-question"  title="Agregar Pregunta" *ngIf="step == 'configuration-questions'"  data-toggle="modal" data-target="#exampleModalCenter" (click)="modalTypeQuestion = true"></fa-icon></li>
 
-    <li><fa-icon [icon]="faArrowAltCircleLeft" class="plus-question"  title="Atrás" *ngIf="step == 'conditional-questions'" (click)="steps('configuration-questions')" ></fa-icon></li>
-    <li><fa-icon [icon]="faCheckCircle" class="plus-question"  title="Finalizar" *ngIf="step == 'conditional-questions'"  ></fa-icon></li>
+    <li><fa-icon [icon]="FA_ICONS.options.faArrowAltCircleLeft" class="plus-question"  title="Atrás" *ngIf="step == 'conditional-questions'" (click)="steps('configuration-questions')" ></fa-icon></li>
+    <li><fa-icon [icon]="FA_ICONS.options.faCheckCircle" class="plus-question"  title="Finalizar" *ngIf="step == 'conditional-questions'"  ></fa-icon></li>
   </ul>
 </div>
 
@@ -600,7 +627,7 @@
                       <p class="mini-txt">Los campos configurados a continuación saldrán antes de comenzar la encuesta despues del texto inicial</p>
                     </div>
                     <div class="col-sm-2">
-                      <fa-icon [icon]="faPlus" title="Agregar Input" class="icon-condi" (click)="addInputType()"></fa-icon>
+                      <fa-icon [icon]="FA_ICONS.options.faPlus" title="Agregar Input" class="icon-condi" (click)="addInputType()"></fa-icon>
                     </div> 
                     </div>
                   </div>
@@ -613,8 +640,8 @@
                       <div class="push_input"  *ngIf="itemInp.name != ' '"> {{ itemInp.name }} </div>
                     </div>
                     <div class="col-sm-4">
-                      <fa-icon [icon]="faBook" title="Seleccionar campo de la base de datos" class="icon-condi px-2" (click)="selectInput(itemInp)"></fa-icon>  
-                      <fa-icon [icon]="faTimesCircle" title="Seleccionar campo de la base de datos" class="icon-condi px-2" (click)="deleteInput(quiz.inputs,h)"></fa-icon> 
+                      <fa-icon [icon]="FA_ICONS.options.faBook" title="Seleccionar campo de la base de datos" class="icon-condi px-2" (click)="selectInput(itemInp)"></fa-icon>  
+                      <fa-icon [icon]="FA_ICONS.options.faTimesCircle" title="Seleccionar campo de la base de datos" class="icon-condi px-2" (click)="deleteInput(quiz.inputs,h)"></fa-icon> 
                     </div>
                      
                     <div class="box-list-input" *ngIf="itemInp.selAct">
@@ -637,6 +664,150 @@
     
     </form>
     
+    </div>
+
+    <div class="modal" id="modalEditQuestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
+
+      <form #formDesign="ngForm" class="needs-validation" novalidate>
+        <!-- <form #formDesign="ngForm" (ngSubmit)="configDesign(formDesign)" class="needs-validation" novalidate> -->
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document"> 
+          <div class="modal-content">
+            <div class="modal-header">
+              <h2 class="modal-title" id="exampleModalCenterTitle">Editar Pregunta</h2>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+
+            <div class="modal-body">
+              <div class="container-fluid">
+
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                  <li class="nav-item">
+                    <a class="nav-link active" id="design-tab" data-toggle="tab" href="#design" role="tab" aria-controls="design" aria-selected="false">Diseño</a>
+                  </li>
+                </ul>
+
+                <div class="tab-content" id="myTabConditional">
+                  
+                  <div class="tab-pane tap-conf fade show active" id="design" role="tabpanel" aria-labelledby="design-tab">
+                    
+                    <h3>Diseño de Respuesta</h3>
+                    <div class="row">
+                      <div class="col-md-3 pl-4 p-3">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" id="design_1" name="configModalDesign.responsiveDesign" value="basic" checked [(ngModel)]="configModalDesign.responsiveDesign">
+                          <label class="form-check-label" for="design_1">Básico</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 p-3">
+                        <div class="tab-hidden" *ngIf="configModalDesign.responsiveDesign != 'basic'"></div>
+                        <div class="form-check form-check-inline" *ngFor="let dat of configModalDesign.items; let i = index">
+                          <input class="form-check-input" type="checkbox" id="optDesig_1_{{i}}" value="option1">
+                          <label class="form-check-label" for="optDesig_1_{{i}}">{{ dat.name }}</label>
+                        </div>
+                      </div>
+                      <div class="col-md-3 p-3">
+                      </div>
+                    </div>  
+
+                    <div class="row">
+                      <div class="col-md-3 p-4">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" id="design_2" name="configModalDesign.responsiveDesign" value="faces" [(ngModel)]="configModalDesign.responsiveDesign">
+                          <label class="form-check-label" for="design_2">Caras</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 p-3">
+                        <div class="tab-hidden" *ngIf="configModalDesign.responsiveDesign != 'faces'"></div>
+                        <div class="form-check form-check-inline" *ngFor="let dat of configModalDesign.items; let f = index">
+                           <label class="form-check-label" id="optDesig_2_{{f}}"><fa-icon [(colorPicker)]="dat.color" [icon]="selectIconOption('faces',f)" class="icon-response" id="icon-opt_2_{{f}}" (mouseover)="dat.hover=true" (mouseleave)="dat.hover=false" [ngStyle]="{color: dat.hover==true  ? configModalDesign.colorHover : dat.color  }" ></fa-icon></label>
+                        </div>
+                      </div>
+                      <div class="col-md-3 p-3">
+                        <div class="tab-hidden" *ngIf="configModalDesign.responsiveDesign != 'faces'"></div>
+                        <div [(colorPicker)]="configModalDesign.colorHover" class="rad-color color-horizon ml-2"  [style.background]="configModalDesign.colorHover" [style.color]="configModalDesign.colorHover"></div>
+                      </div>
+                    </div> 
+                    
+                    <div class="row">
+                      <div class="col-md-3 p-4">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" id="design_3" name="configModalDesign.responsiveDesign" value="heart" [(ngModel)]="configModalDesign.responsiveDesign">
+                          <label class="form-check-label" for="design_3">Corazones</label>
+                        </div>
+                      </div>
+                      <div class="col-md-6 p-3">
+                        <div class="tab-hidden" *ngIf="configModalDesign.responsiveDesign != 'heart'"></div>
+                        <div class="form-check form-check-inline" *ngFor="let dat of configModalDesign.items; let f = index">
+                          <label class="form-check-label" id="optDesig_3_{{f}}"><fa-icon [(colorPicker)]="dat.color" [icon]="selectIconOption('heart',f)" class="icon-response" id="icon-opt_3_{{f}}" (mouseover)="dat.hover=true" (mouseleave)="dat.hover=false" [ngStyle]="{color: dat.hover==true  ? configModalDesign.colorHover : dat.color }"  ></fa-icon></label>
+                        </div>
+                      </div>
+                      <div class="col-md-3 p-3">
+                        <div class="tab-hidden" *ngIf="configModalDesign.responsiveDesign != 'heart'"></div>
+                        <div [(colorPicker)]="configModalDesign.colorHover" class="rad-color color-horizon ml-2"  [style.background]="configModalDesign.colorHover" [style.color]="configModalDesign.colorHover"></div>
+                      </div>
+                    </div> 
+
+                    <div class="row">
+                      <div class="col-md-3 p-4">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" id="design_4" name="configModalDesign.responsiveDesign" value="square" [(ngModel)]="configModalDesign.responsiveDesign">
+                          <label class="form-check-label" for="design_4">Cuadros</label>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 p-3">
+                        <div class="tab-hidden" *ngIf="configModalDesign.responsiveDesign != 'square'"></div>
+                        <div class="form-check form-check-inline m-1" *ngFor="let dat of configModalDesign.items; let i = index">
+                          <label [(colorPicker)]="dat.color" (mouseover)="dat.hover=true" (mouseleave)="dat.hover=false" [style.color]="configModalDesign.colorFont" [ngStyle]="{background: dat.hover==true  ? configModalDesign.colorHover : dat.color }" class="form-check-label item_square" for="optDesig_4_{{i}}">{{ dat.name }}</label>
+                        </div>
+                      </div>
+ 
+                      <div class="col-md-3 p-3">
+                        <div class="tab-hidden" *ngIf="configModalDesign.responsiveDesign != 'square'"></div>
+                        <div [(colorPicker)]="configModalDesign.colorHover" class="rad-color color-horizon ml-2"  [style.background]="configModalDesign.colorHover" [style.color]="configModalDesign.colorHover"></div>
+                        <div [(colorPicker)]="configModalDesign.colorFont" class="rad-color color-horizon ml-2"  [style.background]="configModalDesign.colorFont" [style.color]="configModalDesign.colorFont"></div>
+                      </div>
+                    </div> 
+
+                    <div class="row">
+                      <div class="col-md-3 p-4">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" id="design_4" name="configModalDesign.responsiveDesign" value="slider" [(ngModel)]="configModalDesign.responsiveDesign">
+                          <label class="form-check-label" for="design_4">Barra</label>
+                        </div>
+                      </div>
+
+                      <div class="col-md-6 p-3">
+                        <div class="tab-hidden" *ngIf="configModalDesign.responsiveDesign != 'slider'"></div>
+                        <div class="form-check form-check-inline m-1" *ngIf="configModalDesign.items?.length > 0">
+                          <mat-slider min="configModalDesign.items[0].name" [max]="configModalDesign.items[configModalDesign.items?.length-1].name"  [step]="configModalDesign.items[1].name-configModalDesign.items[0].name" thumbLabel  #sliData></mat-slider>
+                        </div>
+                      </div>
+
+                      <div class="col-md-3 p-3">
+                        <div class="tab-hidden" *ngIf="configModalDesign.responsiveDesign != 'slider'"></div>
+                        <div [(colorPicker)]="configModalDesign.color" class="rad-color color-horizon ml-2"  [style.background]="configModalDesign.color" (colorPickerChange)="sliColor(configModalDesign.color)"></div>
+                      </div>
+                    </div> 
+
+                  </div>
+
+                </div>
+
+              </div>
+            </div>
+
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary" (click)="configModalDesign.send = true">Seleccionar</button>
+              <div  data-dismiss="modal" #closeBtn></div>
+            </div>
+           </div>
+          </div>
+
+      </form>
+
     </div>
 
     <div class="modal" id="modalConditionalQuestion" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true" >
@@ -692,7 +863,7 @@
                               <p class="mini-txt">Los campos configurados a continuación saldrán antes de comenzar la encuesta </p>
                             </div>
                             <div class="col-sm-2">
-                              <fa-icon [icon]="faPlus" title="Agregar Input" class="icon-condi" (click)="addInputType()"></fa-icon>
+                              <fa-icon [icon]="FA_ICONS.options.faPlus" title="Agregar Input" class="icon-condi" (click)="addInputType()"></fa-icon>
                             </div> 
                             </div>
                           </div>
@@ -704,13 +875,13 @@
                             </div>
                             <div class="col-sm-4">
 
-                              <fa-icon [icon]="faBook" title="Seleccionar campo de la base de datos" class="icon-condi px-2" (click)="selectInput(itemInp)"></fa-icon>     
-                              <fa-icon [icon]="faExchangeAlt" title="Buscar datos relacionados" class="icon-condi px-2" (click)="getUsers(itemInp)" #getUser></fa-icon> 
+                              <fa-icon [icon]="FA_ICONS.options.faBook" title="Seleccionar campo de la base de datos" class="icon-condi px-2" (click)="selectInput(itemInp)"></fa-icon>     
+                              <fa-icon [icon]="FA_ICONS.options.faExchangeAlt" title="Buscar datos relacionados" class="icon-condi px-2" (click)="getUsers(itemInp)" #getUser></fa-icon> 
 
                               <input type="file" class="custom-file-input" #csvRelatedInput name="Upload CSV" id="uploadInputsRelated" (change)="uploadRelatedInput($event,h,itemInp,formConditional)" accept=".csv" >
-                              <fa-icon [icon]="faUpload" title="Subir datos relacionados" class="icon-condi px-2" for="uploadInputsRelated" (click)="uploadRelatedInput()"></fa-icon> 
+                              <fa-icon [icon]="FA_ICONS.options.faUpload" title="Subir datos relacionados" class="icon-condi px-2" for="uploadInputsRelated" (click)="uploadRelatedInput()"></fa-icon> 
 
-                              <fa-icon [icon]="faTimesCircle" title="Eliminar campo" class="icon-condi px-2" (click)="deleteInput(quiz.inputs,h)"></fa-icon>
+                              <fa-icon [icon]="FA_ICONS.options.faTimesCircle" title="Eliminar campo" class="icon-condi px-2" (click)="deleteInput(quiz.inputs,h)"></fa-icon>
 
                               <ng-select *ngIf="itemInp.selFilter" [multiple]="true" name="selectedFilterInput{{ h }}" ngModel  placeholder="Filtrar por : "  (change)="saveFilterUserQuestion( $event, itemInp.name  )">
                                 <ng-option *ngFor="let udat of dataDuplicate(listUsers,itemInp.name)" [value]="udat"  selected>{{ udat }}</ng-option>
@@ -872,32 +1043,7 @@
                   </div>
 
                   </div>
-                  <div class="tab-pane tap-conf fade" id="design" role="tabpanel" aria-labelledby="design-tab">
-                    
-                        <h3>Diseño</h3>
-                        <div class="row">
-                          <div class="col-md-6">
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                              <label class="form-check-label" for="inlineCheckbox1">Básico</label>
-                            </div>
-                          </div>
-                          <div class="col-md-6">
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                              <label class="form-check-label" for="inlineCheckbox1">1</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                              <label class="form-check-label" for="inlineCheckbox1">2</label>
-                            </div>
-                            <div class="form-check form-check-inline">
-                              <input class="form-check-input" type="checkbox" id="inlineCheckbox1" value="option1">
-                              <label class="form-check-label" for="inlineCheckbox1">3</label>
-                            </div>
-                          </div>
-                        </div>        
-                  </div>
+               
                 </div>
               </div>
             </div>

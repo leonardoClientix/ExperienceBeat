@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild, ElementRef, ChangeDetectorRef } from '@angular/core';
 import { NgForm, FormGroup, FormControl , Validators , FormArray} from '@angular/forms';
-import { faClone, faEdit, faSave, faArrowAltCircleRight, faArrowAltCircleLeft, faPlusCircle,faSortDown, faSortUp, faAngleLeft,faAngleRight, faPlus, faCheckCircle, faBook, faTimesCircle,faExchangeAlt, faUpload, faAsterisk, faWindowClose, faTimes, faExclamationCircle, faNetworkWired } from '@fortawesome/free-solid-svg-icons';
+import { faClone, faEdit, faSave, faArrowAltCircleRight, faArrowAltCircleLeft, faPlusCircle,faSortDown, faSortUp, faAngleLeft,faAngleRight, faPlus, faCheckCircle, faBook, faTimesCircle,faExchangeAlt, faUpload, faAsterisk, faWindowClose, faTimes, faExclamationCircle, faNetworkWired, faDizzy, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { QuizService } from '../../../services/quiz.service';
 import * as ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { QuizModule } from '../../../models/quiz.module';
@@ -12,6 +12,8 @@ import { UserModule } from 'src/app/models/user.module';
 import { UsersService } from 'src/app/services/users.service';
 import { InputModule } from 'src/app/models/input.module';
 import { ActivatedRoute } from '@angular/router';
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { FA_ICONS } from "../../../fontawesome.module";
 
 @Component({
   selector: 'app-config-questions',
@@ -25,6 +27,7 @@ export class ConfigQuestionsComponent implements OnInit {
   public questions:QuestionsModule;
   public colors:ColorModule;
   public records: any[] = [];
+  public FA_ICONS = FA_ICONS;
    
   modalTypeQuestion = false;
   @ViewChild('closeBtn') closeBtn: ElementRef;
@@ -32,34 +35,14 @@ export class ConfigQuestionsComponent implements OnInit {
   @ViewChild('csvReaderQuestions', { static: false })  csvReaderQuestions:any;
   @ViewChild('csvReaderUsers', { static: false })  csvReaderUsers:any;
   @ViewChild('csvRelatedInput', { static: false })  csvRelatedInput:any;
+  @ViewChild('sliData', { static: false })  sliData:any;
 
  
   fileLogo: any;
   form:FormGroup;
   formTypeQuestion:FormGroup;
   formConditional: FormGroup;
-
   step = "basic-parameters";
-  faClone = faClone;
-  faEdit = faEdit;
-  faSave = faSave;
-  faArrowAltCircleRight = faArrowAltCircleRight;
-  faPlusCircle = faPlusCircle;
-  faSortDown = faSortDown;
-  faSortUp = faSortUp;
-  faArrowAltCircleLeft = faArrowAltCircleLeft;
-  faCheckCircle = faCheckCircle;
-  faAngleLeft = faAngleLeft;
-  faAngleRight = faAngleRight;
-  faPlus = faPlus;
-  faTimesCircle = faTimesCircle;
-  faExchangeAlt = faExchangeAlt;
-  faUpload = faUpload;
-  faAsterisk = faAsterisk;
-  faWindowClose = faWindowClose;
-  faTimes = faTimes;
-  faExclamationCircle = faExclamationCircle;
-  faNetworkWired = faNetworkWired;
   loading = true;
   typeConditional;
   faBook = faBook;
@@ -69,6 +52,7 @@ export class ConfigQuestionsComponent implements OnInit {
   listUsers = [];
   idQuestionFilter;
   configModalQuestion:any = {};
+  configModalDesign:any = {};
   dataLisInput = [];
  
 
@@ -87,6 +71,7 @@ export class ConfigQuestionsComponent implements OnInit {
     public _questions:QuestionsService,
     public _users:UsersService
   ) {
+
 
     this.activatedRoute.params.subscribe( data => {
 
@@ -217,7 +202,9 @@ export class ConfigQuestionsComponent implements OnInit {
       
   
       if(localStorage.getItem('id_quiz')){
-        this._quizService.updateQuiz(this.quiz,localStorage.getItem("id_quiz"));
+        this._quizService.updateQuiz(this.quiz,localStorage.getItem("id_quiz")).then(dat => {
+          console.log(dat);
+        });
       } else { 
         this.quiz.creation_date = new Date();
         this._quizService.saveQuiz(this.quiz);
@@ -258,8 +245,6 @@ export class ConfigQuestionsComponent implements OnInit {
 
   typeQuestion( formType:NgForm ){
     console.log(formType);
-
-    //let typeQuestion = this.formTypeQuestion.controls['typeQuestion'].value;
     let typeQuestion = formType.form.controls.typeQuestion.value;
     let dataQuestion: QuestionsModule = new QuestionsModule();
     
@@ -269,6 +254,7 @@ export class ConfigQuestionsComponent implements OnInit {
     dataQuestion.id = count_question;
     dataQuestion.colors = new ColorModule();
     dataQuestion.description = '';
+    dataQuestion.responsiveDesign = 'basic';
     
     switch (typeQuestion) {
       case 'open_question':
@@ -295,12 +281,6 @@ export class ConfigQuestionsComponent implements OnInit {
     } 
 
     this.quiz.questions.push(dataQuestion);
-
-   
-    //this.modalTypeQuestion = false;
-    //this.closeBtn.nativeElement.click();
-
-   // console.log(this.quiz.questions[this.quiz.questions.length-1]);
     
     this._quizService.updateQuiz(this.quiz,localStorage.getItem("id_quiz"));
 
@@ -512,6 +492,87 @@ export class ConfigQuestionsComponent implements OnInit {
         this.quiz.questions.splice(indexOf, 1);
     } 
   }
+
+  modalEditQuestion(item){
+    this.configModalDesign = {};
+    this.configModalDesign = item;
+
+    console.log(this.quiz);
+  }
+
+  sliColor(data,item?){
+    if(!item){
+      
+    this.sliData._elementRef.nativeElement.children[0].children[2].children[2].style.background = data;
+    this.sliData._elementRef.nativeElement.children[0].children[2].children[1].style.background = data;
+    this.sliData._elementRef.nativeElement.children[0].children[0].children[1].style.background = data;
+    } else {
+
+      item._elementRef.nativeElement.children[0].children[2].children[2].style.background = data;
+      item._elementRef.nativeElement.children[0].children[2].children[1].style.background = data;
+      item._elementRef.nativeElement.children[0].children[0].children[1].style.background = data;
+
+    }
+  }
+
+  selectIconOption(type,id){
+
+    let icon:IconDefinition = FA_ICONS.options.faExclamationTriangle;
+
+    switch (type) {
+      case 'faces':
+
+            switch (id) {
+              case 0:
+                icon = FA_ICONS.faces.faAngry;
+                break;
+              case 1:
+                icon = FA_ICONS.faces.faFrown;
+                break;
+              case 2:
+                icon = FA_ICONS.faces.faMeh;
+                break;
+              case 3:
+                icon = FA_ICONS.faces.faSmile;
+                break;
+              case 4:
+                icon = FA_ICONS.faces.faGrin;
+                break;
+              case 5:
+                icon = FA_ICONS.faces.faGrinAlt;
+                break;
+              case 6:
+                icon = FA_ICONS.faces.faLaugh;
+                break;
+              case 7:
+                icon = FA_ICONS.faces.faGrinBeam;
+                break;
+              case 8:
+                icon = FA_ICONS.faces.faGrinStars;
+                break;
+            
+              default:
+                break;
+            }
+
+        break;
+
+      case 'heart':
+
+            icon = FA_ICONS.heart.faHeart;
+            
+        break;
+    
+      default:
+        break;
+    }
+
+
+    return icon;
+
+  }
+
+ 
 
   uploadListener($event: any, type): void {
 

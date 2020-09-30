@@ -30,6 +30,8 @@ import { NgSelectModule } from '@ng-select/ng-select';
 import { PreviewQuizComponent } from './components/admin/preview-quiz/preview-quiz.component';
 import * as firebase from 'firebase';
 import {DatePipe} from '@angular/common';
+import { MatSliderModule } from '@angular/material/slider';
+
 
 
 
@@ -66,7 +68,8 @@ import {DatePipe} from '@angular/common';
     NgbModule,
     NgbPaginationModule, 
     NgbAlertModule,
-    NgSelectModule
+    NgSelectModule,
+    MatSliderModule
   ],
   providers: [ DatePipe ],
   bootstrap: [AppComponent]

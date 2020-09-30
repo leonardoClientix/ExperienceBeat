@@ -42,15 +42,33 @@
           
                     <div class="list-check">
                       <div class="form-check form-check-inline" *ngFor="let idqs of item.items; let i = index">
-                        <input class="form-check-input" type="radio" name="question_{{idQ}}_{{i}}"  id="inlineCheckbox_{{idQ}}_{{i}}" (click)="stateQuiz(item, idqs,'multiple_choice',input)"  [checked]="idqs.check"   ngModel #input>
-                       
-                        <label class="form-check-label" for="inlineCheckbox_{{idQ}}_{{i}}" >
-                          <span translate="no">
-                           <div [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion">{{ idqs.name }}</div>
-                          </span>
-                        </label>
-                        <input type="text" class="input-other" name="other_{{idQ}}_{{i}}" *ngIf="idqs.check && idqs.type =='other'" [(ngModel)]="idqs.value">
+
+                        <div *ngIf="item.responsiveDesign == 'basic'">
+                          <input class="form-check-input" type="radio" name="question_{{idQ}}_{{i}}"  id="inlineCheckbox_{{idQ}}_{{i}}" (click)="stateQuiz(item, idqs,'multiple_choice',input)"  [checked]="idqs.check"   ngModel #input>    
+                          <label class="form-check-label" for="inlineCheckbox_{{idQ}}_{{i}}" >
+                            <span translate="no">
+                            <div [style.color]="quiz.colors.txtoption" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion">{{ idqs.name }}</div>
+                            </span>
+                          </label>
+                          <input type="text" class="input-other" name="other_{{idQ}}_{{i}}" *ngIf="idqs.check && idqs.type =='other'" [(ngModel)]="idqs.value">
+                        </div>
+
+                        <div *ngIf="item.responsiveDesign == 'faces' || item.responsiveDesign == 'heart'">   
+                          <label class="form-check-label">
+                            <fa-icon class="iconDesign" [icon]="selectIconOption(item.responsiveDesign,i)" id="inlineCheckbox_{{idQ}}_{{i}}" (click)="stateQuiz(item, idqs,'multiple_choice',input)" [style.color]="idqs.color" (mouseover)="idqs.hover=true" (mouseleave)="idqs.hover=false" [ngStyle]="{color: idqs.hover==true || idqs.check==true   ? item.colorHover : idqs.color  }" #input></fa-icon>
+                          </label>
+                        </div>
+
+                        <div *ngIf="item.responsiveDesign == 'square'">
+                          <label (mouseover)="idqs.hover=true" (mouseleave)="idqs.hover=false" [style.color]="item.colorFont" (click)="stateQuiz(item, idqs,'multiple_choice',input)" [ngStyle]="{background: idqs.hover==true || idqs.check==true ? item.colorHover : idqs.color }" class="form-check-label item_square" for="optDesig_4_{{i}}" #input>{{ idqs.name }}</label>
+                        </div>
+                     
                       </div>
+
+                      <div *ngIf="item.responsiveDesign == 'slider'" class="content-slider">
+                        <mat-slider min="item.items[0].name" [max]="item.items[item.items?.length-1].name"  [step]="item.items[1].name-item.items[0].name" thumbLabel   [style.color]="sliColor(item.color,idSlider) " (change)="saveSlider(idSlider,item)" #idSlider></mat-slider>
+                      </div>
+
                     </div> 
   
                 </div>
