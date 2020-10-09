@@ -33,6 +33,12 @@ th.mat-sort-header-sorted {
   width: 100%;
   top: 0;
 }
+.center-item{
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+  display: block;
+}
 .logo img{
   width: 191px;
 }
@@ -125,6 +131,17 @@ textarea, input {
   width: 122px;
   margin-bottom: 28px;
 }
+.type_table .label-option{
+  text-align: center;
+}
+.type_table .items-options-list{
+  margin: 0 auto;
+}
+.modal-config .label-option{
+  margin: 0 auto;
+  margin-bottom: 28px;
+}
+
 .two-box .form-check{
   /*width: 50%;*/
   color: #000000;
@@ -190,8 +207,16 @@ textarea, input {
   margin: 12px;
   margin-top: 0;
 }
+.modal-config  .items-options-list{
+  margin: 0 auto;
+  width: min-content;
+}
 .two-box .form-check-label{
   width: 100%;
+}
+.div-box{
+  border-bottom: 1px solid #ddd;
+  padding: 23px;
 }
 .min-tab {
     min-height: 90px !important;
@@ -975,6 +1000,16 @@ ngx-sortable .sortable-container{
 }
 .radio-hidden{
   display: none;
+}
+.conten-table-face {
+  width: 18%;
+}
+.conten-table-face .title-table{
+  text-align: center;
+}
+.min-text{
+  padding: 44px;
+  text-align: center;
 }
 @media (max-width: 576px){
   .two-box{

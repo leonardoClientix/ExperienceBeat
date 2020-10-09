@@ -7,11 +7,13 @@ import { faSms } from '@fortawesome/free-solid-svg-icons';
 import { ActivatedRoute } from '@angular/router';
 import { QuizService } from 'src/app/services/quiz.service';
 import { ResponseService } from '../../../services/response.service';
+import { UsersService } from '../../../services/users.service';
 //import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Observable } from 'rxjs';
 import { DatePipe } from '@angular/common';
  
 import { Angular5Csv } from 'angular5-csv/dist/Angular5-csv';
+import { useAnimation } from '@angular/animations';
 
 @Component({
   selector: 'app-dashboard',
@@ -36,6 +38,7 @@ export class DashboardComponent implements OnInit {
   constructor(
     private activatedRoute:ActivatedRoute,
     private _responseService:ResponseService,
+    private _usersService:UsersService,
     private datePipe: DatePipe
   ) { 
 
@@ -51,7 +54,18 @@ export class DashboardComponent implements OnInit {
         this.dataSource.sort = this.sort;
         this.dataSource.paginator = this.paginator;
 
-        console.log(this.dataSource);
+        for (let index = 0; index < resp.length; index++) {
+          let indice = Object.keys(resp[index].user);
+          this._usersService.getUserInput(indice[0],resp[index].user[indice[0]]).subscribe((us:any) =>{
+            if(us[0]){
+              delete us[0].configQuiz;
+              resp[index].user = us[0];
+            } else {
+              resp[index].user.nodatabase = true;
+            }
+          });
+        }
+
         this.response = resp;  
       }
         this.loading = false;
@@ -379,199 +393,97 @@ export class DashboardComponent implements OnInit {
   }
 
   exportData( dataResponse ){
-    //console.log(dataResponse);
 
-    let data = [];
-    let edas = {};
-    let titles_user = {};
-    let titles_question = {};
-    let titles_items = {};
+    console.log(dataResponse);
     
+    let dataExcel = [];
+    let titles = ["Fecha de Creación"];
+    let cont = 1;
+
     for (let index = 0; index < dataResponse.length; index++) {
-      const quest = {};
+
+      let dataUser = {};
+      let creationDate:any = {}
+      const ordered = {};
       
 
-      let user = this.rebuildUserExcel('A',index,dataResponse[index].user,titles_user);
-          user = user.data;
-      const allRespon = dataResponse[index].questions;
+      // ORDENAR Y AGREGAR DATOS DE USUARIO 
+      if(dataResponse[index].user.nodatabase == true){
+        delete dataResponse[index];
+      }
 
-      //Object.assign(quest,dataResponse[index].user);
+      if(dataResponse[index]){
 
-       for (let b = 0; b < dataResponse[index].questions.length; b++) {
-         let response:any = this.rebuildQuiestionsExcel("B",index, b, allRespon[b],dataResponse[index].creation_date ,titles_question );   
-             edas = Object.assign(response,user);
+          creationDate['creation_date'] = this.datePipe.transform(new Date(dataResponse[index].creation_date),"yyyy-MM-dd , h:mma");
+          Object.assign(dataUser,creationDate);
 
-             if(response.typeDesign == "check_label" || response.typeDesign == "table" || response.typeDesign == "multiple_choice" ){
-                for (let m = 0; m < response.items.length; m++) {
-                  const datItem = this.concatItemsExcel("C",response.typeDesign,response.items[m],index,b,m,titles_items);      
-                  Object.assign(edas,datItem);
-                }
-             }
-
-         
-            // switch (response.typeDesign) {
-            //   case "check_label":
-
-            //      for (let m = 0; m < response.items.length; m++) {
-            //       const datItem = this.concatItemsExcel("C",response.typeDesign,response.items[m],index,b,m,titles_items);      
-            //       Object.assign(edas,datItem);
-            //      }
-       
-            //     break;
-            //   case "table":
-
-            //     for (let m = 0; m < response.items.length; m++) {
-            //       const datItem = this.concatItemsExcel("C",response.typeDesign,response.items[m],index,b,m,titles_items);      
-            //       Object.assign(edas,datItem);
-            //     }
-        
-            //     break;
-            //   case "multiple_choice":
-
-            //     for (let m = 0; m < response.items.length; m++) {
-            //       const datItem = this.concatItemsExcel("C",response.typeDesign,response.items[m],index,b,m,titles_items);      
-            //       Object.assign(edas,datItem);
-            //     }
-          
-            //     break;
+          Object.keys(dataResponse[index].user).sort().forEach(function(key) {
             
-            //   default:
-                
-            //     break;
-            // }
-          
-          delete response.items;
-          delete response.typeDesign;
-          delete response.mandatory;
-          delete response.value;
-          delete response.maximum_responses;
-          delete response.minimal_responses;
+              if(titles.indexOf(key) == -1){
+                titles.push(key);
+              }   
+              ordered[key] = dataResponse[index].user[key];
+          });
+              Object.assign(dataUser,ordered);
+            
 
-          data.push(edas);
+            //PREGUNTAS
+        
+            const allRespon = dataResponse[index].questions;
+            const responses = {}; 
+            for (let b = 0; b < allRespon.length; b++) {
+
+                let it = allRespon[b].items;
+                if(it){
+                  for (let c = 0; c < it.length; c++) {
+                    
+                    if(c == 0){
+                      if(cont == 2){
+                        let descript = allRespon[b].description;
+                        titles.push(descript.replace(/,/g," "));
+                      }     
+                      responses['B_'+b+'_'+c+'_0'] = '';  
+                    } 
+                    if(cont == 2){
+                      let optTit = it[c].name;
+                      titles.push(optTit.replace(/,/g," "));
+                      if(it[c].type == "other"){
+                        titles.push('Valor');
+                      }
+                    }
+
+                    if(it[c].check){   
+                      let opt = it[c].name;
+                      responses['B_'+b+'_'+c] = opt.replace(/,/g," ");
+                      if(it[c].type == "other"){
+                          let valOther = it[c].value;
+                          responses['B_'+b+'_'+c+'_1'] = valOther.replace(/,/g," ");
+                      }
+                    } else {
+                      responses['B_'+b+'_'+c] = '';
+                      if(it[c].type == "other"){
+                        responses['B_'+b+'_'+c+'_2'] = '';
+                      }
+                    }      
+                    Object.assign(dataUser,responses);
+                  }
+                }
+
+            }
+            dataExcel.push(dataUser);
 
        }
-      
+
+       cont++;
+
     }
-
-   
-    console.log(data);
-
-    let header = [];
-
-    for (const da in titles_question) {
-      header.push(titles_question[da]);
-    }
-
-    for (const da in titles_user) {
-      header.push(titles_user[da]);
-    }
-
-    for (const da in titles_items) {
-      header.push(titles_items[da]);
-    }
-
-    console.log(header);
-
-    let options = { 
-      headers: header
-    };
  
-     new Angular5Csv(data, 'My Report');
-  }
+    let options = { 
+       headers: titles
+    };
 
-  concatItemsExcel( order,typeDesign,item,idRegistro,idQuestion,idItem,title ){
-    
-    let concat = {};
-    let name = {};
+    new Angular5Csv(dataExcel, 'My Report',options);
 
-    if(typeDesign != "multiple_choice"){
-
-      let label = { };
-      label[order+'-'+idRegistro+'_'+idQuestion+'_'+idItem+'_0_0_label'] = item.label;
-      if(idItem == 0){
-        title[order+'-'+idRegistro+'_'+idQuestion+'_'+idItem+'_0_0_label'] = item.label;
-      }
-      let options = item.options;
-
-      for (let f = 0; f < options.length; f++) {
-        if(options[f].check){ 
-          name[order+'-'+idRegistro+'_'+idQuestion+'_'+idItem+"_"+f+"_name"] = options[f].name;     
-          if(idItem == 0){
-            title[order+'-'+idRegistro+'_'+idQuestion+'_'+idItem+"_"+f+"_name"] = options[f].name;     
-          }
-        } else {
-          name[order+'-'+idRegistro+'_'+idQuestion+'_'+idItem+"_"+f+"_name"] = '';
-          if(idItem == 0){
-            title[order+'-'+idRegistro+'_'+idQuestion+'_'+idItem+"_"+f+"_name"] = options[f].name;   
-          }
-        }
-        concat = Object.assign(name,label);
-      }
-
-    } else {
-
-        if(item.check){ 
-          name[order+'-'+idRegistro+'_'+idQuestion+'_'+idItem+"_name"] = item.name; 
-          if(idItem == 0){   
-            title[order+'-'+idRegistro+'_'+idQuestion+'_'+idItem+"_name"] = item.name;   
-          } 
-        } else {
-          name[order+'-'+idRegistro+'_'+idQuestion+'_'+idItem+"_name"] = '';
-          if(idItem == 0){
-            title[order+'-'+idRegistro+'_'+idQuestion+'_'+idItem+"_name"] = item.name;   
-          }
-        }
-        concat = Object.assign(name);
-
-    }
-
-     return concat;
-
-  }
-
-  rebuildQuiestionsExcel( order, idRegistro, id, question, creation_date, title ){
-
-    question[order+'-'+idRegistro+'_'+id+'_creation_date'] = this.datePipe.transform(new Date(creation_date),"yyyy-MM-dd");
-    question[order+'-'+idRegistro+'_'+id+'_description'] = question.description;
-    question[order+'-'+idRegistro+'_'+id+'_typeDesign'] = question.typeDesign;
-    question[order+'-'+idRegistro+'_'+id+'_mandatory'] = question.mandatory;
-    question[order+'-'+idRegistro+'_'+id+'_value'] = question.value;
-    question[order+'-'+idRegistro+'_'+id+'_0_id'] = question.id;
-
-    if(id == 0 && idRegistro == 0 ){
-      title[order+'-'+idRegistro+'_'+id+'_description'] = "DESCRIPCION";
-      title[order+'-'+idRegistro+'_'+id+'_typeDesign'] = "DISEÑO";
-      title[order+'-'+idRegistro+'_'+id+'_mandatory'] = "OBLIGATORIA";
-      title[order+'-'+idRegistro+'_'+id+'_value'] = "VALOR PREGUNTA ABIERTA";
-      title[order+'-'+idRegistro+'_'+id+'_0_id'] = "ID";
-    }
-
-
-    //question[id+'_0_0_0_0_description'] = question.description;
-    delete question.id;
-    delete question.description;
-    delete question.colors;
-    delete question.repeat;
-
-    return question;
-
-  }
-
-  rebuildUserExcel( order, id, user, titles ){
-
-    let indice = Object.keys(user);
-      
-    for (let index = 0; index < indice.length; index++) {
-      user[order+"-"+id+"_"+indice[index]] = user[indice[index]];
-      if(id == 0){
-        titles[order+"-"+id+"_"+indice[index]] = indice[index];
-      }
-      delete user[indice[index]];
-    }
-
-
-    return { data: user };
-    
   }
 
   togglePop(event: any,type){

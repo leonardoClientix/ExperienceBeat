@@ -1,8 +1,11 @@
 <div *ngIf="loading == false" [style.background]="quiz.colors.background" class="background-prev prev-data">
 <nav class="navbar navbar-light " [style.background]="quiz.colors.header" [style.color]="quiz.colors.name" >
     <a class="navbar-brand" href="#">
-      <img [src]="quiz.logo" width="30" height="30" alt="">
+      <img [src]="quiz.logo" height="30" alt="">
     </a>
+    <div class="form-inline my-2 my-lg-0">
+      <img src="./assets/img/LogoClientix.png"  height="30" class="d-inline-block align-top" alt="">
+    </div>
 </nav>
 <div class="container top-50">
  
@@ -85,12 +88,11 @@
                   <div class="id_question">{{ idQ + 1 }}</div>
                   <div class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [innerHTML]="item.description"></div>
          
-                    <div class="list-check">
+                    <div class="list-check" *ngIf="item.responsiveDesign == 'basic'">
                       <div class="row">
                         <div class="col-md-6" *ngFor="let lab of item.items; let l = index">
                           <div class="row">
                               <div class="label-option col-md-3">
-                                <!-- <input class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l" [(ngModel)]="lab.label"/> -->
                                 <div [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" >{{ lab.label }}</div>
                               </div>
                               <div class="items-options-list col-md-3">
@@ -100,6 +102,50 @@
                                     <span translate="no">
                                       <!-- <input name="opnum" class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l+'_opt_'+i" [(ngModel)]="idqs.name"/> -->
                                       <div [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion"  >{{ idqs.name }}</div>
+                                    </span>
+                                  </label> 
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+
+                    <div class="list-check" *ngIf="item.responsiveDesign == 'faces'">
+                      <div class="row">
+                        <div class="col-md-3" *ngFor="let lab of item.items; let l = index">
+                          <div class="row">
+                              <div class="label-option col-md-5">
+                                <div [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" >{{ lab.label }}</div>
+                              </div>
+                              <div class="items-options-list col-md-5">
+                                <div class="form-check form-check-inline" *ngFor="let idqs of item.items[l].options; let i = index">
+                                  <!-- <input class="form-check-input inp-checkbox" type="radio" name="question_{{l}}_{{i}}"  id="inlineCheckbox_{{l}}_{{i}}" (click)="stateQuiz(lab, idqs.name,'check_label')" [checked]="lab.options[i].check && idqs.name == lab.options[i].name"> -->
+                                  <label class="form-check-label" for="inlineCheckbox_{{l}}_{{i}}" >
+                                    <span translate="no">
+                                      <fa-icon class="iconDesign" [icon]="selectIconOption(item.responsiveDesign,i)" [style.color]="idqs.color" (mouseover)="idqs.hover=true" (mouseleave)="idqs.hover=false" (click)="stateQuiz(lab, idqs.name,'check_label')" [ngStyle]="{color: idqs.hover==true || (lab.options[i].check && idqs.name == lab.options[i].name) ? item.colorHover : idqs.color  }"></fa-icon>
+                                    </span>
+                                  </label> 
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div> 
+
+                    <div class="list-check type_table" *ngIf="item.responsiveDesign == 'faces_table'">
+                      <div class="row">
+                        <div class="col-md-3" *ngFor="let lab of item.items; let l = index">
+                          <div class="row">
+                              <div class="label-option col-md-12">
+                                <div [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" >{{ lab.label }}</div>
+                              </div>
+                              <div class="items-options-list col-md-5">
+                                <div class="form-check form-check-inline" *ngFor="let idqs of item.items[l].options; let i = index">
+                                  <!-- <input class="form-check-input inp-checkbox" type="radio" name="question_{{l}}_{{i}}"  id="inlineCheckbox_{{l}}_{{i}}" (click)="stateQuiz(lab, idqs.name,'check_label')" [checked]="lab.options[i].check && idqs.name == lab.options[i].name"> -->
+                                  <label class="form-check-label" for="inlineCheckbox_{{l}}_{{i}}" >
+                                    <span translate="no">
+                                      <fa-icon class="iconDesign" [icon]="selectIconOption('faces',i)" [style.color]="idqs.color" (mouseover)="idqs.hover=true" (mouseleave)="idqs.hover=false" (click)="stateQuiz(lab, idqs.name,'check_label')" [ngStyle]="{color: idqs.hover==true || (lab.options[i].check && idqs.name == lab.options[i].name) ? item.colorHover : idqs.color  }"></fa-icon>
                                     </span>
                                   </label> 
                                 </div>
@@ -171,6 +217,19 @@
       <div class="cnt-message">
           <div class="card-text" [innerHTML]="quiz.final_text" translate="no"></div>
       </div>  
+      <div class="row">
+        
+        <div class="col-md-12 mb-4">
+          <img src="./assets/img/logo_experiencebeat.png" class="center-item" height="50" alt="">
+        </div>
+        
+        <div class="col-md-12 mt-5 min-text">
+          Si quieres implementar medición de experiencia del cliente, paciente o colaborador contacta con nosotros a <a href="mailto:contacto@clientix.co">contacto@clientix.co</a>
+        </div>
+        <div class="col-md-12 mb-4">
+          <img src="./assets/img/LogoClientix.png" class="center-item" height="40" alt="">
+        </div>
+      </div>
     </div>
 
     <button type="submit" class="btn btn-primary btn-rigt" *ngIf="showQuestions" (click)="saveResponse('finished')">Enviar</button>

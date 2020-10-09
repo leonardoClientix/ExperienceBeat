@@ -70,29 +70,28 @@ export class PreviewQuizComponent implements OnInit {
 
       this._usersService.searchInput(name,value).subscribe( list =>{
 
-          if(list.length != 0){   
-            this.validExist = false; 
+          if(list.length == 0){   
+            // no existe
+            this.validExist = true; 
           } else {
-            this.validExist = true;
+            this.validExist = false;
+
+            this.showInput = false;
+            this.showQuestions = true;
+            this.response.user  = userData.value;
+            this.response.creation_date = new Date();
+            this.quiz.end_date = '';
+            this.response.state = 'process';
+            this.response.questions = [];
+                 
+            return this._responseService.addResponse(this.response);
+
           }
 
       });
 
     }
 
-    if(!this.validExist){
-      
-      this.showInput = false;
-      this.showQuestions = true;
-      this.response.user  = userData.value;
-      this.response.creation_date = new Date();
-      this.quiz.end_date = '';
-      this.response.state = 'process';
-      this.response.questions = [];
-           
-      return this._responseService.addResponse(this.response);
-    }
-    
   }
 
   saveResponse( state ){

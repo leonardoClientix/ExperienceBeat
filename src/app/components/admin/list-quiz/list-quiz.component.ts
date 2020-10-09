@@ -1,5 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
 import { QuizService } from './../../../services/quiz.service';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-list-quiz',
@@ -9,9 +10,11 @@ import { QuizService } from './../../../services/quiz.service';
 export class ListQuizComponent implements OnInit {
 
   listQuiz = [];
+  
 
   constructor(
-    private _quizService:QuizService
+    private _quizService:QuizService,
+    private datePipe: DatePipe
   ) {
 
     this._quizService.getAllQuiz().subscribe(data=>{
@@ -21,8 +24,13 @@ export class ListQuizComponent implements OnInit {
    }
 
   ngOnInit(): void {
+  }
 
-
+  clonarQuiz(quiz){
+    quiz.creation_date = new Date();
+    quiz.name = quiz.name+' Clonada: '+this.datePipe.transform(new Date(),"yyyy-MM-dd , h:mma");
+    let clonQuiz = JSON.parse(JSON.stringify(quiz));
+    this._quizService.saveQuiz(clonQuiz);
   }
 
 }

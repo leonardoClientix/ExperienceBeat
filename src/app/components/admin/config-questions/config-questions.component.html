@@ -217,13 +217,15 @@
                   <div class="list-check">
                     <div class="row">
                       <div class="col-md-6" *ngFor="let lab of item.items; let l = index">
-                        <div class="row">
+
+                        <div class="row" *ngIf="item.responsiveDesign == 'basic' || item.responsiveDesign == 'faces'" >
                             <div class="label-option col-md-3">
                               <input class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l" [(ngModel)]="lab.label"/>
                             </div>
                             <div class="items-options-list col-md-3">
                               <div class="form-check form-check-inline" *ngFor="let idqs of item.items[l].options; let i = index">
-                                <input class="form-check-input inp-checkbox" type="radio" name="question_{{i}}"  id="inlineCheckbox_{{i}}" #dataCkMensaje>
+                                <input *ngIf="item.responsiveDesign == 'basic'" class="form-check-input inp-checkbox" type="radio" name="question_{{i}}"  id="inlineCheckbox_{{i}}" #dataCkMensaje>
+                                <fa-icon *ngIf="item.responsiveDesign == 'faces'" class="iconDesign" [icon]="selectIconOption(item.responsiveDesign,i)" [style.color]="idqs.color" (mouseover)="idqs.hover=true" (mouseleave)="idqs.hover=false" [ngStyle]="{color: idqs.hover==true  ? item.colorHover : idqs.color  }"></fa-icon>
                                 <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l+'_opt_'+i" [(ngModel)]="idqs.name"/></span></label>
                                 <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item.items[l],'check_label',i)">-</div> 
                               </div>
@@ -232,6 +234,23 @@
                               </ul>
                             </div>
                         </div>
+
+                        <div class="row" *ngIf="item.responsiveDesign == 'faces_table'" >
+                          <div class="label-option col-md-12">
+                            <input class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l" [(ngModel)]="lab.label"/>
+                          </div>
+                          <div class="items-options-list col-md-3">
+                            <div class="form-check form-check-inline" *ngFor="let idqs of item.items[l].options; let i = index">
+                              <fa-icon  class="iconDesign" [icon]="selectIconOption('faces',i)" [style.color]="idqs.color" (mouseover)="idqs.hover=true" (mouseleave)="idqs.hover=false" [ngStyle]="{color: idqs.hover==true  ? item.colorHover : idqs.color  }"></fa-icon>
+                              <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l+'_opt_'+i" [(ngModel)]="idqs.name"/></span></label>
+                              <div  class="min-icon"  title="Eliminar Opción" (click)="removeOpt(item.items[l],'check_label',i)">-</div> 
+                            </div>
+                            <ul class="confg-controls ind-cont">
+                              <li><fa-icon [icon]="FA_ICONS.options.faPlus" class="conf-icon" title="Agregar Opción" (click)="addOptLabel(item.items[l],'check_label')"></fa-icon></li>
+                            </ul>
+                          </div>
+                        </div>
+
                       </div>
                     </div>
                   </div> 
@@ -243,7 +262,7 @@
                   <li><div [colorPicker]="item.colors.txtquestion" (colorPickerChange)="item.colors.txtquestion = $event" class="rad-color" [style.background]="item.colors.txtquestion" [style.background]="quiz.colors.txtquestion" id="color-question" title="Texto Pregunta"></div></li> 
                   <li> <fa-icon [icon]="FA_ICONS.options.faClone" class="conf-icon"  title="Clonar pregunta" (click)="clonarQuestion(item)" ></fa-icon></li>
                   <li> <fa-icon [icon]="FA_ICONS.options.faAsterisk" class="conf-icon ico-mandatory"  title="Pregunta obligatoria" [ngClass]="{'active': item.mandatory}"  (click)="item.mandatory = !item.mandatory"></fa-icon></li>
-                  <li> <fa-icon [icon]="FA_ICONS.options.faEdit" class="conf-icon"  title="Editar pregunta" ></fa-icon></li>    
+                  <li> <fa-icon [icon]="FA_ICONS.options.faEdit" class="conf-icon"  title="Editar pregunta" data-toggle="modal" data-target="#modalEditQuestion" (click)="modalEditQuestion(item)"></fa-icon></li>    
                   <li><fa-icon [icon]="FA_ICONS.options.faPlus" class="conf-icon" title="Agregar Opción" (click)="addOpt(item,'check_label')"></fa-icon></li>   
                   <li> <fa-icon [icon]="FA_ICONS.options.faTimes" class="conf-icon"  title="Eliminar pregunta" (click)="deleteQuestion(item.id)"></fa-icon></li>     
                 </ul>
@@ -396,24 +415,70 @@
 
               <div class="col-md-11 mb-11 cont-itemquestion" [style.background]="quiz.colors.question" [style.background]="item.colors.question">
                 <div class="cont-question" [style.color]="quiz.colors.txtquestion" [style.color]="item.colors.txtquestion" [innerHTML]="item.description"></div>
-       
-                  <div class="list-check">
+  
+                  <div class="list-check" *ngIf="item.responsiveDesign == 'basic'">
                     <div class="row">
                       <div class="col-md-6" *ngFor="let lab of item.items; let l = index">
                         <div class="row">
                             <div class="label-option col-md-3">
-                              <input class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l" [(ngModel)]="lab.label"/>
+                              <label [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion"> {{ lab.label }}</label>
                             </div>
-                            <div class="items-options-list col-md-3">
+                            <div class="items-options-list col-md-5">
                               <div class="form-check form-check-inline" *ngFor="let idqs of item.items[l].options; let i = index">
-                                <input class="form-check-input inp-checkbox" type="radio" name="question_{{i}}"   id="inlineCheckbox_{{i}}" #dataCkMensaje>
-                                <label class="form-check-label" for="inlineCheckbox_{{i}}" ><span translate="no"><input name="opnum" class="input-opt" [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" [name]="item.id+'_label_'+l+'_opt_'+i" [(ngModel)]="idqs.name"/></span></label> 
+                                <input class="form-check-input inp-checkbox" type="radio" name="question_{{i}}"   id="inlineCheckbox_{{i}}" #dataCkMensaje/>
+                                <label class="form-check-label" for="inlineCheckbox_{{i}}" >
+                                  <span translate="no">
+                                    <div [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion" >{{ idqs.name }}</div>
+                                  </span>
+                                </label> 
                               </div>
                             </div>
                         </div>
                       </div>
                     </div>
                   </div> 
+
+                  <div class="list-check" *ngIf="item.responsiveDesign == 'faces'">
+                    <div class="row">
+                      <div class="col-md-3" *ngFor="let lab of item.items; let l = index">
+                        <div class="row" >
+                            <div class="label-option col-md-5">
+                              <label [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion"> {{ lab.label }}</label>
+                            </div>
+                            <div class="items-options-list col-md-5">
+                              <div class="form-check form-check-inline" *ngFor="let idqs of item.items[l].options; let i = index">
+                                <label class="form-check-label" for="inlineCheckbox_{{i}}" >
+                                  <span translate="no">
+                                    <fa-icon class="iconDesign" [icon]="selectIconOption(item.responsiveDesign,i)" [style.color]="idqs.color" (mouseover)="idqs.hover=true" (mouseleave)="idqs.hover=false" [ngStyle]="{color: idqs.hover==true  ? item.colorHover : idqs.color  }"></fa-icon>
+                                  </span>
+                                </label> 
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  
+                  <div class="list-check type_table" *ngIf="item.responsiveDesign == 'faces_table'">
+                    <div class="row">
+                      <div class="col-md-3" *ngFor="let lab of item.items; let l = index">
+                        <div class="row" >
+                            <div class="label-option col-md-12">
+                              <label [style.color]="quiz.colors.txtoption" [style.color]="item.colors.txtquestion"> {{ lab.label }}</label>
+                            </div>
+                            <div class="items-options-list col-md-5">
+                              <div class="form-check form-check-inline" *ngFor="let idqs of item.items[l].options; let i = index">
+                                <label class="form-check-label" for="inlineCheckbox_{{i}}" >
+                                  <span translate="no">
+                                    <fa-icon class="iconDesign" [icon]="selectIconOption('faces',i)" [style.color]="idqs.color" (mouseover)="idqs.hover=true" (mouseleave)="idqs.hover=false" [ngStyle]="{color: idqs.hover==true  ? item.colorHover : idqs.color  }"></fa-icon>
+                                  </span>
+                                </label> 
+                              </div>
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
 
               </div>
 
@@ -690,7 +755,7 @@
 
                 <div class="tab-content" id="myTabConditional">
                   
-                  <div class="tab-pane tap-conf fade show active" id="design" role="tabpanel" aria-labelledby="design-tab">
+                  <div class="tab-pane tap-conf fade show active" id="design" role="tabpanel" aria-labelledby="design-tab" *ngIf="configModalDesign.typeDesign =='multiple_choice'">
                     
                     <h3>Diseño de Respuesta</h3>
                     <div class="row">
@@ -792,6 +857,114 @@
                       </div>
                     </div> 
 
+                  </div>
+
+                  <div class="tab-pane tap-conf fade show active modal-config" id="design" role="tabpanel" aria-labelledby="design-tab" *ngIf="configModalDesign.typeDesign =='check_label'">
+                    
+                    <h3>Diseño de Respuesta</h3>
+
+                    <div class="row div-box">
+
+                      <div class="col-md-3 p-4">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" id="design_1" name="configModalDesign.responsiveDesign" value="basic" [(ngModel)]="configModalDesign.responsiveDesign">
+                          <label class="form-check-label" for="design_1">Basico</label>
+                        </div>
+                      </div>
+                      
+                      <div class="col-md-9">  
+                        <div class="row">
+                          <div class="tab-hidden" *ngIf="configModalDesign.responsiveDesign != 'basic'"></div>
+                          <div class="col-md-5" *ngFor="let lab of configModalDesign.items; let l = index">
+                            <div class="row">
+                                <div class="label-option col-md-5">
+                                  <div [style.color]="quiz.colors.txtoption" [style.color]="configModalDesign.colors.txtquestion" >{{ lab.label }}</div>
+                                </div>
+                                <div class="items-options-list col-md-6">
+                                  <div class="form-check form-check-inline" *ngFor="let idqs of configModalDesign.items[l].options; let i = index">
+                                    <input class="form-check-input inp-checkbox" type="radio" name="question_{{l}}_{{i}}"  id="inlineCheckbox_{{l}}_{{i}}" >
+                                    <label class="form-check-label" for="inlineCheckbox_{{l}}_{{i}}" >
+                                      <span translate="no">
+                                        <div [style.color]="quiz.colors.txtoption" [style.color]="configModalDesign.colors.txtquestion"  >{{ idqs.name }}</div>
+                                      </span>
+                                    </label> 
+                                  </div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>  
+                     
+                    </div>
+
+
+                    <div class="row div-box">
+
+                      <div class="col-md-3 p-4">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" id="design_2" name="configModalDesign.responsiveDesign" value="faces" [(ngModel)]="configModalDesign.responsiveDesign">
+                          <label class="form-check-label" for="design_2">Caras</label>
+                        </div>
+                      </div>
+
+                      <div class="col-md-9">
+                        <div class="row">
+                          <div class="tab-hidden" *ngIf="configModalDesign.responsiveDesign != 'faces'"></div>
+                          <div class="col-md-5" *ngFor="let lab of configModalDesign.items; let l = index">
+                            <div class="row">
+                                <div class="label-option col-md-5">
+                                  <div [style.color]="quiz.colors.txtoption" [style.color]="configModalDesign.colors.txtquestion" >{{ lab.label }}</div>
+                                </div>
+                                <div class="items-options-list col-md-5">
+                                  <div class="form-check form-check-inline" *ngFor="let idqs of configModalDesign.items[l].options; let i = index">  
+                                    <label class="form-check-label" for="inlineCheckbox_{{l}}_{{i}}" >
+                                      <span translate="no">
+                                        <fa-icon [(colorPicker)]="idqs.color" [icon]="selectIconOption('faces',i)" class="icon-response" id="icon-opt_2_{{i}}" (mouseover)="idqs.hover=true" (mouseleave)="idqs.hover=false" [ngStyle]="{color: idqs.hover==true  ? configModalDesign.colorHover : idqs.color  }" ></fa-icon>
+                                      </span>
+                                    </label> 
+                                  </div>
+                                </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                    </div>
+
+
+                    <div class="row div-box">
+
+                      <div class="col-md-3 p-4">
+                        <div class="form-check form-check-inline">
+                          <input class="form-check-input" type="radio" id="design_3" name="configModalDesign.responsiveDesign" value="faces_table" [(ngModel)]="configModalDesign.responsiveDesign">
+                          <label class="form-check-label" for="design_3">Caras tabla</label>
+                        </div>
+                      </div>
+
+                      <div class="col-md-9">
+                        <div class="row">
+                        <div class="tab-hidden" *ngIf="configModalDesign.responsiveDesign != 'faces_table'"></div>
+                        <div class="conten-table-face" *ngFor="let lab of configModalDesign.items; let l = index">
+                          <div class="row">
+                              <div class="label-option ">
+                                <div [style.color]="quiz.colors.txtoption" [style.color]="configModalDesign.colors.txtquestion" class="title-table">{{ lab.label }}</div>
+                              </div>
+                              <div class="items-options-list col-md-9">
+                                <div class="form-check form-check-inline" *ngFor="let dat of configModalDesign.items[l].options; let f = index">
+                                  <label class="form-check-label col-md-12" id="optDesig_2_{{f}}">
+                                    <fa-icon [(colorPicker)]="dat.color" [icon]="selectIconOption('faces',f)" class="icon-response" id="icon-opt_2_{{f}}" (mouseover)="dat.hover=true" (mouseleave)="dat.hover=false" [ngStyle]="{color: dat.hover==true  ? configModalDesign.colorHover : dat.color  }" ></fa-icon>
+                                  </label>
+                                </div>
+                              </div>
+                          </div>
+                        </div>
+                        </div>
+                      </div>
+
+
+                    </div>
+
+                  
                   </div>
 
                 </div>

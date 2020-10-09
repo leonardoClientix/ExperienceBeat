@@ -28,6 +28,11 @@ export class UsersService {
     return this.itemsCollection.valueChanges();
   }
 
+  getUserInput( input, value ){
+    this.itemsCollection = this.afs.collection<QuestionsModule>("users_prueba", ref => ref.where(input, '==', value));
+    return this.itemsCollection.valueChanges();
+  }
+
   getUserQuiz( ){
     
     const data_user = new Observable((observer) => {
