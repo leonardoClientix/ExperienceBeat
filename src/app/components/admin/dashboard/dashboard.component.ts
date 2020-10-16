@@ -433,13 +433,34 @@ export class DashboardComponent implements OnInit {
             const responses = {}; 
             for (let b = 0; b < allRespon.length; b++) {
 
+              let descript = allRespon[b].description;
+
+                if(allRespon[b].typeDesign == 'open_question'){
+                  if(cont == 2){
+                   titles.push(descript.replace(/,/g," "));
+                   titles.push('Valor');
+                  }
+                  let valDescrip = allRespon[b].value;
+                  console.log(valDescrip);
+                  if(valDescrip){
+                    console.log("1");
+                    responses['C_'+b+'_0'] = '';
+                    responses['C_'+b+'_1'] = valDescrip.replace(/,/g," ");
+                  } else {
+                    console.log("2"); 
+                    responses['C_'+b+'_1'] = '';
+                  }
+                  Object.assign(dataUser,responses);
+                  
+                }
+
                 let it = allRespon[b].items;
                 if(it){
                   for (let c = 0; c < it.length; c++) {
                     
                     if(c == 0){
                       if(cont == 2){
-                        let descript = allRespon[b].description;
+                        
                         titles.push(descript.replace(/,/g," "));
                       }     
                       responses['B_'+b+'_'+c+'_0'] = '';  
@@ -472,9 +493,13 @@ export class DashboardComponent implements OnInit {
             }
             dataExcel.push(dataUser);
 
+            if(allRespon.length != 0){
+              cont++;
+            }
+            
        }
 
-       cont++;
+      
 
     }
  
